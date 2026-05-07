@@ -8,11 +8,6 @@ import Link from "next/link"
 import { ArrowLeft, Beaker } from "lucide-react"
 import { getProductsByCategory, type Product } from "@/lib/products-data"
 
-export const metadata = {
-  title: "Aromatic Chemicals | Sheetal Aromatics",
-  description: "Premium aromatic chemical compounds for various industries",
-}
-
 export default function AromaticChemicalsPage() {
   const products = getProductsByCategory("Aromatic Chemicals")
 

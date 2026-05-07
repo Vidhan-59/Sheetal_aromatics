@@ -7,11 +7,6 @@ import Link from "next/link"
 import { ArrowLeft, Shield } from "lucide-react"
 import { getProductsByCategory } from "@/lib/products-data"
 
-export const metadata = {
-  title: "Metals | Sheetal Aromatics",
-  description: "High purity metals for industrial applications",
-}
-
 export default function MetalsPage() {
   const products = getProductsByCategory("Metals")
 

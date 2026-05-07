@@ -7,11 +7,6 @@ import Link from "next/link"
 import { ArrowLeft, Leaf } from "lucide-react"
 import { getProductsByCategory } from "@/lib/products-data"
 
-export const metadata = {
-  title: "Ayurvedic Herbs | Sheetal Aromatics",
-  description: "Premium Ayurvedic herbs for pharmaceutical and wellness applications",
-}
-
 export default function AyurvedicHerbsPage() {
   const products = getProductsByCategory("Ayurvedic Herbs")
 

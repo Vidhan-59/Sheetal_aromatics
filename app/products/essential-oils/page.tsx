@@ -7,11 +7,6 @@ import Link from "next/link"
 import { ArrowLeft, Leaf } from "lucide-react"
 import { getProductsByCategory } from "@/lib/products-data"
 
-export const metadata = {
-  title: "Essential Oils | Sheetal Aromatics",
-  description: "Pure and natural essential oils from finest sources",
-}
-
 export default function EssentialOilsPage() {
   const products = getProductsByCategory("Essential Oils")
 

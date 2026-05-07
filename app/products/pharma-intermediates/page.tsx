@@ -7,11 +7,6 @@ import Link from "next/link"
 import { ArrowLeft, Beaker } from "lucide-react"
 import { getProductsByCategory } from "@/lib/products-data"
 
-export const metadata = {
-  title: "Pharma Intermediates | Sheetal Aromatics",
-  description: "Quality intermediates for pharmaceutical manufacturing",
-}
-
 export default function PharmaIntermediatesPage() {
   const products = getProductsByCategory("Pharma Intermediates")
 
