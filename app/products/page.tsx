@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ProductSearch } from "@/components/product-search"
+import { ProductCategoryCard } from "@/components/product-category-card"
 import Link from "next/link"
 import { Beaker, Leaf, Shield, ArrowRight } from "lucide-react"
 
@@ -22,6 +23,7 @@ function ProductsContent() {
       icon: Beaker,
       href: "/products/aromatic-chemicals",
       productCount: "15+ Products",
+      imagePath: "/images/aromatic-chemicals.jpg",
     },
     {
       title: "Essential Oils",
@@ -30,6 +32,7 @@ function ProductsContent() {
       icon: Leaf,
       href: "/products/essential-oils",
       productCount: "12+ Products",
+      imagePath: "/images/essential-oils.jpg",
     },
     {
       title: "Ayurvedic Herbs",
@@ -37,6 +40,7 @@ function ProductsContent() {
       icon: Leaf,
       href: "/products/ayurvedic-herbs",
       productCount: "16+ Products",
+      imagePath: "/images/ayurvedic-herbs.jpg",
     },
     {
       title: "Ayurvedic Powders",
@@ -45,6 +49,7 @@ function ProductsContent() {
       icon: Leaf,
       href: "/products/ayurvedic-powders",
       productCount: "13+ Products",
+      imagePath: "/images/ayurvedic-powders.jpg",
     },
     {
       title: "Metals",
@@ -52,6 +57,7 @@ function ProductsContent() {
       icon: Shield,
       href: "/products/metals",
       productCount: "2+ Products",
+      imagePath: "/images/metals.jpg",
     },
     {
       title: "Pharma Intermediates",
@@ -60,6 +66,7 @@ function ProductsContent() {
       icon: Beaker,
       href: "/products/pharma-intermediates",
       productCount: "8+ Products",
+      imagePath: "/images/pharma-intermediates.jpg",
     },
   ]
 
@@ -106,25 +113,16 @@ function ProductsContent() {
               <h2 className="text-3xl font-bold text-center mb-12">Product Categories</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {productCategories.map((category, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow h-full">
-                    <CardContent className="p-6 flex flex-col h-full">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                          <category.icon className="h-6 w-6 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-semibold">{category.title}</h3>
-                          <p className="text-sm text-accent font-medium">{category.productCount}</p>
-                        </div>
-                      </div>
-                      <p className="text-muted-foreground mb-6 flex-grow">{category.description}</p>
-                      <Button asChild className="w-full">
-                        <Link href={category.href}>
-                          View Products <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
+                  <ProductCategoryCard
+                    key={index}
+                    title={category.title}
+                    description={category.description}
+                    href={category.href}
+                    icon={category.icon}
+                    productCount={parseInt(category.productCount)}
+                    imageQuery={category.title}
+                    imagePath={category.imagePath}
+                  />
                 ))}
               </div>
             </div>

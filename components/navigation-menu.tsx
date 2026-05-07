@@ -76,8 +76,8 @@ export function MainNavigationMenu() {
           <NavigationMenuTrigger className={cn("transition-all duration-200", pathname.startsWith("/products") && "text-primary bg-primary/10")}>
             Products
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50 bg-card rounded-xl shadow-xl border border-border/50 premium-shadow">
-            <div className="grid w-[600px] grid-cols-2 gap-3 p-6 text-foreground">
+          <NavigationMenuContent className="z-50 bg-card rounded-xl shadow-2xl border border-border/50 premium-shadow min-w-[600px]">
+            <div className="grid grid-cols-2 gap-3 p-6 text-foreground">
               <div className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link

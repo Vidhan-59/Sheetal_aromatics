@@ -10,6 +10,7 @@ interface ProductCategoryCardProps {
   icon: LucideIcon
   productCount: number
   imageQuery: string
+  imagePath?: string
 }
 
 export function ProductCategoryCard({
@@ -19,13 +20,14 @@ export function ProductCategoryCard({
   icon: Icon,
   productCount,
   imageQuery,
+  imagePath,
 }: ProductCategoryCardProps) {
   return (
     <Link href={href} className="group block h-full">
       <Card className="h-full transition-all duration-300 hover:shadow-xl hover:border-primary/30 premium-shadow lift-on-hover overflow-hidden">
         <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-secondary/30 to-secondary/10">
           <img
-            src={`/placeholder.svg?height=200&width=300&query=${encodeURIComponent(imageQuery)}`}
+            src={imagePath || `/placeholder.svg?height=200&width=300&query=${encodeURIComponent(imageQuery)}`}
             alt={title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"

@@ -210,6 +210,11 @@
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="%232d5a48"/><circle cx="12" cy="12" r="8" fill="none" stroke="%232d5a48" stroke-width="1" opacity="0.4"/></svg>') 12 12, auto;
+}
+
+button, a, [role="button"], input[type="submit"], select {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="%23b8a876"/><circle cx="12" cy="12" r="8" fill="none" stroke="%23b8a876" stroke-width="1" opacity="0.5"/></svg>') 12 12, pointer;
 }
 
 /* Enhanced focus states for accessibility */

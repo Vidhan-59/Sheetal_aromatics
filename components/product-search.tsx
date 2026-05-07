@@ -166,16 +166,16 @@ Thank you.`
           <Filter className="h-4 w-4" />
           Filter by category:
         </span>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+        <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <Badge
               key={category}
               variant={selectedCategories.includes(category) ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary/10 transition-all duration-200 justify-center py-2 px-3 text-xs sm:text-sm"
+              className="cursor-pointer hover:bg-primary/10 transition-all duration-200 py-2 px-3 text-xs sm:text-sm whitespace-nowrap"
               onClick={() => toggleCategory(category)}
             >
-              <span className="truncate">{category}</span>
-              {selectedCategories.includes(category) && <X className="h-3 w-3 ml-1 shrink-0" />}
+              {category}
+              {selectedCategories.includes(category) && <X className="h-3 w-3 ml-1" />}
             </Badge>
           ))}
         </div>

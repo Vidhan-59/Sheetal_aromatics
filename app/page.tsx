@@ -172,33 +172,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Herbs Section */}
+      {/* Product Categories Section */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">Featured Herbs</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">Product Categories</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover our most popular Ayurvedic herbs trusted by wellness enthusiasts
+              Explore our complete range of premium Ayurvedic and specialty products
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
             {productCategories.map((product, index) => (
-              <Link key={index} href={product.href}>
-                <Card className="h-full hover:shadow-lg transition-all duration-300 border-border/50 cursor-pointer group lift-on-hover overflow-hidden">
-                  <CardContent className="p-6 md:p-8 h-full flex flex-col">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${product.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <product.icon className="h-7 w-7 text-primary" />
-                    </div>
-                    
-                    <h3 className="text-xl font-semibold text-foreground mb-2 font-serif">{product.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-6 flex-grow">{product.description}</p>
-                    
-                    <div className="flex items-center text-primary font-medium text-sm group-hover:gap-3 gap-2 transition-all duration-300">
-                      Learn More <ArrowRight className="h-4 w-4" />
-                    </div>
-                  </CardContent>
-                </Card>
+              <Link key={index} href={product.href} className="group">
+                <div className="flex flex-col items-center justify-center p-4 md:p-6 rounded-lg border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 h-full">
+                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                    <product.icon className="h-6 w-6 md:h-7 md:w-7 text-primary" />
+                  </div>
+                  <h3 className="text-sm md:text-base font-semibold text-foreground text-center group-hover:text-primary transition-colors duration-300">{product.title}</h3>
+                </div>
               </Link>
             ))}
           </div>

@@ -45,10 +45,7 @@ export default function Header() {
               <span>sheetalaromatics@gmail.com</span>
             </div>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="text-accent font-semibold">Premium Heritage Since 2005</div>
-            <ThemeToggle />
-          </div>
+          <div className="text-accent font-semibold">Premium Heritage Since 2005</div>
         </div>
 
         {/* Main header */}
