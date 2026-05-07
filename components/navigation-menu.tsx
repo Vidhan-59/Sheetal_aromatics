@@ -63,8 +63,8 @@ export function MainNavigationMenu() {
           <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink
               className={cn(
-                "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
-                pathname === "/" && "bg-accent/50",
+                "group inline-flex h-10 w-max items-center justify-center rounded-lg bg-transparent px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                pathname === "/" && "text-primary bg-primary/10",
               )}
             >
               Home
@@ -73,21 +73,21 @@ export function MainNavigationMenu() {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={cn(pathname.startsWith("/products") && "bg-accent/50")}>
+          <NavigationMenuTrigger className={cn("transition-all duration-200", pathname.startsWith("/products") && "text-primary bg-primary/10")}>
             Products
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50 bg-white rounded-md shadow-lg border border-gray-300">
-            <div className="grid w-[600px] grid-cols-2 gap-3 p-4 text-gray-800">
+          <NavigationMenuContent className="z-50 bg-card rounded-xl shadow-xl border border-border/50 premium-shadow">
+            <div className="grid w-[600px] grid-cols-2 gap-3 p-6 text-foreground">
               <div className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-primary/10 to-primary/5 p-6 no-underline outline-none focus:shadow-md hover:bg-gradient-to-b hover:from-primary/15 hover:to-primary/10 transition-all duration-300"
                     href="/products"
                   >
-                    <Beaker className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">All Products</div>
-                    <p className="text-sm leading-tight text-gray-600">
-                      Browse our complete range of premium chemicals and natural products
+                    <Beaker className="h-6 w-6 text-primary" />
+                    <div className="mb-2 mt-4 text-lg font-semibold text-foreground">All Products</div>
+                    <p className="text-sm leading-tight text-muted-foreground">
+                      Browse our complete range of premium herbs and natural products
                     </p>
                   </Link>
                 </NavigationMenuLink>
@@ -98,7 +98,7 @@ export function MainNavigationMenu() {
                   title={category.title}
                   href={category.href}
                   icon={category.icon}
-                  className="text-gray-800"
+                  className="text-foreground"
                 >
                   {category.description}
                 </ListItem>
@@ -111,8 +111,8 @@ export function MainNavigationMenu() {
           <Link href="/about" legacyBehavior passHref>
             <NavigationMenuLink
               className={cn(
-                "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
-                pathname === "/about" && "bg-accent/50",
+                "group inline-flex h-10 w-max items-center justify-center rounded-lg bg-transparent px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                pathname === "/about" && "text-primary bg-primary/10",
               )}
             >
               About Us
@@ -124,8 +124,8 @@ export function MainNavigationMenu() {
           <Link href="/contact" legacyBehavior passHref>
             <NavigationMenuLink
               className={cn(
-                "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
-                pathname === "/contact" && "bg-accent/50",
+                "group inline-flex h-10 w-max items-center justify-center rounded-lg bg-transparent px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                pathname === "/contact" && "text-primary bg-primary/10",
               )}
             >
               Contact
@@ -146,16 +146,16 @@ const ListItem = React.forwardRef<
       <a
         ref={ref}
         className={cn(
-          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          "block select-none space-y-1 rounded-lg p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-primary/5 hover:text-primary focus:bg-primary/5 focus:text-primary",
           className,
         )}
         {...props}
       >
         <div className="flex items-center gap-2">
-          {Icon && <Icon className="h-4 w-4" />}
-          <div className="text-sm font-medium leading-none">{title}</div>
+          {Icon && <Icon className="h-4 w-4 text-primary" />}
+          <div className="text-sm font-semibold leading-none">{title}</div>
         </div>
-        <p className="line-clamp-2 text-sm leading-snug text-gray-600">{children}</p>
+        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
       </a>
     </NavigationMenuLink>
   )

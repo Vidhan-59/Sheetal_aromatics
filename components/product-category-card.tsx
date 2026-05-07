@@ -21,30 +21,36 @@ export function ProductCategoryCard({
   imageQuery,
 }: ProductCategoryCardProps) {
   return (
-    <Link href={href} className="group block">
-      <Card className="h-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] performance-optimized">
-        <div className="aspect-video relative overflow-hidden rounded-t-lg">
+    <Link href={href} className="group block h-full">
+      <Card className="h-full transition-all duration-300 hover:shadow-xl hover:border-primary/30 premium-shadow lift-on-hover overflow-hidden">
+        <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-secondary/30 to-secondary/10">
           <img
             src={`/placeholder.svg?height=200&width=300&query=${encodeURIComponent(imageQuery)}`}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-          <div className="absolute top-3 right-3">
-            <Badge variant="secondary" className="bg-white/90 text-foreground">
-              {productCount} Products
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute top-4 right-4 transform transition-all duration-300 group-hover:scale-110">
+            <Badge variant="secondary" className="bg-primary text-primary-foreground shadow-lg font-semibold">
+              {productCount} Items
             </Badge>
           </div>
         </div>
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-muted">
-              <Icon className="h-5 w-5 text-primary" />
+        <CardContent className="p-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 flex-shrink-0">
+              <Icon className="h-6 w-6 text-primary" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">{title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">{description}</p>
+              <div className="mt-4 flex items-center text-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Explore
+                <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
             </div>
           </div>
         </CardContent>

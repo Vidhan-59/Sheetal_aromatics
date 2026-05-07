@@ -1,21 +1,21 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Work_Sans, Open_Sans } from "next/font/google"
+import { Lora, Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { generateOrganizationStructuredData } from "@/components/seo-metadata"
 
-const workSans = Work_Sans({
+const lora = Lora({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-work-sans",
+  variable: "--font-serif",
 })
 
-const openSans = Open_Sans({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-open-sans",
+  variable: "--font-sans",
 })
 
 export const metadata: Metadata = {
@@ -93,7 +93,7 @@ export default function RootLayout({
   const organizationData = generateOrganizationStructuredData()
 
   return (
-    <html lang="en" className={`${workSans.variable} ${openSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${lora.variable} ${inter.variable} bg-background`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

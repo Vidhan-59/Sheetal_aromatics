@@ -51,13 +51,18 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-accent text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 font-serif">About Sheetal Aromatics</h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Two decades of excellence in aromatic chemicals, essential oils, and ayurvedic products. Your trusted
-              partner in quality and innovation.
+      <section className="bg-gradient-to-br from-primary via-primary/95 to-primary text-primary-foreground py-24 md:py-32 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-foreground/5 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h1 className="text-5xl md:text-7xl font-bold font-serif leading-tight">Our Heritage</h1>
+            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed font-light">
+              20 years of premium Ayurvedic wellness heritage. A trusted partner in authentic herbs, 
+              scientific integrity, and global excellence.
             </p>
           </div>
         </div>

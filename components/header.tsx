@@ -31,49 +31,49 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm sticky top-0 z-50 border-b">
+    <header className="bg-background/98 backdrop-blur-sm supports-[backdrop-filter]:bg-background/95 sticky top-0 z-50 border-b border-border/40 premium-shadow transition-all duration-300">
       <div className="container mx-auto px-4">
         {/* Top bar */}
-        <div className="hidden md:flex items-center justify-between py-2 text-sm text-muted-foreground border-b">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4" />
+        <div className="hidden md:flex items-center justify-between py-3 text-xs text-muted-foreground border-b border-border/30">
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2 hover:text-primary transition-colors duration-200">
+              <Phone className="h-3.5 w-3.5" />
               <span>+91 9824169906 / +91 9426005911</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4" />
+            <div className="flex items-center gap-2 hover:text-primary transition-colors duration-200">
+              <Mail className="h-3.5 w-3.5" />
               <span>sheetalaromatics@gmail.com</span>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="text-accent font-medium">Trusted Export Partner Since 2005</div>
+          <div className="flex items-center gap-6">
+            <div className="text-accent font-semibold">Premium Heritage Since 2005</div>
             <ThemeToggle />
           </div>
         </div>
 
         {/* Main header */}
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-4 gap-8">
           <CompanyLogo size="md" />
 
           <div className="hidden lg:flex items-center gap-4 flex-1 max-w-md mx-8">
-            <form onSubmit={handleSearch} className="relative flex-1">
+            <form onSubmit={handleSearch} className="relative flex-1 search-enhanced">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products, CAS numbers..."
+                placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 bg-muted/50 border-muted-foreground/20 focus:bg-background transition-all duration-200"
+                className="pl-10 pr-4 bg-muted/40 border-border/50 focus:bg-background transition-all duration-300 rounded-lg text-sm"
               />
             </form>
           </div>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             <MainNavigationMenu />
-            <Button asChild className="bg-accent hover:bg-accent/90 shadow-md transition-all duration-200">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-md transition-all duration-200 rounded-lg px-6">
               <Link href="/contact">Get Quote</Link>
             </Button>
-            <div className="md:hidden">
+            <div className="hidden md:flex">
               <ThemeToggle />
             </div>
           </div>
