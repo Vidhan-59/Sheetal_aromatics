@@ -1,38 +1,19 @@
-"use client"
-
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { QuoteButton } from "@/components/quote-button"
 import Link from "next/link"
-import { ArrowLeft, Leaf, Mail } from "lucide-react"
+import { ArrowLeft, Leaf } from "lucide-react"
 import { getProductsByCategory } from "@/lib/products-data"
+
+export const metadata = {
+  title: "Ayurvedic Herbs | Sheetal Aromatics",
+  description: "Premium Ayurvedic herbs for pharmaceutical and wellness applications",
+}
 
 export default function AyurvedicHerbsPage() {
   const products = getProductsByCategory("Ayurvedic Herbs")
-
-  const handleGetQuote = (productName: string, casNumber?: string) => {
-    const subject = `Quote Request for ${productName}`
-    const body = `Dear Sheetal Aromatics Team,
-
-I would like to request a quote for the following product:
-
-Product Name: ${productName}
-${casNumber ? `CAS Number: ${casNumber}` : ""}
-
-Please provide:
-- Price per unit/kg
-- Minimum order quantity
-- Availability
-- Delivery timeline
-
-Thank you for your assistance.
-
-Best regards,`
-
-    const mailtoLink = `mailto:sheetalaromatics@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    window.open(mailtoLink, "_blank")
-  }
 
   return (
     <div className="min-h-screen">
@@ -134,13 +115,7 @@ Best regards,`
                     </div>
                   )}
 
-                  <Button 
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transition-all duration-300" 
-                    onClick={() => handleGetQuote(product.name, product.casNumber)}
-                  >
-                    <Mail className="mr-2 h-4 w-4" />
-                    Request Quote
-                  </Button>
+                  <QuoteButton productName={product.name} casNumber={product.casNumber} />
                 </CardContent>
               </Card>
             ))}

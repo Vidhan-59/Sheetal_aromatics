@@ -1,34 +1,20 @@
-"use client"
-
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { QuoteButton } from "@/components/quote-button"
 import Link from "next/link"
-import { ArrowLeft, Beaker, Mail } from "lucide-react"
+import { ArrowLeft, Beaker } from "lucide-react"
 import { getProductsByCategory, type Product } from "@/lib/products-data"
+
+export const metadata = {
+  title: "Aromatic Chemicals | Sheetal Aromatics",
+  description: "Premium aromatic chemical compounds for various industries",
+}
 
 export default function AromaticChemicalsPage() {
   const products = getProductsByCategory("Aromatic Chemicals")
-
-  const handleQuoteRequest = (product: Product) => {
-    const subject = `Quote Request for ${product.name}`
-    const body = `Dear Sheetal Aromatics Team,
-
-I would like to request a quote for the following product:
-
-Product Name: ${product.name}
-Category: ${product.category}
-${product.casNumber ? `CAS Number: ${product.casNumber}` : ""}
-${product.molecularFormula ? `Molecular Formula: ${product.molecularFormula}` : ""}
-
-Please provide pricing and availability information.
-
-Thank you.`
-
-    window.location.href = `mailto:sheetalaromatics@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  }
 
   return (
     <div className="min-h-screen">
@@ -127,10 +113,7 @@ Thank you.`
                       )}
                     </div>
 
-                    <Button onClick={() => handleQuoteRequest(product)} className="w-full mt-4" size="sm">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Get Quote
-                    </Button>
+                    <QuoteButton productName={product.name} casNumber={product.casNumber} />
                   </div>
                 </CardContent>
               </Card>
