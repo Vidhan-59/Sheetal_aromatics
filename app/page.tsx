@@ -4,10 +4,11 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { ProductCategoryCard } from "@/components/product-category-card"
 import Link from "next/link"
 import { 
   Leaf, Award, Globe, Shield, Users, ArrowRight, CheckCircle, Sparkles, 
-  BarChart3, Droplet, RefreshCw, Heart, Wind, Zap
+  BarChart3, Droplet, RefreshCw, Heart, Wind, Zap, Beaker
 } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -176,23 +177,60 @@ export default function HomePage() {
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">Product Categories</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore our complete range of premium Ayurvedic and specialty products
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+              Comprehensive range of high-quality products across multiple categories
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-            {productCategories.map((product, index) => (
-              <Link key={index} href={product.href} className="group">
-                <div className="flex flex-col items-center justify-center p-4 md:p-6 rounded-lg border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 h-full">
-                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                    <product.icon className="h-6 w-6 md:h-7 md:w-7 text-primary" />
-                  </div>
-                  <h3 className="text-sm md:text-base font-semibold text-foreground text-center group-hover:text-primary transition-colors duration-300">{product.title}</h3>
-                </div>
-              </Link>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <ProductCategoryCard
+              title="Aromatic Chemicals"
+              description="Premium quality aromatic compounds for various industries"
+              href="/products/aromatic-chemicals"
+              icon={Beaker}
+              productCount={15}
+              imageQuery="Aromatic Chemicals"
+            />
+            <ProductCategoryCard
+              title="Essential Oils"
+              description="Pure and natural essential oils from finest sources"
+              href="/products/essential-oils"
+              icon={Droplet}
+              productCount={12}
+              imageQuery="Essential Oils"
+            />
+            <ProductCategoryCard
+              title="Ayurvedic Herbs"
+              description="Traditional herbs for wellness and pharmaceutical use"
+              href="/products/ayurvedic-herbs"
+              icon={Leaf}
+              productCount={16}
+              imageQuery="Ayurvedic Herbs"
+            />
+            <ProductCategoryCard
+              title="Ayurvedic Powders"
+              description="Finely processed herbal powders for various applications"
+              href="/products/ayurvedic-powders"
+              icon={Leaf}
+              productCount={13}
+              imageQuery="Ayurvedic Powders"
+            />
+            <ProductCategoryCard
+              title="Metals"
+              description="High purity metals for industrial applications"
+              href="/products/metals"
+              icon={Shield}
+              productCount={2}
+              imageQuery="Metals"
+            />
+            <ProductCategoryCard
+              title="Pharma Intermediates"
+              description="Quality intermediates for pharmaceutical manufacturing"
+              href="/products/pharma-intermediates"
+              icon={Beaker}
+              productCount={8}
+              imageQuery="Pharma Intermediates"
+            />
           </div>
         </div>
       </section>
