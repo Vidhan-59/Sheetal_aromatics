@@ -18,54 +18,50 @@ function ProductsContent() {
   const productCategories = [
     {
       title: "Aromatic Chemicals",
-      description:
-        "Premium quality aromatic compounds including Benzyl Acetate, Benzyl Alcohol, Phenyl Ethyl Isobutyrate, and more",
+      description: "Premium quality aromatic compounds for various industries",
       icon: Beaker,
       href: "/products/aromatic-chemicals",
-      productCount: "15+ Products",
+      productCount: 15,
       imagePath: "/images/aromatic-chemicals.jpg",
     },
     {
       title: "Essential Oils",
-      description:
-        "Pure and natural essential oils including Lemongrass, Cinnamon, Clove, Eucalyptus, Peppermint, and more",
+      description: "Pure and natural essential oils from finest sources",
       icon: Leaf,
       href: "/products/essential-oils",
-      productCount: "12+ Products",
+      productCount: 12,
       imagePath: "/images/essential-oils.jpg",
     },
     {
       title: "Ayurvedic Herbs",
-      description: "Traditional herbs including Ashwagandha, Amla, Harad, Baheda, Gokhru, Shatavari, and more",
+      description: "Traditional herbs for wellness and pharmaceutical use",
       icon: Leaf,
       href: "/products/ayurvedic-herbs",
-      productCount: "16+ Products",
+      productCount: 16,
       imagePath: "/images/ayurvedic-herbs.jpg",
     },
     {
       title: "Ayurvedic Powders",
-      description:
-        "Finely processed herbal powders including Ashwagandha Powder, Amla Powder, Triphala Powder, and more",
+      description: "Finely processed herbal powders for various applications",
       icon: Leaf,
       href: "/products/ayurvedic-powders",
-      productCount: "13+ Products",
+      productCount: 13,
       imagePath: "/images/ayurvedic-powders.jpg",
     },
     {
       title: "Metals",
-      description: "High purity metals including Selenium Metal Powder (99.9%) and Iodine (99.5%)",
+      description: "High purity metals for industrial applications",
       icon: Shield,
       href: "/products/metals",
-      productCount: "2+ Products",
+      productCount: 2,
       imagePath: "/images/metals.jpg",
     },
     {
       title: "Pharma Intermediates",
-      description:
-        "Quality intermediates including Diphenyl Acetonitrile, Diphenyl Acetic Acid, and specialized compounds",
+      description: "Quality intermediates for pharmaceutical manufacturing",
       icon: Beaker,
       href: "/products/pharma-intermediates",
-      productCount: "8+ Products",
+      productCount: 8,
       imagePath: "/images/pharma-intermediates.jpg",
     },
   ]
@@ -75,13 +71,16 @@ function ProductsContent() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-accent text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-serif">Our Products</h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Comprehensive range of premium quality aromatic chemicals, essential oils, ayurvedic products, and
-              pharmaceutical intermediates
+      <section className="bg-gradient-to-br from-primary via-primary/95 to-primary text-primary-foreground py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-foreground/5 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold leading-tight">Our Products</h1>
+            <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto font-light">
+              Comprehensive range of high-quality products across multiple categories
             </p>
           </div>
         </div>
@@ -108,10 +107,15 @@ function ProductsContent() {
           </section>
 
           {/* Product Categories */}
-          <section className="py-16">
+          <section className="py-20 md:py-28 bg-background">
             <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-12">Product Categories</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">Our Product Categories</h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Comprehensive range of high-quality products across multiple categories
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {productCategories.map((category, index) => (
                   <ProductCategoryCard
                     key={index}
@@ -119,7 +123,7 @@ function ProductsContent() {
                     description={category.description}
                     href={category.href}
                     icon={category.icon}
-                    productCount={parseInt(category.productCount)}
+                    productCount={category.productCount}
                     imageQuery={category.title}
                     imagePath={category.imagePath}
                   />
