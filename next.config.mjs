@@ -1,5 +1,15 @@
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+
+const projectRoot = path.dirname(fileURLToPath(import.meta.url))
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // This project sits several folders deep inside a OneDrive tree, so Next's
+  // workspace-root inference is ambiguous. Pinning it keeps serverless file
+  // tracing correct on Vercel.
+  outputFileTracingRoot: projectRoot,
+
   eslint: {
     // Lint is run separately; a lint warning should not block a deploy.
     ignoreDuringBuilds: true,
