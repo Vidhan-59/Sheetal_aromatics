@@ -3,77 +3,140 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Sheetal Aromatics — design system
+  ---------------------------------
+  Palette direction: deep forest green (chemistry + nature + stability),
+  warm off-white surfaces (paper, not screen-white), charcoal ink and a
+  restrained brass accent. The logo orange (#CC3300) is reserved for the
+  brand mark only so it never competes with interface accents.
+*/
+
 :root {
-  /* Updated to sky blue and white color scheme */
-  --background: #ffffff;
-  --foreground: #1e293b;
-  --card: #ffffff;
-  --card-foreground: #1e293b;
-  --popover: #ffffff;
-  --popover-foreground: #1e293b;
-  --primary: #0ea5e9;
-  --primary-foreground: #ffffff;
-  --secondary: #f8fafc;
-  --secondary-foreground: #475569;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #0284c7;
-  --accent-foreground: #ffffff;
-  --destructive: #dc2626;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #ffffff;
-  --ring: rgba(14, 165, 233, 0.3);
-  --chart-1: #bae6fd;
-  --chart-2: #dbeafe;
-  --chart-3: #e0f2fe;
-  --chart-4: #f0f9ff;
-  --chart-5: #f8fafc;
-  --radius: 0.5rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #1e293b;
-  --sidebar-primary: #0ea5e9;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #0284c7;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: rgba(14, 165, 233, 0.3);
+  /* --- Brand scale --------------------------------------------------- */
+  --forest-950: #06180F;
+  --forest-900: #0A241A;
+  --forest-800: #0E3324;
+  --forest-700: #12432F;
+  --forest-600: #1B5A3F;
+  --forest-500: #267453;
+  --forest-400: #4A9375;
+  --forest-300: #86B8A0;
+  --forest-200: #C2DCCF;
+  --forest-100: #E4EFE9;
+  --forest-50: #F2F8F4;
+
+  --brass-700: #8A6524;
+  --brass-600: #A67A2E;
+  --brass-500: #B98A3C;
+  --brass-400: #CBA467;
+  --brass-100: #F4EBDA;
+
+  --ink-900: #14181A;
+  --ink-800: #1F2528;
+  --ink-700: #333B3E;
+  --ink-600: #4C5559;
+  --ink-500: #6B7478;
+  --ink-400: #909899;
+
+  --paper: #FBFAF7;
+  --paper-2: #F4F2ED;
+  --line: #E4E2DB;
+
+  /* Logo-only colours (do not use for UI) */
+  --brand-logo-red: #CC3300;
+  --brand-logo-violet: #6C6CFF;
+
+  /* --- Semantic tokens ------------------------------------------------ */
+  --background: var(--paper);
+  --foreground: var(--ink-900);
+  --card: #FFFFFF;
+  --card-foreground: var(--ink-900);
+  --popover: #FFFFFF;
+  --popover-foreground: var(--ink-900);
+
+  --primary: var(--forest-700);
+  --primary-foreground: #FFFFFF;
+
+  --secondary: var(--forest-50);
+  --secondary-foreground: var(--forest-800);
+
+  --muted: var(--paper-2);
+  --muted-foreground: var(--ink-600);
+
+  --accent: var(--brass-600);
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #A32718;
+  --destructive-foreground: #FFFFFF;
+
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--forest-500);
+
+  --chart-1: var(--forest-700);
+  --chart-2: var(--forest-500);
+  --chart-3: var(--forest-300);
+  --chart-4: var(--brass-500);
+  --chart-5: var(--ink-500);
+
+  --radius: 0.375rem;
+
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: var(--ink-900);
+  --sidebar-primary: var(--forest-700);
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: var(--forest-50);
+  --sidebar-accent-foreground: var(--forest-800);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--forest-500);
 }
 
 .dark {
-  /* Enhanced dark mode with sky blue accents */
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f8fafc;
-  --popover: #1e293b;
-  --popover-foreground: #f8fafc;
-  --primary: #38bdf8;
-  --primary-foreground: #0f172a;
-  --secondary: #334155;
-  --secondary-foreground: #f8fafc;
-  --muted: #334155;
-  --muted-foreground: #94a3b8;
-  --accent: #0ea5e9;
-  --accent-foreground: #f8fafc;
-  --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
-  --border: #334155;
-  --input: #1e293b;
-  --ring: rgba(56, 189, 248, 0.3);
-  --chart-1: #0c4a6e;
-  --chart-2: #1e40af;
-  --chart-3: #0369a1;
-  --chart-4: #0284c7;
-  --chart-5: #0ea5e9;
-  --sidebar: #1e293b;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #38bdf8;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #0ea5e9;
-  --sidebar-accent-foreground: #f8fafc;
-  --sidebar-border: #334155;
-  --sidebar-ring: rgba(56, 189, 248, 0.3);
+  --background: #0B0F0D;
+  --foreground: #ECEFEC;
+  --card: #121816;
+  --card-foreground: #ECEFEC;
+  --popover: #121816;
+  --popover-foreground: #ECEFEC;
+
+  --primary: #63B08C;
+  --primary-foreground: #06180F;
+
+  --secondary: #16211C;
+  --secondary-foreground: #D5E3DB;
+
+  --muted: #16201C;
+  --muted-foreground: #9AA8A1;
+
+  --accent: var(--brass-400);
+  --accent-foreground: #1A1305;
+
+  --destructive: #E06A5A;
+  --destructive-foreground: #1A0A07;
+
+  --border: #23302A;
+  --input: #23302A;
+  --ring: #63B08C;
+
+  --chart-1: #63B08C;
+  --chart-2: #4A9375;
+  --chart-3: #86B8A0;
+  --chart-4: var(--brass-400);
+  --chart-5: #9AA8A1;
+
+  --paper: #0B0F0D;
+  --paper-2: #121816;
+  --line: #23302A;
+
+  --sidebar: #121816;
+  --sidebar-foreground: #ECEFEC;
+  --sidebar-primary: #63B08C;
+  --sidebar-primary-foreground: #06180F;
+  --sidebar-accent: #16211C;
+  --sidebar-accent-foreground: #D5E3DB;
+  --sidebar-border: #23302A;
+  --sidebar-ring: #63B08C;
 }
 
 @theme inline {
@@ -101,10 +164,37 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-forest-950: var(--forest-950);
+  --color-forest-900: var(--forest-900);
+  --color-forest-800: var(--forest-800);
+  --color-forest-700: var(--forest-700);
+  --color-forest-600: var(--forest-600);
+  --color-forest-500: var(--forest-500);
+  --color-forest-400: var(--forest-400);
+  --color-forest-300: var(--forest-300);
+  --color-forest-200: var(--forest-200);
+  --color-forest-100: var(--forest-100);
+  --color-forest-50: var(--forest-50);
+  --color-brass-700: var(--brass-700);
+  --color-brass-600: var(--brass-600);
+  --color-brass-500: var(--brass-500);
+  --color-brass-400: var(--brass-400);
+  --color-brass-100: var(--brass-100);
+  --color-ink-900: var(--ink-900);
+  --color-ink-800: var(--ink-800);
+  --color-ink-700: var(--ink-700);
+  --color-ink-600: var(--ink-600);
+  --color-ink-500: var(--ink-500);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-line: var(--line);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -113,162 +203,134 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  /* Updated font variables to use new Work Sans and Open Sans fonts */
-  --font-sans: var(--font-open-sans);
-  --font-serif: var(--font-work-sans);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-jakarta);
+  --font-serif: var(--font-jakarta);
+  /* Wordmark only — closest available match to the original Arial Black Italic artwork */
+  --font-logo: var(--font-archivo);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: var(--forest-200);
+    color: var(--forest-900);
   }
 }
 
-/* Updated hero gradient to use sky blue theme */
-.hero-gradient {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+@layer components {
+  /* Editorial eyebrow label used above section headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent;
+  }
+
+  /* Thin rule used to separate editorial blocks */
+  .hairline {
+    @apply border-t border-border;
+  }
+
+  /* Subtle blueprint grid used behind dark hero panels */
+  .grid-texture {
+    background-image: linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .card-quiet {
+    @apply rounded-lg border border-border bg-card;
+  }
+
+  /* Product / category tiles: restrained lift, no scale-jumping */
+  .tile {
+    @apply relative rounded-lg border border-border bg-card transition-[border-color,box-shadow,transform] duration-200 ease-out;
+  }
+
+  .tile:hover {
+    @apply border-forest-300 shadow-[0_10px_30px_-18px_rgb(10_36_26_/_0.45)];
+    transform: translateY(-2px);
+  }
+
+  .link-underline {
+    @apply relative inline-flex items-center gap-1.5 font-medium text-primary;
+  }
+
+  .link-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-0 h-px w-0 bg-current transition-[width] duration-200 ease-out;
+  }
+
+  .link-underline:hover::after {
+    @apply w-full;
+  }
 }
 
-.dark .hero-gradient {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-}
+@layer utilities {
+  /*
+    Scroll reveal. Hidden only once the inline bootstrap script has added the
+    `js` class to <html>, so content stays visible without JavaScript and for
+    crawlers that do not execute it.
+  */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
 
-/* Added smooth transitions and enhanced user interactions */
-.smooth-transition {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.1), 0 8px 10px -6px rgba(14, 165, 233, 0.1);
-}
-
-.dark .hover-lift:hover {
-  box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.2), 0 8px 10px -6px rgba(56, 189, 248, 0.1);
-}
-
-/* Enhanced button animations */
-.btn-primary {
-  @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 ease-out;
-  transform: translateZ(0);
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-}
-
-.dark .btn-primary:hover {
-  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
-}
-
-/* Smooth card animations */
-.card-interactive {
-  @apply transition-all duration-200 ease-out;
-  border: 1px solid hsl(var(--border));
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.card-interactive:hover {
-  border-color: hsl(var(--primary));
-}
-
-/* Enhanced search bar styling */
-.search-enhanced {
-  @apply transition-all duration-200 ease-out;
-  box-shadow: 0 1px 3px rgba(14, 165, 233, 0.1);
-}
-
-.search-enhanced:focus-within {
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), 0 1px 3px rgba(14, 165, 233, 0.2);
-  transform: translateY(-1px);
-}
-
-.dark .search-enhanced:focus-within {
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), 0 1px 3px rgba(56, 189, 248, 0.3);
-}
-
-/* Loading animations */
-.loading-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
+  .js .reveal.is-visible {
     opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
+    transform: none;
   }
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Enhanced focus states for accessibility */
-.focus-enhanced:focus-visible {
-  outline: 2px solid hsl(var(--primary));
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* Product grid enhancements */
-.product-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-
-@media (max-width: 640px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-}
-
-/* Optimized animations for mobile */
 @media (prefers-reduced-motion: reduce) {
-  .hover-lift,
-  .fade-in,
-  .btn-primary,
-  .card-interactive,
-  .search-enhanced {
-    transition: none;
-    animation: none;
-  }
-
   html {
     scroll-behavior: auto;
   }
-}
 
-/* Added performance optimizations */
-.performance-optimized {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-.fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  to {
+
+  .js .reveal {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }

@@ -1,11 +1,13 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "sheetal-aromatics-website",
+  "version": "1.0.0",
   "private": true,
+  "description": "B2B product discovery and quotation website for Sheetal Aromatics, Ahmedabad.",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "start": "next start"
   },
   "dependencies": {
@@ -64,6 +66,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.9",
     "@types/node": "^22",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8.5",

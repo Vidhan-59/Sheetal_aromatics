@@ -1,118 +1,94 @@
 import type React from "react"
-import type { Metadata } from "next"
-import { Work_Sans, Open_Sans } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Archivo, Inter, Plus_Jakarta_Sans } from "next/font/google"
+
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
-import { generateOrganizationStructuredData } from "@/components/seo-metadata"
+import { SiteHeader, MobileQuoteBar } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
+import { JsonLd } from "@/components/json-ld"
+import { BASE_URL, organizationSchema, websiteSchema } from "@/lib/seo"
+import { siteConfig } from "@/lib/site-config"
 
-const workSans = Work_Sans({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-work-sans",
+  variable: "--font-inter",
 })
 
-const openSans = Open_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-open-sans",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-jakarta",
+})
+
+/** Wordmark only — the nearest webfont match to the original logo lettering. */
+const archivo = Archivo({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["900"],
+  style: ["italic"],
+  variable: "--font-archivo",
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: {
-    default: "Sheetal Aromatics - Leaders in Aromatic Chemicals & Essential Oils Since 2005",
+    default: "Sheetal Aromatics | Chemical & Natural Product Supplier and Exporter, India",
     template: "%s | Sheetal Aromatics",
   },
-  description:
-    "Trusted supplier of aromatic chemicals, essential oils, ayurvedic herbs, and pharma intermediates. Export quality products since 2005. Professional chemical solutions for global markets with 20+ years experience.",
-  keywords: [
-    "aromatic chemicals",
-    "essential oils",
-    "ayurvedic herbs",
-    "pharma intermediates",
-    "export quality",
-    "Sheetal Aromatics",
-    "chemical suppliers",
-    "B2B chemicals",
-    "pharmaceutical ingredients",
-    "benzyl acetate",
-    "benzyl alcohol",
-    "lemongrass oil",
-    "eucalyptus oil",
-    "ashwagandha",
-    "turmeric powder",
-    "selenium metal",
-    "citric acid",
-    "menthol crystals",
-    "chemical manufacturer India",
-    "export chemicals",
-    "pharmaceutical raw materials",
-  ].join(", "),
-  authors: [{ name: "Sheetal Aromatics", url: "https://sheetalaromatics.com" }],
-  creator: "Sheetal Aromatics",
-  publisher: "Sheetal Aromatics",
-  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  openGraph: {
-    title: "Sheetal Aromatics - Premium Chemical & Herbal Products Since 2005",
-    description:
-      "Leading supplier of aromatic chemicals and essential oils since 2005. Quality assured products for global export with 20+ years expertise.",
-    type: "website",
-    locale: "en_US",
-    url: "https://sheetalaromatics.com",
-    siteName: "Sheetal Aromatics",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Sheetal Aromatics - Chemical and Herbal Products",
-      },
-    ],
+  description: siteConfig.shortDescription,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: BASE_URL }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "Chemicals",
+  formatDetection: { telephone: true, address: false, email: true },
+  robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  alternates: { canonical: BASE_URL },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.png" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sheetal Aromatics - Premium Chemical & Herbal Products",
-    description:
-      "Leading supplier of aromatic chemicals and essential oils since 2005. Quality assured products for global export.",
-    images: ["/og-image.jpg"],
-  },
-  verification: {
-    google: "your-google-verification-code",
-  },
-  alternates: {
-    canonical: "https://sheetalaromatics.com",
-  },
-    generator: 'v0.app'
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  const organizationData = generateOrganizationStructuredData()
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#12432F" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B0F0D" },
+  ],
+}
 
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${workSans.variable} ${openSans.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${jakarta.variable} ${archivo.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationData),
-          }}
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#4b5563" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        {/* Marks the document as JS-capable so scroll-reveal can hide content
+            safely. Without JS the class never lands and everything stays visible. */}
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js')` }} />
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
       </head>
-      <body className="font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          {children}
-          <Toaster />
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
+          <a
+            href="#main"
+            className="sr-only z-[100] focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+          >
+            Skip to content
+          </a>
+          <SiteHeader />
+          <main id="main" className="pb-16 lg:pb-0">
+            {children}
+          </main>
+          <SiteFooter />
+          <MobileQuoteBar />
         </ThemeProvider>
       </body>
     </html>

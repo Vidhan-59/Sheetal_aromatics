@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 356 252" role="img" aria-label="Sheetal Aromatics — Manufacturer of Aromatic &amp; Organic Chemicals">
+  <title>Sheetal Aromatics</title>
+  <desc>Sheetal Aromatics — Manufacturer of Aromatic &amp; Organic Chemicals</desc>
+  <g fill="#6C6CFF">
+    <polygon points="285.5,71 268.25,100.88 233.75,100.88 216.5,71 233.75,41.12 268.25,41.12"/>
+    <polygon points="340.5,115 322.75,145.74 287.25,145.74 269.5,115 287.25,84.26 322.75,84.26"/>
+  </g>
+  <line x1="289" y1="57" x2="289" y2="80" stroke="#CCCCCC" stroke-width="1.6" stroke-linecap="round"/>
+  <g fill="#CC3300" font-family="Archivo, 'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="900" font-style="italic" font-size="50" letter-spacing="0.5">
+    <text x="24" y="140">SHEETAL</text>
+    <text x="40" y="192">AROMATICS</text>
+  </g>
+  <g fill="#000000" font-family="'Source Serif 4', 'Times New Roman', Times, Georgia, serif" font-size="24">
+    <text x="32" y="222">Manufacturer of Aromatic</text>
+    <text x="32" y="248">&amp; Organic Chemicals</text>
+  </g>
+</svg>

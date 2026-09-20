@@ -1,61 +1,41 @@
 import type { MetadataRoute } from "next"
-import { productsDatabase } from "@/lib/products-data"
+import { BASE_URL } from "@/lib/seo"
+import { productCategories, productsDatabase } from "@/lib/products-data"
 
+/**
+ * Every URL here is a real, indexable page. Filter permutations and the API
+ * route are deliberately excluded — see robots.ts.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://sheetalaromatics.com"
+  const now = new Date()
 
-  // Static pages
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/products`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: BASE_URL, changeFrequency: "monthly", priority: 1 },
+    { url: `${BASE_URL}/products`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE_URL}/about`, changeFrequency: "yearly", priority: 0.7 },
+    { url: `${BASE_URL}/export`, changeFrequency: "yearly", priority: 0.8 },
+    { url: `${BASE_URL}/request-a-quote`, changeFrequency: "yearly", priority: 0.8 },
+    { url: `${BASE_URL}/contact`, changeFrequency: "yearly", priority: 0.7 },
+    { url: `${BASE_URL}/faq`, changeFrequency: "yearly", priority: 0.6 },
+    { url: `${BASE_URL}/privacy-policy`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${BASE_URL}/terms-and-conditions`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${BASE_URL}/cookie-policy`, changeFrequency: "yearly", priority: 0.2 },
   ]
 
-  // Product category pages
-  const categories = [
-    "aromatic-chemicals",
-    "essential-oils",
-    "ayurvedic-herbs",
-    "ayurvedic-powders",
-    "metals",
-    "pharma-intermediates",
-  ]
+  const categoryPages: MetadataRoute.Sitemap = productCategories.map((category) => ({
+    url: `${BASE_URL}/products/${category.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }))
 
-  const categoryPages = categories.map((category) => ({
-    url: `${baseUrl}/products/${category}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
+  const productPages: MetadataRoute.Sitemap = productsDatabase.map((product) => ({
+    url: `${BASE_URL}/products/${product.category}/${product.slug}`,
+    changeFrequency: "monthly",
     priority: 0.7,
   }))
 
-  // Individual product pages (if you have them)
-  const productPages = productsDatabase.map((product) => ({
-    url: `${baseUrl}/products/${product.category.toLowerCase().replace(/\s+/g, "-")}/${product.id}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
+  return [...staticPages, ...categoryPages, ...productPages].map((entry) => ({
+    ...entry,
+    lastModified: now,
   }))
-
-  return [...staticPages, ...categoryPages, ...productPages]
 }

@@ -1,181 +1,183 @@
-# Sheetal Aromatics Website
+# Sheetal Aromatics — website
 
-A modern, responsive website for Sheetal Aromatics - a leading supplier of premium chemicals, essential oils, and herbal products with 20+ years of export expertise.
+B2B product discovery and quotation site for Sheetal Aromatics, a partnership
+firm in Ahmedabad, Gujarat supplying aromatic chemicals, essential oils,
+Ayurvedic products, metals and pharma intermediates to domestic and export
+customers since 2005.
 
-## Features
+Production domain: **https://sheetalaromatics.com**
 
-- 🎨 Clean, light UI design with dark/light theme support
-- 🔍 Advanced product search with chemical database
-- 📧 Quote request system with email notifications
-- 📱 Fully responsive design
-- ⚡ Performance optimized with fast routing
-- 🔍 SEO optimized with structured data
-- 🌐 Product categories with detailed specifications
+---
 
-## Tech Stack
+## Running it
 
-- **Framework**: Next.js 14 with App Router
-- **Styling**: Tailwind CSS v4 with custom design tokens
-- **UI Components**: shadcn/ui
-- **Typography**: Work Sans & Open Sans
-- **Email**: Resend API integration
-- **Performance**: Optimized images, lazy loading, and caching
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-\`\`\`bash
-git clone <repository-url>
-cd sheetal-aromatics
-\`\`\`
-
-2. Install dependencies
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+npm run dev          # http://localhost:3000
+```
 
-3. Set up environment variables (see Email Configuration below)
+```bash
+npm run build
+npm start            # serves the production build on port 3000
+```
 
-4. Run the development server
-\`\`\`bash
-npm run dev
-\`\`\`
+Requires Node 18.18+ (Node 20 LTS recommended).
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+---
 
-## Email Configuration
+## Enquiry email
 
-The website includes a quote request system that sends emails to `sheetalaromatics@gmail.com`. Follow these steps to configure email functionality:
+The quotation and contact forms POST to `/api/enquiry`. Copy `.env.example` to
+`.env.local` and configure either SMTP or Gmail credentials — see the comments
+in that file.
 
-### Option 1: Resend (Recommended)
+If no transport is configured the endpoint returns a clear error asking the
+visitor to email the company directly and logs the enquiry server-side. It
+never reports success for a message it did not send.
 
-1. Sign up for a free account at [resend.com](https://resend.com)
-2. Get your API key from the Resend dashboard
-3. Add the API key to your environment variables:
+The endpoint validates input with Zod, throttles to 5 submissions per IP per
+10 minutes, carries a honeypot field plus a minimum fill time, escapes all
+values rendered into the HTML email, and strips newlines from anything used in
+a mail header.
 
-\`\`\`bash
-# In your .env.local file
-RESEND_API_KEY=your_resend_api_key_here
-\`\`\`
+---
 
-4. Verify your domain in Resend dashboard (for production)
+## Adding or editing products
 
-### Option 2: Alternative Email Services
+Everything is driven by **`lib/products-data.ts`**. Append one object to
+`productsDatabase` and the product automatically gets:
 
-The email API route (`app/api/send-quote/route.ts`) can be easily modified to use other services:
+- its own page at `/products/<category>/<slug>`
+- a sitemap entry, canonical URL, metadata and a social share card
+- Product structured data
+- inclusion in search, category filters and related-product lists
 
-#### Gmail SMTP
-\`\`\`typescript
-// Install nodemailer: npm install nodemailer @types/nodemailer
-import nodemailer from 'nodemailer';
+```ts
+{
+  slug: "example-product",
+  name: "Example Product",
+  category: "aromatic-chemicals",
+  summary: "One line used on cards and in search results.",
+  casNumber: "000-00-0",          // omit if not verified
+  molecularFormula: "C9H10O2",    // omit if not verified
+  physicalForm: "Liquid",
+  applications: ["Perfumery", "Flavours"],
+  keywords: ["example", "ester"],
+}
+```
 
-const transporter = nodemailer.createTransporter({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD, // Use App Password, not regular password
-  },
-});
-\`\`\`
+Only include a field when the value is verified. Any field left out simply does
+not render — the specification table shows "confirmed on enquiry" instead.
 
-#### SendGrid
-\`\`\`typescript
-// Install @sendgrid/mail: npm install @sendgrid/mail
-import sgMail from '@sendgrid/mail';
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-\`\`\`
+Company facts (address, phone, email, GST, IEC, partners, hours) live in
+**`lib/site-config.ts`** and are used everywhere, including structured data.
+Change them in one place.
 
-### Environment Variables
+---
 
-Create a `.env.local` file in the root directory:
+## Content accuracy rules
 
-\`\`\`bash
-# Email Configuration
-RESEND_API_KEY=your_resend_api_key_here
+The site deliberately does **not** state:
 
-# Optional: Custom email settings
-CONTACT_EMAIL=sheetalaromatics@gmail.com
-FROM_EMAIL=noreply@yourdomain.com
-\`\`\`
+- price, MOQ, stock or lead time
+- certifications (ISO / GMP / HACCP / REACH / FDA or any other)
+- production capacity, facilities, employee or customer counts
+- countries served, customer names, testimonials or ratings
 
-### Testing Email Functionality
+Where a buyer would expect one of these, the UI says the information is
+confirmed on enquiry. `casNumber`, `molecularFormula` and `molecularWeight` are
+public chemical identifiers, not claims about supplied material. Product
+`technicalNote` text is general published context about a substance and is
+labelled as such on the page.
 
-1. Start the development server
-2. Navigate to the Contact page
-3. Fill out the quote form
-4. Check your email inbox for the quote request
+If the company later obtains certifications or wants to publish export
+markets, add them to `lib/site-config.ts` and surface them — the layouts have
+room for it.
 
-## Performance Optimizations
+---
 
-The website includes several performance optimizations:
+## Product imagery
 
-- **Image Optimization**: Lazy loading and optimized placeholder images
-- **Font Loading**: Preconnect and DNS prefetch for Google Fonts
-- **CSS Optimizations**: Minimal CSS with Tailwind CSS purging
-- **Component Optimization**: React.memo and performance-optimized classes
-- **Routing**: Fast client-side navigation with Next.js App Router
+Products are illustrated by `components/product-visual.tsx`, which draws an
+SVG from the product's own record: the physical form it is supplied in, its
+category, its characteristic material colour, and its molecular formula where
+one is held. Each product gets a stable, distinct illustration.
 
-## SEO Features
+This was chosen over stock photography deliberately — a generic laboratory
+photo attached to a specific chemical misrepresents it, and correct
+photographs of 69 different materials are not available. The illustrations are
+accurate, licence-free, roughly 2 kB each and differentiate the five
+categories at a glance.
 
-- Comprehensive meta tags and Open Graph data
-- Structured data (JSON-LD) for search engines
-- Automatic sitemap generation
-- Robots.txt configuration
-- Semantic HTML structure
-- Fast loading times for better search rankings
+To move to real photography later, add a `photo` field to `Product` and render
+it in place of `<ProductVisual />` in `components/product-card.tsx` and the
+product page. Nothing else needs to change.
+
+---
+
+## Brand assets
+
+| File | Use |
+| --- | --- |
+| `public/logo/sheetal-aromatics-logo.svg` | Full lockup, redrawn from the company artwork |
+| `public/logo/sheetal-aromatics-mark.svg` | Hexagon mark only |
+| `components/brand/logo.tsx` | In-app logo (mark as vector paths, wordmark in Archivo) |
+| `public/icon.svg`, `icon-192.png`, `icon-512.png`, `apple-icon.png` | Favicons and app icons |
+| `app/opengraph-image.tsx` | Site-wide social share card |
+| `app/products/[category]/[slug]/opengraph-image.tsx` | Per-product share card |
+
+Brand colours are fixed in the mark and must not follow the interface theme:
+wordmark `#CC3300`, hexagons `#6C6CFF`. Interface colours are tokens in
+`app/globals.css` (deep forest green, warm off-white, brass accent).
+
+---
+
+## Structure
+
+```
+app/
+  page.tsx                              Home
+  about/ export/ contact/ faq/          Company pages
+  request-a-quote/                      RFQ form
+  products/                             Catalogue overview + search
+  products/[category]/                  Category pages (static)
+  products/[category]/[slug]/           Product pages (static) + OG image
+  privacy-policy/ terms-and-conditions/ cookie-policy/
+  api/enquiry/route.ts                  Form handler
+  sitemap.ts robots.ts manifest.ts opengraph-image.tsx
+components/                             Site components (ui/ is shadcn)
+lib/
+  site-config.ts                        Company facts — single source of truth
+  products-data.ts                      Catalogue + search + SEO copy
+  faqs.ts                               FAQ content (also used for FAQ schema)
+  seo.ts                                Metadata helpers and JSON-LD
+```
+
+Stack: Next.js 15 (App Router), React 19, Tailwind CSS v4, shadcn/ui,
+TypeScript, Nodemailer.
+
+---
+
+## SEO
+
+- One `<h1>` per page, correct heading order
+- Unique title, description and canonical on every indexable page
+- `sitemap.xml` generated from the catalogue; `robots.txt` excludes `/api/`
+  and the parameterised `/products?…` filter URLs
+- JSON-LD: Organization, WebSite, BreadcrumbList, Product, FAQPage,
+  CollectionPage. `offers`, `sku`, `aggregateRating` and `review` are omitted
+  because that data does not exist
+- Open Graph and Twitter cards, with a generated per-product image
+- Permanent redirects in `next.config.mjs` preserve the old Ayurvedic herb and
+  powder URLs and three renamed product slugs
+
+After the first deploy: submit the sitemap in Google Search Console and add the
+verification token to `app/layout.tsx` under `metadata.verification`.
+
+---
 
 ## Deployment
 
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy automatically
-
-### Other Platforms
-
-The website can be deployed to any platform that supports Next.js:
-- Netlify
-- Railway
-- DigitalOcean App Platform
-- AWS Amplify
-
-## Project Structure
-
-\`\`\`
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── products/          # Product pages
-│   └── contact/           # Contact page
-├── components/            # Reusable components
-│   ├── ui/               # shadcn/ui components
-│   └── ...               # Custom components
-├── lib/                  # Utility functions and data
-└── public/               # Static assets
-\`\`\`
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## Support
-
-For technical support or questions about the website, contact:
-- **Email**: sheetalaromatics@gmail.com
-- **Phone**: +91 9825036382, +91 9825001540
-
-## License
-
-This project is proprietary to Sheetal Aromatics. All rights reserved.
+Any Node host that runs Next.js works. On Vercel: import the repository, add
+the environment variables from `.env.example`, deploy. `/api/enquiry` needs a
+Node runtime — a purely static export will not send email.

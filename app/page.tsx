@@ -1,255 +1,349 @@
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import { Breadcrumbs } from "@/components/breadcrumbs"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import type { Metadata } from "next"
 import Link from "next/link"
-import { Beaker, Leaf, Award, Globe, Shield, Users, ArrowRight, CheckCircle, FlaskConical } from "lucide-react"
+import { ArrowRight, FileText, Globe2, PackageSearch, ShieldCheck } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Container, Eyebrow, Section, SectionHeading } from "@/components/layout-primitives"
+import { Reveal } from "@/components/reveal"
+import { ProductVisual } from "@/components/product-visual"
+import { CtaBand } from "@/components/cta-band"
+import { FaqList } from "@/components/faq-list"
+import { JsonLd } from "@/components/json-ld"
+import { pageMetadata, faqSchema } from "@/lib/seo"
+import { siteConfig, yearsOfExperience } from "@/lib/site-config"
+import { featuredFaqs } from "@/lib/faqs"
+import {
+  countByCategory,
+  getProductBySlug,
+  productCategories,
+  productsDatabase,
+} from "@/lib/products-data"
+
+export const metadata: Metadata = pageMetadata({
+  title: "Sheetal Aromatics | Chemical & Natural Product Supplier and Exporter, India",
+  description:
+    "Aromatic chemicals, essential oils, Ayurvedic products, metals and pharma intermediates for B2B and export buyers. Ahmedabad, India — established 2005.",
+  path: "/",
+  keywords: [
+    "chemical supplier India",
+    "chemical exporter India",
+    "aromatic chemicals supplier",
+    "essential oil supplier India",
+    "Ayurvedic products supplier India",
+    "pharma intermediates supplier",
+    "chemical supplier Ahmedabad",
+    "Sheetal Aromatics",
+  ],
+})
+
+/* Representative products used for the hero mosaic — one per category so the
+   range is visible at a glance rather than described. */
+const heroSamples = [
+  "benzyl-acetate",
+  "lemongrass-oil",
+  "ashwagandha",
+  "sodium-metal",
+  "2-mercapto-5-methoxybenzimidazole",
+  "menthol",
+]
+  .map((slug) => getProductBySlug(slug))
+  .filter(Boolean)
+
+const capabilities = [
+  {
+    icon: PackageSearch,
+    title: "Specification-led sourcing",
+    body: "Enquiries are handled against the grade, assay and packing you actually work to — not a fixed catalogue item that nearly fits.",
+  },
+  {
+    icon: Globe2,
+    title: "Export-oriented supply",
+    body: `We hold an Importer Exporter Code (${siteConfig.registrations[1].value}) and handle enquiries from buyers outside India alongside domestic supply.`,
+  },
+  {
+    icon: FileText,
+    title: "Documentation on request",
+    body: "Product specifications and the documentation your side requires are confirmed against each enquiry before an order is placed.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Consistent, direct contact",
+    body: "The firm is run by its partners. Enquiries are answered by the people who source the material, not routed through a queue.",
+  },
+]
 
 export default function HomePage() {
-  const productCategories = [
-    {
-      title: "Aromatic Chemicals",
-      description: "Premium quality aromatic compounds for various industries",
-      icon: Beaker,
-      href: "/products/aromatic-chemicals",
-      productCount: 15,
-    },
-    {
-      title: "Essential Oils",
-      description: "Pure and natural essential oils from finest sources",
-      icon: Leaf,
-      href: "/products/essential-oils",
-      productCount: 12,
-    },
-    {
-      title: "Ayurvedic Herbs",
-      description: "Traditional herbs for wellness and pharmaceutical use",
-      icon: Leaf,
-      href: "/products/ayurvedic-herbs",
-      productCount: 16,
-    },
-    {
-      title: "Ayurvedic Powders",
-      description: "Finely processed herbal powders for various applications",
-      icon: Leaf,
-      href: "/products/ayurvedic-powders",
-      productCount: 13,
-    },
-    {
-      title: "Metals",
-      description: "High purity metals for industrial applications",
-      icon: Shield,
-      href: "/products/metals",
-      productCount: 2,
-    },
-    {
-      title: "Pharma Intermediates",
-      description: "Quality intermediates for pharmaceutical manufacturing",
-      icon: FlaskConical,
-      href: "/products/pharma-intermediates",
-      productCount: 8,
-    },
+  const stats = [
+    { value: `${yearsOfExperience}+`, label: "Years in the industry" },
+    { value: String(productCategories.length), label: "Product categories" },
+    { value: `${productsDatabase.length}`, label: "Products listed" },
+    { value: String(siteConfig.establishedYear), label: "Established" },
   ]
-
-  const whyChooseUs = [
-    {
-      icon: Award,
-      title: "20+ Years Experience",
-      description: "Established in 2005, we bring decades of expertise in chemical supply",
-    },
-    {
-      icon: Globe,
-      title: "Export Excellence",
-      description: "Strong presence in both export and local markets with global reach",
-    },
-    {
-      icon: Shield,
-      title: "Quality Assurance",
-      description: "Rigorous quality control and testing for all our products",
-    },
-    {
-      icon: Users,
-      title: "Customer Satisfaction",
-      description: "Trusted by clients worldwide for reliability and exceptional service",
-    },
-  ]
-
-  const certifications = ["Export Documentation", "Pharmaceutical Grade", "Quality Assurance", "Global Standards"]
 
   return (
-    <div className="min-h-screen fade-in">
-      <Header />
-      <Breadcrumbs />
+    <>
+      <JsonLd data={faqSchema(featuredFaqs)} />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-background to-muted py-20 relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 font-serif leading-tight text-foreground">
-              Leaders in Aromatic Chemicals, Essential Oils & Ayurvedic Products
+      {/* ------------------------------- Hero ------------------------------ */}
+      <section className="relative overflow-hidden bg-forest-900 text-white">
+        <div aria-hidden="true" className="grid-texture absolute inset-0 opacity-70" />
+        <div
+          aria-hidden="true"
+          className="absolute -right-40 top-1/2 h-[42rem] w-[42rem] -translate-y-1/2 rounded-full bg-forest-700/40 blur-3xl"
+        />
+
+        <Container className="relative grid gap-14 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-28">
+          <div>
+            <Eyebrow className="text-brass-400">
+              Established {siteConfig.establishedYear} · Ahmedabad, India
+            </Eyebrow>
+
+            <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">
+              Chemical, aromatic and natural product supply for global markets
             </h1>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Award className="h-6 w-6 text-primary" />
-              <p className="text-xl md:text-2xl text-muted-foreground font-medium">Since 2005</p>
-            </div>
-            <p className="text-lg md:text-xl mb-8 text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Trusted in both Export and Local Markets. Your reliable partner for premium quality chemicals and natural
-              products with 20+ years of excellence.
+
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/85">
+              {yearsOfExperience}+ years supplying aromatic chemicals, essential oils, Ayurvedic products, metals and
+              pharma intermediates to manufacturers, distributors, importers and procurement teams.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="shadow-lg performance-optimized" asChild>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button asChild size="lg" variant="inverted">
+                <Link href="/request-a-quote">Request a Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline-inverted">
                 <Link href="/products">
-                  View Products <ArrowRight className="ml-2 h-5 w-5" />
+                  Explore Products
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="shadow-lg performance-optimized bg-transparent" asChild>
-                <Link href="/contact">Get Quote</Link>
+            </div>
+
+            <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/15 pt-8 sm:grid-cols-4">
+              {stats.map((stat) => (
+                <div key={stat.label}>
+                  <dt className="sr-only">{stat.label}</dt>
+                  <dd>
+                    <span className="block font-display text-3xl font-semibold tabular-nums text-white">
+                      {stat.value}
+                    </span>
+                    <span className="mt-1 block text-xs leading-snug text-forest-100/65">{stat.label}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* Product mosaic */}
+          <div className="relative hidden lg:block">
+            <div className="grid grid-cols-3 gap-3">
+              {heroSamples.map((product, i) => (
+                <div
+                  key={product!.slug}
+                  className={`overflow-hidden rounded-lg border border-white/15 shadow-2xl ${
+                    i % 2 === 0 ? "translate-y-5" : ""
+                  }`}
+                >
+                  <div className="aspect-square">
+                    <ProductVisual product={product!} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* --------------------------- Trust strip --------------------------- */}
+      <div className="border-b border-border bg-muted">
+        <Container>
+          <ul className="grid divide-y divide-border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+            {[
+              { k: "Constitution", v: `${siteConfig.legalForm}, Gujarat` },
+              { k: "GST", v: siteConfig.registrations[0].value },
+              { k: "IEC", v: siteConfig.registrations[1].value },
+              { k: "Enquiries", v: "Export & domestic, B2B only" },
+            ].map((item) => (
+              <li key={item.k} className="px-0 py-4 lg:px-6 lg:first:pl-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">{item.k}</p>
+                <p className="mt-1 font-medium">{item.v}</p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </div>
+
+      {/* ---------------------------- Categories --------------------------- */}
+      <Section tone="paper">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Product range"
+              title="Five product groups, one point of contact"
+              description="Browse the catalogue by category, or search for a product name or CAS number. Every product page carries the identifiers we hold and a direct route to an enquiry."
+            />
+            <Link href="/products" className="link-underline pb-2">
+              View all products
+              <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {productCategories.map((category, i) => {
+              const sample = productsDatabase.find((p) => p.category === category.slug)
+              return (
+                <Reveal as="li" key={category.slug} delay={i * 60} className="h-full">
+                  <article className="tile group flex h-full flex-col overflow-hidden">
+                    <div className="aspect-[16/9] overflow-hidden border-b border-border">
+                      {sample && (
+                        <ProductVisual
+                          product={sample}
+                          className="transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                        />
+                      )}
+                    </div>
+                    <div className="flex flex-1 flex-col p-6">
+                      <div className="flex items-baseline justify-between gap-4">
+                        <h3 className="text-lg font-semibold">
+                          <Link href={`/products/${category.slug}`} className="after:absolute after:inset-0 hover:text-primary">
+                            {category.name}
+                          </Link>
+                        </h3>
+                        <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                          {countByCategory(category.slug)} products
+                        </span>
+                      </div>
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                        {category.description}
+                      </p>
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                        View products
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                        />
+                      </span>
+                    </div>
+                  </article>
+                </Reveal>
+              )
+            })}
+
+            <Reveal as="li" delay={productCategories.length * 60} className="h-full">
+              <div className="flex h-full flex-col justify-between rounded-lg border border-dashed border-forest-300 bg-forest-50 p-6 dark:bg-secondary">
+                <div>
+                  <h3 className="text-lg font-semibold">Looking for something not listed?</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    Our catalogue reflects what we supply most often. If you need a related product or a different
+                    grade, send the specification and we will tell you what can be arranged.
+                  </p>
+                </div>
+                <Button asChild variant="outline" className="mt-6 self-start">
+                  <Link href="/request-a-quote">Send a specification</Link>
+                </Button>
+              </div>
+            </Reveal>
+          </ul>
+        </Container>
+      </Section>
+
+      {/* --------------------------- Capabilities -------------------------- */}
+      <Section tone="muted">
+        <Container>
+          <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <SectionHeading
+              eyebrow={`${yearsOfExperience}+ years of trusted product & export experience`}
+              title="How we work with buyers"
+              description={
+                <>
+                  <p>
+                    Sheetal Aromatics has been supplying chemical and natural products since{" "}
+                    {siteConfig.establishedYear}. Two decades in the same trade means we know the material, the
+                    paperwork and the questions a serious buyer needs answered before placing an order.
+                  </p>
+                  <p className="mt-4">
+                    We are a {siteConfig.legalForm.toLowerCase()} run by its partners, {" "}
+                    {siteConfig.partners.map((p) => p.name).join(" and ")}.
+                  </p>
+                </>
+              }
+            />
+
+            <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              {capabilities.map((item, i) => (
+                <Reveal as="li" key={item.title} delay={i * 70}>
+                  <item.icon aria-hidden="true" className="h-6 w-6 text-accent" />
+                  <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ------------------------------ Export ----------------------------- */}
+      <Section tone="paper">
+        <Container>
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <SectionHeading
+                eyebrow="Global supply & export"
+                title="Built around how international buyers actually procure"
+                description="Overseas enquiries need more than a price. They need the specification confirmed, the packing agreed, the paperwork lined up and someone who replies. That is the part we have spent two decades getting right."
+              />
+              <Button asChild variant="outline" className="mt-8">
+                <Link href="/export">
+                  How we handle export enquiries
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
               </Button>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Certifications Section */}
-      <section className="py-6 bg-muted/50 border-b border-border">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            {certifications.map((cert, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="font-medium text-foreground">{cert}</span>
-              </div>
-            ))}
+            <ol className="relative space-y-8 border-l border-border pl-8">
+              {[
+                ["Enquiry", "You send the product, quantity, specification and destination."],
+                ["Confirmation", "We confirm what can be supplied and against which specification."],
+                ["Quotation", "Pricing, packing and terms are quoted for your requirement."],
+                ["Documentation", "Paperwork is prepared for the agreed terms and destination."],
+                ["Despatch", "Shipment is coordinated and tracked through to delivery."],
+              ].map(([title, body], i) => (
+                <Reveal as="li" key={title} delay={i * 60} className="relative">
+                  <span
+                    aria-hidden="true"
+                    className="absolute -left-[2.3rem] top-1 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background text-[11px] font-semibold tabular-nums text-accent"
+                  >
+                    {i + 1}
+                  </span>
+                  <h3 className="text-base font-semibold">{title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                </Reveal>
+              ))}
+            </ol>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* About Us Section */}
-      <section className="py-16 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif text-foreground">About Sheetal Aromatics</h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Established in 2005, Sheetal Aromatics has grown to become a trusted global supplier of aromatic
-              chemicals, essential oils, and ayurvedic products. Under the leadership of Mr. Shailesh Shah and Mr.
-              Vidhan Shah, we have built a reputation for excellence in both export and domestic markets.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">20+</div>
-                <p className="text-muted-foreground font-medium">Years of Experience</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">500+</div>
-                <p className="text-muted-foreground font-medium">Products Available</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">50+</div>
-                <p className="text-muted-foreground font-medium">Countries Served</p>
-              </div>
+      {/* -------------------------------- FAQ ------------------------------ */}
+      <Section tone="muted" spacing="tight">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+            <SectionHeading eyebrow="Before you enquire" title="Questions buyers ask us first" />
+            <div>
+              <FaqList items={featuredFaqs} />
+              <Link href="/faq" className="link-underline mt-6 inline-flex">
+                All buyer FAQs
+                <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* Product Categories */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-foreground">Our Product Categories</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive range of high-quality products across multiple categories
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {productCategories.map((category, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <category.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {category.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">{category.productCount} products</p>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground mb-4 leading-relaxed">{category.description}</p>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors bg-transparent"
-                  >
-                    <Link href={category.href}>
-                      View Products <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-16 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-foreground">
-              Why Choose Sheetal Aromatics?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Your trusted partner for quality, reliability, and excellence
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {whyChooseUs.map((item, index) => (
-              <Card key={index} className="text-center hover:shadow-md transition-shadow performance-optimized">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <item.icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2 text-foreground">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif">Ready to Partner with Us?</h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Get in touch today for premium quality products and exceptional service
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild className="performance-optimized">
-              <Link href="/contact">Contact Us</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary performance-optimized bg-transparent"
-              asChild
-            >
-              <Link href="/products">Browse Products</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+      <CtaBand
+        title="Send us your specification"
+        description="Tell us the product, quantity, grade and destination. We will come back with availability and a quotation."
+      />
+    </>
   )
 }

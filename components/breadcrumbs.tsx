@@ -1,56 +1,55 @@
-"use client"
-
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { ChevronRight, Home } from "lucide-react"
+import { ChevronRight } from "lucide-react"
+import { Container } from "@/components/layout-primitives"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
+import { cn } from "@/lib/utils"
 
-export function Breadcrumbs() {
-  const pathname = usePathname()
-  const pathSegments = pathname.split("/").filter(Boolean)
+export interface Crumb {
+  name: string
+  href: string
+}
 
-  if (pathname === "/") return null
-
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    ...pathSegments.map((segment, index) => {
-      const href = "/" + pathSegments.slice(0, index + 1).join("/")
-      const label = segment
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
-
-      return { label, href }
-    }),
-  ]
+/**
+ * Breadcrumbs are passed explicitly rather than derived from the URL so the
+ * labels read like the pages they point at ("Ayurvedic Products", not
+ * "Ayurvedic-products") and so the emitted BreadcrumbList matches what is on
+ * screen.
+ */
+export function Breadcrumbs({ trail, className }: { trail: Crumb[]; className?: string }) {
+  const full: Crumb[] = [{ name: "Home", href: "/" }, ...trail]
 
   return (
-    <nav aria-label="Breadcrumb" className="bg-muted/30 py-3">
-      <div className="container mx-auto px-4">
-        <ol className="flex items-center space-x-2 text-sm">
-          {breadcrumbItems.map((item, index) => (
-            <li key={item.href} className="flex items-center">
-              {index > 0 && <ChevronRight className="h-4 w-4 text-muted-foreground mx-2" />}
-              {index === 0 ? (
-                <Link
-                  href={item.href}
-                  className="flex items-center text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Home className="h-4 w-4 mr-1" />
-                  {item.label}
-                </Link>
-              ) : index === breadcrumbItems.length - 1 ? (
-                <span className="text-foreground font-medium" aria-current="page">
-                  {item.label}
-                </span>
-              ) : (
-                <Link href={item.href} className="text-muted-foreground hover:text-foreground transition-colors">
-                  {item.label}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
-    </nav>
+    <>
+      <JsonLd data={breadcrumbSchema(full)} />
+      <nav aria-label="Breadcrumb" className={cn("border-b border-border bg-muted/60", className)}>
+        <Container>
+          <ol className="flex flex-wrap items-center gap-y-1 py-3 text-xs sm:text-sm">
+            {full.map((crumb, i) => {
+              const last = i === full.length - 1
+              return (
+                <li key={crumb.href} className="flex items-center">
+                  {i > 0 && (
+                    <ChevronRight aria-hidden="true" className="mx-1.5 h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
+                  )}
+                  {last ? (
+                    <span aria-current="page" className="font-medium text-foreground">
+                      {crumb.name}
+                    </span>
+                  ) : (
+                    <Link
+                      href={crumb.href}
+                      className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {crumb.name}
+                    </Link>
+                  )}
+                </li>
+              )
+            })}
+          </ol>
+        </Container>
+      </nav>
+    </>
   )
 }

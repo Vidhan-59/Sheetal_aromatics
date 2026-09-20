@@ -1,14 +1,18 @@
 import type { MetadataRoute } from "next"
+import { BASE_URL } from "@/lib/seo"
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://sheetalaromatics.com"
-
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/admin/"],
-    },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        // /products carries client-side filter state in the query string.
+        // Blocking the parameterised form keeps one canonical catalogue URL.
+        disallow: ["/api/", "/products?*"],
+      },
+    ],
+    sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   }
 }
