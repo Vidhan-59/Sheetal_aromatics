@@ -6,11 +6,11 @@ import { ArrowRight } from "lucide-react"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
 import { ProductExplorer } from "@/components/product-explorer"
-import { ProductVisual } from "@/components/product-visual"
+import { ProductImage } from "@/components/product-image"
 import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
-import { countByCategory, productCategories, productsDatabase } from "@/lib/products-data"
+import { categoryCover, countByCategory, productCategories, productsDatabase } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
   title: "Products | Chemicals, Oils, Herbs & Intermediates",
@@ -21,6 +21,7 @@ export const metadata: Metadata = pageMetadata({
     "essential oils supplier",
     "Ayurvedic products exporter",
     "pharma intermediates India",
+    "phase transfer catalysts India",
     "chemical product catalogue India",
   ],
 })
@@ -52,16 +53,17 @@ export default function ProductsPage() {
       <Section tone="muted" spacing="tight">
         <Container>
           <h2 className="sr-only">Product categories</h2>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="grid gap-4 grid-cols-2 sm:grid-cols-3 xl:grid-cols-6">
             {productCategories.map((category) => {
-              const sample = productsDatabase.find((p) => p.category === category.slug)
+              const sample = categoryCover(category.slug)
               return (
                 <li key={category.slug} className="h-full">
                   <article className="tile group flex h-full flex-col overflow-hidden">
                     <div className="aspect-[3/2] overflow-hidden border-b border-border">
                       {sample && (
-                        <ProductVisual
+                        <ProductImage
                           product={sample}
+                          sizes="(min-width: 1280px) 200px, (min-width: 640px) 33vw, 50vw"
                           className="transition-transform duration-500 ease-out group-hover:scale-[1.05]"
                         />
                       )}

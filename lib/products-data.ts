@@ -24,6 +24,7 @@ export type CategorySlug =
   | "ayurvedic-products"
   | "metals"
   | "pharma-intermediates"
+  | "phase-transfer-catalysts"
 
 export type VisualForm =
   | "liquid"
@@ -55,6 +56,8 @@ export interface ProductCategory {
   intro: string
   /** Optional sub-grouping shown as filter chips on the category page. */
   groups?: string[]
+  /** Slug of the product whose image represents the category on tiles. Defaults to the first product. */
+  cover?: string
   seo: { title: string; description: string }
 }
 
@@ -104,6 +107,7 @@ export interface Product {
 export const productCategories: ProductCategory[] = [
   {
     slug: "aromatic-chemicals",
+    cover: "menthol",
     name: "Aromatic Chemicals",
     tagline: "Esters, alcohols and specialty aroma ingredients",
     description:
@@ -118,6 +122,7 @@ export const productCategories: ProductCategory[] = [
   },
   {
     slug: "essential-oils",
+    cover: "clove-oil",
     name: "Essential Oils",
     tagline: "Steam-distilled oils and isolated aroma compounds",
     description:
@@ -132,6 +137,7 @@ export const productCategories: ProductCategory[] = [
   },
   {
     slug: "ayurvedic-products",
+    cover: "ashwagandha",
     name: "Ayurvedic Products",
     tagline: "Herbs, raw materials and milled powders",
     description:
@@ -147,6 +153,7 @@ export const productCategories: ProductCategory[] = [
   },
   {
     slug: "metals",
+    cover: "selenium-metal-powder",
     name: "Metals",
     tagline: "High-purity elements for industry and synthesis",
     description:
@@ -161,6 +168,7 @@ export const productCategories: ProductCategory[] = [
   },
   {
     slug: "pharma-intermediates",
+    cover: "2-mercapto-5-methoxybenzimidazole",
     name: "Pharma Intermediates",
     tagline: "Building blocks for pharmaceutical synthesis",
     description:
@@ -171,6 +179,21 @@ export const productCategories: ProductCategory[] = [
       title: "Pharma Intermediates Supplier, India",
       description:
         "2-Mercapto-5-methoxybenzimidazole, diphenyl acetonitrile, diphenyl acetic acid and related building blocks. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "phase-transfer-catalysts",
+    cover: "benzyl-triphenyl-phosphonium-chloride",
+    name: "Phase Transfer Catalysts",
+    tagline: "Quaternary ammonium and phosphonium salts",
+    description:
+      "Quaternary ammonium and phosphonium salts including TEBAC, benzyl tributyl ammonium chloride and triphenyl phosphonium chlorides for synthesis and polymer work.",
+    intro:
+      "Our phase transfer catalyst range covers the quaternary ammonium and phosphonium salts used to carry reactants between aqueous and organic phases — in alkylation, substitution and condensation chemistry for pharmaceutical, agrochemical and fine chemical manufacture — along with triphenyl phosphonium salts used as Wittig reagent precursors and curing accelerators. Share the assay, moisture limit and packing you work to and we will respond with availability and a quotation.",
+    seo: {
+      title: "Phase Transfer Catalysts Supplier, India",
+      description:
+        "TEBAC, benzyl tributyl ammonium chloride, phenyl trimethyl ammonium chloride and benzyl / butyl triphenyl phosphonium chloride. Ahmedabad, India.",
     },
   },
 ]
@@ -383,11 +406,14 @@ export const productsDatabase: Product[] = [
     name: "Yara Yara Crystal",
     category: "aromatic-chemicals",
     summary: "Specialty aromatic crystal used in classical perfumery accords.",
+    casNumber: "93-04-9",
+    molecularFormula: "C11H10O",
+    molecularWeight: "158.20 g/mol",
     typicalGrade: "High grade",
     physicalForm: "Crystals",
-    synonyms: ["2-Methoxynaphthalene (Yara Yara)"],
+    synonyms: ["2-Methoxynaphthalene (Yara Yara)", "Methyl 2-naphthyl ether", "Nerolin Yara Yara"],
     applications: ["Perfumery", "Fine Fragrance", "Specialty Compounding"],
-    keywords: ["yara yara", "crystal", "specialty", "aromatic", "perfumery"],
+    keywords: ["yara yara", "crystal", "specialty", "aromatic", "perfumery", "methoxynaphthalene", "nerolin"],
   },
 
   /* ------------------------------- Essential Oils ----------------------- */
@@ -954,8 +980,9 @@ export const productsDatabase: Product[] = [
     molecularWeight: "78.97 g/mol",
     typicalGrade: "99.9%",
     physicalForm: "Powder",
+    synonyms: ["Selenium metal", "Grey selenium", "Elemental selenium"],
     applications: ["Glass Industry", "Electronics", "Metallurgy", "Laboratory & Research"],
-    keywords: ["selenium", "metal", "powder", "high purity", "se", "industrial"],
+    keywords: ["selenium", "metal", "selenium metal", "powder", "high purity", "se", "industrial"],
   },
   {
     slug: "iodine",
@@ -1062,7 +1089,7 @@ export const productsDatabase: Product[] = [
     summary: "Diphenyl-substituted nitrile used as an intermediate in pharmaceutical synthesis.",
     casNumber: "86-29-3",
     molecularFormula: "C14H11N",
-    molecularWeight: "193.25 g/mol",
+    molecularWeight: "193.24 g/mol",
     typicalGrade: "98%+",
     physicalForm: "Solid",
     synonyms: ["2,2-Diphenylacetonitrile", "α-Phenylbenzeneacetonitrile"],
@@ -1094,37 +1121,169 @@ export const productsDatabase: Product[] = [
     keywords: ["dimethyl", "isopropyl", "chloride", "hydrochloride", "intermediate"],
   },
   {
-    slug: "benhydryl-thioacetamide",
-    name: "Benhydryl Thioacetamide",
+    slug: "benzhydryl-thioacetamide",
+    name: "Benzhydryl Thioacetamide",
     category: "pharma-intermediates",
-    summary: "Thioacetamide intermediate used in pharmaceutical synthesis.",
+    summary: "Benzhydryl thioether amide used as an intermediate in pharmaceutical synthesis.",
+    casNumber: "68524-30-1",
+    molecularFormula: "C15H15NOS",
+    molecularWeight: "257.35 g/mol",
     typicalGrade: "98%+",
     physicalForm: "Solid",
-    synonyms: ["Benzhydryl thioacetamide"],
+    synonyms: ["2-(Benzhydrylthio)acetamide", "2-[(Diphenylmethyl)thio]acetamide", "Benhydryl thioacetamide"],
     applications: ["Pharmaceutical Synthesis", "Fine Chemical Manufacturing"],
-    keywords: ["benhydryl", "benzhydryl", "thioacetamide", "intermediate"],
+    keywords: ["benzhydryl", "benhydryl", "thioacetamide", "diphenylmethylthio", "68524-30-1", "intermediate"],
   },
   {
     slug: "2-2-diphenyl-4-bromo-butyronitrile",
     name: "2,2-Diphenyl-4-Bromo Butyronitrile",
     category: "pharma-intermediates",
     summary: "Brominated diphenyl nitrile used in multi-step pharmaceutical synthesis.",
+    casNumber: "39186-58-8",
+    molecularFormula: "C16H14BrN",
+    molecularWeight: "300.19 g/mol",
     typicalGrade: "98%+",
     physicalForm: "Solid",
-    synonyms: ["4-Bromo-2,2-diphenylbutyronitrile"],
+    synonyms: ["4-Bromo-2,2-diphenylbutyronitrile", "4-Bromo-2,2-diphenylbutanenitrile"],
     applications: ["Pharmaceutical Synthesis", "Fine Chemical Manufacturing", "Laboratory & Research"],
-    keywords: ["diphenyl", "bromo", "butyronitrile", "intermediate", "synthesis"],
+    keywords: ["diphenyl", "bromo", "butyronitrile", "39186-58-8", "intermediate", "synthesis"],
   },
   {
     slug: "2-phenyl-butyric-acid",
     name: "2-Phenyl Butyric Acid",
     category: "pharma-intermediates",
     summary: "Phenyl-substituted butyric acid used as a pharmaceutical building block.",
+    casNumber: "90-27-7",
+    molecularFormula: "C10H12O2",
+    molecularWeight: "164.20 g/mol",
     typicalGrade: "98%+",
     physicalForm: "Solid",
-    synonyms: ["α-Ethylphenylacetic acid"],
+    synonyms: ["α-Ethylphenylacetic acid", "2-Phenylbutanoic acid"],
     applications: ["Pharmaceutical Synthesis", "Fine Chemical Manufacturing"],
-    keywords: ["phenyl", "butyric acid", "intermediate", "building block"],
+    keywords: ["phenyl", "butyric acid", "90-27-7", "intermediate", "building block"],
+  },
+
+  /* ---------------------------- Phase Transfer Catalysts ---------------- */
+  {
+    slug: "benzyl-triethyl-ammonium-chloride",
+    name: "Benzyl Triethyl Ammonium Chloride",
+    category: "phase-transfer-catalysts",
+    summary: "TEBAC — one of the most widely used quaternary ammonium phase transfer catalysts.",
+    overview:
+      "Benzyl triethyl ammonium chloride (TEBAC, TEBA) is a quaternary ammonium salt used to carry anions from an aqueous or solid phase into an organic phase, so that alkylation, substitution, carbene and condensation reactions proceed between reagents that would not otherwise mix. It is used across pharmaceutical, agrochemical and fine chemical synthesis and in polymer and resin chemistry. Assay, moisture limit and packing are confirmed against each enquiry.",
+    casNumber: "56-37-1",
+    molecularFormula: "C13H22ClN",
+    molecularWeight: "227.77 g/mol",
+    physicalForm: "Crystalline powder",
+    synonyms: ["TEBAC", "TEBA", "BTEAC", "Benzyltriethylammonium chloride", "Triethylbenzylammonium chloride"],
+    applications: [
+      "Phase Transfer Catalysis",
+      "Pharmaceutical Synthesis",
+      "Agrochemical Synthesis",
+      "Polymer & Resin Chemistry",
+      "Fine Chemical Manufacturing",
+    ],
+    keywords: ["tebac", "teba", "bteac", "benzyltriethylammonium", "quaternary ammonium", "phase transfer catalyst", "ptc", "quat"],
+    technicalNote:
+      "General information: TEBAC is a quaternary ammonium salt and is known to be hygroscopic, so it is normally kept in tightly closed containers away from moisture. This is general chemistry context about the substance and is not a statement about a specific grade or assay of material supplied by Sheetal Aromatics.",
+    seo: {
+      title: "Benzyl Triethyl Ammonium Chloride (TEBAC)",
+      description:
+        "Benzyl triethyl ammonium chloride (TEBAC, CAS 56-37-1), a quaternary ammonium phase transfer catalyst, supplied from Ahmedabad, India. Request a quotation.",
+    },
+  },
+  {
+    slug: "benzyl-tributyl-ammonium-chloride",
+    name: "Benzyl Tributyl Ammonium Chloride",
+    category: "phase-transfer-catalysts",
+    summary: "Lipophilic quaternary ammonium phase transfer catalyst for alkylation and substitution chemistry.",
+    overview:
+      "Benzyl tributyl ammonium chloride (BTBAC) carries three butyl chains, which makes it more soluble in organic solvents than its triethyl analogue. It is used as a phase transfer catalyst in alkylation, esterification and nucleophilic substitution reactions, and in polymer chemistry. Assay and packing are confirmed against each enquiry.",
+    casNumber: "23616-79-7",
+    molecularFormula: "C19H34ClN",
+    molecularWeight: "311.94 g/mol",
+    physicalForm: "Crystalline powder",
+    synonyms: ["BTBAC", "Benzyltributylammonium chloride", "Tributylbenzylammonium chloride"],
+    applications: [
+      "Phase Transfer Catalysis",
+      "Alkylation & Substitution Reactions",
+      "Pharmaceutical Synthesis",
+      "Polymer Chemistry",
+    ],
+    keywords: ["btbac", "benzyltributylammonium", "tributylbenzylammonium", "quaternary ammonium", "phase transfer catalyst", "ptc", "quat"],
+    seo: {
+      title: "Benzyl Tributyl Ammonium Chloride | CAS 23616-79-7",
+      description:
+        "Benzyl tributyl ammonium chloride (BTBAC, CAS 23616-79-7), a lipophilic phase transfer catalyst, supplied from Ahmedabad, India. Request a quotation.",
+    },
+  },
+  {
+    slug: "phenyl-trimethyl-ammonium-chloride",
+    name: "Phenyl Trimethyl Ammonium Chloride",
+    category: "phase-transfer-catalysts",
+    summary: "Aryl quaternary ammonium salt used as a phase transfer catalyst and synthesis reagent.",
+    overview:
+      "Phenyl trimethyl ammonium chloride (PTMAC), also known as N,N,N-trimethylanilinium chloride, is a quaternary ammonium salt used in organic synthesis as a phase transfer catalyst and as a reagent. Assay, moisture limit and packing are confirmed against each enquiry.",
+    casNumber: "138-24-9",
+    molecularFormula: "C9H14ClN",
+    molecularWeight: "171.67 g/mol",
+    physicalForm: "Crystalline powder",
+    synonyms: ["PTMAC", "N,N,N-Trimethylanilinium chloride", "Trimethylphenylammonium chloride"],
+    applications: ["Phase Transfer Catalysis", "Organic Synthesis", "Pharmaceutical Synthesis", "Laboratory & Research"],
+    keywords: ["ptmac", "trimethylanilinium", "trimethylphenylammonium", "quaternary ammonium", "phase transfer catalyst", "ptc", "quat"],
+    technicalNote:
+      "General information: phenyl trimethyl ammonium chloride is known to be hygroscopic and is normally kept in tightly closed containers away from moisture. This is general chemistry context about the substance and is not a statement about a specific grade or assay of material supplied by Sheetal Aromatics.",
+    seo: {
+      title: "Phenyl Trimethyl Ammonium Chloride | CAS 138-24-9",
+      description:
+        "Phenyl trimethyl ammonium chloride (PTMAC, CAS 138-24-9) for phase transfer catalysis and organic synthesis. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "benzyl-triphenyl-phosphonium-chloride",
+    name: "Benzyl Triphenyl Phosphonium Chloride",
+    category: "phase-transfer-catalysts",
+    summary: "Quaternary phosphonium salt used as a Wittig reagent precursor, catalyst and curing accelerator.",
+    overview:
+      "Benzyl triphenyl phosphonium chloride (BTPPC) is a quaternary phosphonium salt. It is the precursor to the benzylidene ylide used in Wittig olefination, is used as a phase transfer catalyst, and is widely used as an accelerator in the curing of fluoroelastomers. Assay and packing are confirmed against each enquiry.",
+    casNumber: "1100-88-5",
+    molecularFormula: "C25H22ClP",
+    molecularWeight: "388.87 g/mol",
+    physicalForm: "Crystalline powder",
+    synonyms: ["BTPPC", "Benzyltriphenylphosphonium chloride", "(Phenylmethyl)triphenylphosphonium chloride"],
+    applications: [
+      "Wittig Reaction Reagent",
+      "Phase Transfer Catalysis",
+      "Fluoroelastomer Curing Accelerator",
+      "Pharmaceutical Synthesis",
+      "Fine Chemical Manufacturing",
+    ],
+    keywords: ["btppc", "benzyltriphenylphosphonium", "phosphonium salt", "wittig", "fluoroelastomer", "phase transfer catalyst", "ptc"],
+    seo: {
+      title: "Benzyl Triphenyl Phosphonium Chloride (BTPPC)",
+      description:
+        "Benzyl triphenyl phosphonium chloride (BTPPC, CAS 1100-88-5) for Wittig reactions, phase transfer catalysis and FKM curing. Ahmedabad, India.",
+    },
+  },
+  {
+    slug: "butyl-triphenyl-phosphonium-chloride",
+    name: "Butyl Triphenyl Phosphonium Chloride",
+    category: "phase-transfer-catalysts",
+    summary: "Quaternary phosphonium salt used as a Wittig reagent precursor and phase transfer catalyst.",
+    overview:
+      "Butyl triphenyl phosphonium chloride is a quaternary phosphonium salt used as the precursor to the butylidene ylide in Wittig olefination, as a phase transfer catalyst, and as a catalyst in polymer and resin chemistry. Assay and packing are confirmed against each enquiry.",
+    casNumber: "13371-17-0",
+    molecularFormula: "C22H24ClP",
+    molecularWeight: "354.86 g/mol",
+    physicalForm: "Crystalline powder",
+    synonyms: ["Butyltriphenylphosphonium chloride", "n-Butyltriphenylphosphonium chloride"],
+    applications: ["Wittig Reaction Reagent", "Phase Transfer Catalysis", "Polymer & Resin Chemistry", "Fine Chemical Manufacturing"],
+    keywords: ["butyltriphenylphosphonium", "phosphonium salt", "wittig", "phase transfer catalyst", "ptc"],
+    seo: {
+      title: "Butyl Triphenyl Phosphonium Chloride Supplier",
+      description:
+        "Butyl triphenyl phosphonium chloride (CAS 13371-17-0) for Wittig reactions, phase transfer catalysis and polymer work. Ahmedabad, India — request a quotation.",
+    },
   },
 ]
 
@@ -1162,6 +1321,12 @@ export function categoryName(slug: string): string {
   return getCategory(slug)?.name ?? slug
 }
 
+/** The product whose image stands for the category on tiles and cards. */
+export function categoryCover(slug: string): Product | undefined {
+  const cover = getCategory(slug)?.cover
+  return (cover && getProductBySlug(cover)) || productsDatabase.find((p) => p.category === slug)
+}
+
 export function countByCategory(slug: string): number {
   return getProductsByCategory(slug).length
 }
@@ -1184,6 +1349,7 @@ export function visualFormFor(product: Product): VisualForm {
   if (product.category === "metals") return "metal"
   if (product.category === "ayurvedic-products") return product.group === "Powders" ? "powder" : "botanical"
   if (product.category === "pharma-intermediates") return "crystal"
+  if (product.category === "phase-transfer-catalysts") return "crystal"
 
   const form = (product.physicalForm ?? "").toLowerCase()
   if (form.includes("crystal")) return "crystal"
@@ -1213,6 +1379,11 @@ const searchSynonyms: Record<string, string[]> = {
   salt: ["sodium"],
   ppi: ["benzimidazole"],
   omeprazole: ["benzimidazole", "methoxybenzimidazole"],
+  ptc: ["phase transfer catalyst"],
+  quat: ["quaternary ammonium", "phosphonium"],
+  teba: ["benzyl triethyl ammonium chloride"],
+  tebac: ["benzyl triethyl ammonium chloride"],
+  wittig: ["phosphonium"],
 }
 
 function haystack(product: Product): string {

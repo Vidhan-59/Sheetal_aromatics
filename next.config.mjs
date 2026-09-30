@@ -55,6 +55,12 @@ const nextConfig = {
         destination: "/products/pharma-intermediates/2-phenyl-butyric-acid",
         permanent: true,
       },
+      // Spelling corrected from "Benhydryl".
+      {
+        source: "/products/pharma-intermediates/benhydryl-thioacetamide",
+        destination: "/products/pharma-intermediates/benzhydryl-thioacetamide",
+        permanent: true,
+      },
 
       // Legacy/alternate paths.
       { source: "/terms-of-service", destination: "/terms-and-conditions", permanent: true },

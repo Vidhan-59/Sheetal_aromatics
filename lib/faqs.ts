@@ -16,7 +16,7 @@ export const faqs: Faq[] = [
   {
     question: "What products does Sheetal Aromatics supply?",
     answer:
-      "We supply five product groups: aromatic chemicals, essential oils, Ayurvedic products (whole herbs, raw materials and milled powders), metals, and pharma intermediates. The full catalogue is listed on the Products pages, and items outside the listed range can be discussed on enquiry.",
+      "We supply six product groups: aromatic chemicals, essential oils, Ayurvedic products (whole herbs, raw materials and milled powders), metals, pharma intermediates, and phase transfer catalysts (quaternary ammonium and phosphonium salts). The full catalogue is listed on the Products pages, and items outside the listed range can be discussed on enquiry.",
     featured: true,
   },
   {

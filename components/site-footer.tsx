@@ -18,6 +18,7 @@ const legalLinks = [
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions", label: "Terms & Conditions" },
   { href: "/cookie-policy", label: "Cookie Policy" },
+  { href: "/image-credits", label: "Image Credits" },
 ]
 
 export function SiteFooter() {
@@ -28,7 +29,7 @@ export function SiteFooter() {
           <Logo size="md" inverted showTagline={false} />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-forest-100/75">
             A {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat, supplying aromatic chemicals, essential
-            oils, Ayurvedic products, metals and pharma intermediates to B2B and export customers since{" "}
+            oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts to B2B and export customers since{" "}
             {siteConfig.establishedYear}.
           </p>
 

@@ -7,12 +7,14 @@ import { ArrowRight, Info, Mail, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, DataRow, Section } from "@/components/layout-primitives"
-import { MolecularFormula, ProductVisual } from "@/components/product-visual"
+import { MolecularFormula } from "@/components/product-visual"
+import { ProductImage } from "@/components/product-image"
 import { ProductCard } from "@/components/product-card"
 import { QuoteForm } from "@/components/quote-form"
 import { JsonLd } from "@/components/json-ld"
 import { BASE_URL, pageMetadata, productSchema } from "@/lib/seo"
 import { mailtoLink, productEnquiryMessage, siteConfig, whatsappLink } from "@/lib/site-config"
+import { productImageFor } from "@/lib/product-images"
 import {
   categoryName,
   getCategory,
@@ -21,9 +23,61 @@ import {
   productSeoDescription,
   productSeoTitle,
   productsDatabase,
+  type Product,
 } from "@/lib/products-data"
 
 type Params = Promise<{ category: string; slug: string }>
+
+/** States what the image is and credits it, as the photo licences require. */
+function ImageCaption({ product }: { product: Product }) {
+  const image = productImageFor(product.slug)
+  const link = "underline underline-offset-2 hover:text-foreground"
+
+  if (image?.kind === "photo") {
+    return (
+      <>
+        {image.representative ? "Representative photo" : "Photo"}: {image.alt}
+        {image.representative ? " — not a photograph of supplied material" : ""}. By {image.credit.author},{" "}
+        {image.credit.licenseUrl ? (
+          <a href={image.credit.licenseUrl} className={link} target="_blank" rel="noopener noreferrer license">
+            {image.credit.license}
+          </a>
+        ) : (
+          image.credit.license
+        )}
+        , via{" "}
+        <a href={image.credit.sourceUrl} className={link} target="_blank" rel="noopener noreferrer">
+          Wikimedia Commons
+        </a>
+        .
+      </>
+    )
+  }
+
+  if (image?.kind === "structure") {
+    return (
+      <>
+        Chemical structure of {product.name}, drawn from{" "}
+        <a
+          href={`https://pubchem.ncbi.nlm.nih.gov/compound/${image.pubchemCid}`}
+          className={link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          PubChem CID {image.pubchemCid}
+        </a>
+        . Not a photograph of supplied material.
+      </>
+    )
+  }
+
+  return (
+    <>
+      Technical illustration generated from this product&apos;s own record — physical form
+      {product.molecularFormula ? " and molecular formula" : ""}. Not a photograph of supplied material.
+    </>
+  )
+}
 
 export function generateStaticParams() {
   return productsDatabase.map((product) => ({ category: product.category, slug: product.slug }))
@@ -91,9 +145,9 @@ export default async function ProductPage({ params }: { params: Params }) {
       <Section tone="paper" spacing="tight">
         <Container>
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="overflow-hidden rounded-lg border border-border bg-muted">
+            <figure className="overflow-hidden rounded-lg border border-border bg-muted">
               <div className="relative aspect-[4/3]">
-                <ProductVisual product={product} />
+                <ProductImage product={product} priority sizes="(min-width: 1280px) 600px, (min-width: 1024px) 48vw, 100vw" />
                 {product.molecularFormula && (
                   <MolecularFormula
                     formula={product.molecularFormula}
@@ -106,11 +160,10 @@ export default async function ProductPage({ params }: { params: Params }) {
                   </span>
                 )}
               </div>
-              <p className="border-t border-border bg-card px-4 py-2.5 text-[11px] leading-relaxed text-muted-foreground">
-                Technical illustration generated from this product&apos;s own record — physical form
-                {product.molecularFormula ? " and molecular formula" : ""}. Not a photograph of supplied material.
-              </p>
-            </div>
+              <figcaption className="border-t border-border bg-card px-4 py-2.5 text-[11px] leading-relaxed text-muted-foreground">
+                <ImageCaption product={product} />
+              </figcaption>
+            </figure>
 
             <div>
               <Link

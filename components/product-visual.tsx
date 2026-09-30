@@ -21,6 +21,11 @@ const palettes: Record<CategorySlug, { from: string; to: string; ink: string; ac
   "ayurvedic-products": { from: "#F8F5EC", to: "#EEE7D6", ink: "#3F4A22", accent: "#A67A2E" },
   metals: { from: "#F2F4F5", to: "#E1E7E9", ink: "#26363B", accent: "#7A8A90" },
   "pharma-intermediates": { from: "#F0F6F6", to: "#DDEAEA", ink: "#14403E", accent: "#2C6E6A" },
+  "phase-transfer-catalysts": { from: "#F2F3F8", to: "#E0E3EF", ink: "#27325A", accent: "#5B6BA8" },
+}
+
+export function categoryPalette(category: CategorySlug) {
+  return palettes[category]
 }
 
 /** Stable pseudo-random integer from a slug, so a product always looks the same. */

@@ -20,7 +20,7 @@ export const siteConfig = {
 
   tagline: "Manufacturer of Aromatic & Organic Chemicals",
   shortDescription:
-    "Aromatic chemicals, essential oils, Ayurvedic products, metals and pharma intermediates for B2B and export buyers. Ahmedabad, India — established 2005.",
+    "Aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts for B2B and export buyers. Ahmedabad, India.",
 
   address: {
     line1: "A/7, Tirth Industrial Park 3A",

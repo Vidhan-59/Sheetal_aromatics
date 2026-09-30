@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
   return (
     <>
       <JsonLd
-        data={collectionSchema(category.name, category.description, `/products/${category.slug}`)}
+        data={collectionSchema(category.name, category.description, `/products/${category.slug}`, products)}
       />
       <Breadcrumbs
         trail={[

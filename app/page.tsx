@@ -5,7 +5,7 @@ import { ArrowRight, FileText, Globe2, PackageSearch, ShieldCheck } from "lucide
 import { Button } from "@/components/ui/button"
 import { Container, Eyebrow, Section, SectionHeading } from "@/components/layout-primitives"
 import { Reveal } from "@/components/reveal"
-import { ProductVisual } from "@/components/product-visual"
+import { ProductImage } from "@/components/product-image"
 import { CtaBand } from "@/components/cta-band"
 import { FaqList } from "@/components/faq-list"
 import { JsonLd } from "@/components/json-ld"
@@ -13,6 +13,7 @@ import { pageMetadata, faqSchema } from "@/lib/seo"
 import { siteConfig, yearsOfExperience } from "@/lib/site-config"
 import { featuredFaqs } from "@/lib/faqs"
 import {
+  categoryCover,
   countByCategory,
   getProductBySlug,
   productCategories,
@@ -22,7 +23,7 @@ import {
 export const metadata: Metadata = pageMetadata({
   title: "Sheetal Aromatics | Chemical & Natural Product Supplier and Exporter, India",
   description:
-    "Aromatic chemicals, essential oils, Ayurvedic products, metals and pharma intermediates for B2B and export buyers. Ahmedabad, India — established 2005.",
+    "Aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts for B2B and export buyers. Ahmedabad, India.",
   path: "/",
   keywords: [
     "chemical supplier India",
@@ -31,6 +32,7 @@ export const metadata: Metadata = pageMetadata({
     "essential oil supplier India",
     "Ayurvedic products supplier India",
     "pharma intermediates supplier",
+    "phase transfer catalyst supplier India",
     "chemical supplier Ahmedabad",
     "Sheetal Aromatics",
   ],
@@ -39,15 +41,17 @@ export const metadata: Metadata = pageMetadata({
 /* Representative products used for the hero mosaic — one per category so the
    range is visible at a glance rather than described. */
 const heroSamples = [
+  "clove-oil",
   "benzyl-acetate",
-  "lemongrass-oil",
   "ashwagandha",
+  "benzyl-triphenyl-phosphonium-chloride",
   "sodium-metal",
   "2-mercapto-5-methoxybenzimidazole",
-  "menthol",
 ]
   .map((slug) => getProductBySlug(slug))
   .filter(Boolean)
+
+const countWords: Record<number, string> = { 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight" }
 
 const capabilities = [
   {
@@ -103,8 +107,9 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/85">
-              {yearsOfExperience}+ years supplying aromatic chemicals, essential oils, Ayurvedic products, metals and
-              pharma intermediates to manufacturers, distributors, importers and procurement teams.
+              {yearsOfExperience}+ years supplying aromatic chemicals, essential oils, Ayurvedic products, metals,
+              pharma intermediates and phase transfer catalysts to manufacturers, distributors, importers and
+              procurement teams.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -145,7 +150,7 @@ export default function HomePage() {
                   }`}
                 >
                   <div className="aspect-square">
-                    <ProductVisual product={product!} />
+                    <ProductImage product={product!} sizes="180px" priority={i < 3} />
                   </div>
                 </div>
               ))}
@@ -179,7 +184,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Product range"
-              title="Five product groups, one point of contact"
+              title={`${countWords[productCategories.length] ?? productCategories.length} product groups, one point of contact`}
               description="Browse the catalogue by category, or search for a product name or CAS number. Every product page carries the identifiers we hold and a direct route to an enquiry."
             />
             <Link href="/products" className="link-underline pb-2">
@@ -190,14 +195,15 @@ export default function HomePage() {
 
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {productCategories.map((category, i) => {
-              const sample = productsDatabase.find((p) => p.category === category.slug)
+              const sample = categoryCover(category.slug)
               return (
                 <Reveal as="li" key={category.slug} delay={i * 60} className="h-full">
                   <article className="tile group flex h-full flex-col overflow-hidden">
                     <div className="aspect-[16/9] overflow-hidden border-b border-border">
                       {sample && (
-                        <ProductVisual
+                        <ProductImage
                           product={sample}
+                          sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
                           className="transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                         />
                       )}
@@ -229,16 +235,16 @@ export default function HomePage() {
               )
             })}
 
-            <Reveal as="li" delay={productCategories.length * 60} className="h-full">
-              <div className="flex h-full flex-col justify-between rounded-lg border border-dashed border-forest-300 bg-forest-50 p-6 dark:bg-secondary">
-                <div>
+            <Reveal as="li" delay={productCategories.length * 60} className="h-full sm:col-span-2 lg:col-span-3">
+              <div className="flex h-full flex-col justify-between gap-6 rounded-lg border border-dashed border-forest-300 bg-forest-50 p-6 dark:bg-secondary md:flex-row md:items-center">
+                <div className="max-w-2xl">
                   <h3 className="text-lg font-semibold">Looking for something not listed?</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     Our catalogue reflects what we supply most often. If you need a related product or a different
                     grade, send the specification and we will tell you what can be arranged.
                   </p>
                 </div>
-                <Button asChild variant="outline" className="mt-6 self-start">
+                <Button asChild variant="outline" className="self-start md:self-center">
                   <Link href="/request-a-quote">Send a specification</Link>
                 </Button>
               </div>

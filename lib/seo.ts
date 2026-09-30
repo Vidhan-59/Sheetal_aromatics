@@ -9,8 +9,10 @@ import {
 import {
   categoryName,
   productCategories,
+  productHref,
   type Product,
 } from "@/lib/products-data"
+import { productImageAlt, productImageFor } from "@/lib/product-images"
 
 export const BASE_URL = siteConfig.url
 
@@ -196,6 +198,48 @@ export function breadcrumbSchema(trail: { name: string; href: string }[]) {
 }
 
 /**
+ * ImageObject for a product's photo or structure. Photos carry their licence
+ * and credit so Google Images can show the "Licensable" details correctly.
+ */
+export function productImageSchema(product: Product) {
+  const image = productImageFor(product.slug)
+  if (!image) return undefined
+
+  if (image.kind === "structure") {
+    return {
+      "@type": "ImageObject",
+      contentUrl: `${BASE_URL}${image.src}`,
+      url: `${BASE_URL}${image.src}`,
+      encodingFormat: "image/svg+xml",
+      width: 800,
+      height: 600,
+      caption: productImageAlt(product, image),
+      isBasedOn: `https://pubchem.ncbi.nlm.nih.gov/compound/${image.pubchemCid}`,
+    }
+  }
+
+  return {
+    "@type": "ImageObject",
+    contentUrl: `${BASE_URL}${image.src}`,
+    url: `${BASE_URL}${image.src}`,
+    encodingFormat: "image/webp",
+    width: 1200,
+    height: 900,
+    caption: productImageAlt(product, image),
+    creditText: image.credit.author,
+    creator: { "@type": "Person", name: image.credit.author },
+    license: image.credit.licenseUrl ?? image.credit.sourceUrl,
+    acquireLicensePage: image.credit.sourceUrl,
+  }
+}
+
+/** Absolute URL of a product's primary image, for sitemaps and share metadata. */
+export function productImageUrl(product: Product): string | undefined {
+  const image = productImageFor(product.slug)
+  return image ? `${BASE_URL}${image.src}` : undefined
+}
+
+/**
  * Product schema. Deliberately omits `offers`, `sku`, `aggregateRating` and
  * `review` — none of that information is available, and Google treats invented
  * values as spam. Verified chemical identifiers are emitted as
@@ -210,14 +254,18 @@ export function productSchema(product: Product) {
     product.appearance && { name: "Appearance", value: product.appearance },
   ].filter(Boolean) as { name: string; value: string }[]
 
+  const image = productImageSchema(product)
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `${BASE_URL}/products/${product.category}/${product.slug}#product`,
     name: product.name,
-    description: product.summary,
+    description: product.overview ?? product.summary,
     category: categoryName(product.category),
     url: `${BASE_URL}/products/${product.category}/${product.slug}`,
+    ...(image ? { image } : {}),
+    ...(product.casNumber ? { productID: `CAS:${product.casNumber}` } : {}),
     ...(product.synonyms?.length ? { alternateName: product.synonyms } : {}),
     brand: { "@type": "Brand", name: siteConfig.name },
     manufacturer: { "@id": `${BASE_URL}/#organization` },
@@ -241,7 +289,7 @@ export function faqSchema(items: { question: string; answer: string }[]) {
   }
 }
 
-export function collectionSchema(name: string, description: string, path: string) {
+export function collectionSchema(name: string, description: string, path: string, products?: Product[]) {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -250,6 +298,20 @@ export function collectionSchema(name: string, description: string, path: string
     url: `${BASE_URL}${path}`,
     isPartOf: { "@id": `${BASE_URL}/#website` },
     about: { "@id": `${BASE_URL}/#organization` },
+    ...(products?.length
+      ? {
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: products.length,
+            itemListElement: products.map((product, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              url: `${BASE_URL}${productHref(product)}`,
+              name: product.name,
+            })),
+          },
+        }
+      : {}),
   }
 }
 

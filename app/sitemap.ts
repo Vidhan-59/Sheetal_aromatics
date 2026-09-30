@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { BASE_URL } from "@/lib/seo"
+import { BASE_URL, productImageUrl } from "@/lib/seo"
 import { productCategories, productsDatabase } from "@/lib/products-data"
 
 /**
@@ -28,11 +28,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  const productPages: MetadataRoute.Sitemap = productsDatabase.map((product) => ({
-    url: `${BASE_URL}/products/${product.category}/${product.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }))
+  const productPages: MetadataRoute.Sitemap = productsDatabase.map((product) => {
+    const image = productImageUrl(product)
+    return {
+      url: `${BASE_URL}/products/${product.category}/${product.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+      // Image sitemap entry, so product photos and structures are discoverable in Google Images.
+      ...(image ? { images: [image] } : {}),
+    }
+  })
 
   return [...staticPages, ...categoryPages, ...productPages].map((entry) => ({
     ...entry,

@@ -91,7 +91,7 @@ export default function AboutPage() {
                     <p>
                       Sheetal Aromatics is a {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat. Since{" "}
                       {siteConfig.establishedYear} we have supplied aromatic chemicals, essential oils, Ayurvedic
-                      products, metals and pharma intermediates to manufacturers, formulators, distributors and
+                      products, metals, pharma intermediates and phase transfer catalysts to manufacturers, formulators, distributors and
                       importers.
                     </p>
                     <p className="mt-4">

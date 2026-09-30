@@ -38,6 +38,7 @@ export function QuoteForm({ defaultProduct = "", defaultMessage = "", kind = "qu
   const [values, setValues] = useState({ ...initial, product: defaultProduct, message: defaultMessage })
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
   const [feedback, setFeedback] = useState("")
+  const [reference, setReference] = useState("")
 
   function update(field: keyof typeof initial, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }))
@@ -52,13 +53,19 @@ export function QuoteForm({ defaultProduct = "", defaultMessage = "", kind = "qu
       const response = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, kind, elapsed: Date.now() - mountedAt.current }),
+        body: JSON.stringify({
+          ...values,
+          kind,
+          page: window.location.pathname,
+          elapsed: Date.now() - mountedAt.current,
+        }),
       })
       const result = await response.json()
 
       if (response.ok && result.ok) {
         setStatus("sent")
         setFeedback(result.message)
+        setReference(result.reference ?? "")
         setValues({ ...initial, product: defaultProduct })
       } else {
         setStatus("error")
@@ -76,6 +83,11 @@ export function QuoteForm({ defaultProduct = "", defaultMessage = "", kind = "qu
         <CheckCircle2 aria-hidden="true" className="mx-auto h-10 w-10 text-primary" />
         <h3 className="mt-4 text-lg font-semibold">Enquiry received</h3>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">{feedback}</p>
+        {reference && (
+          <p className="mx-auto mt-4 inline-block rounded-md border border-border bg-muted px-3 py-1.5 text-sm">
+            Your reference: <span className="font-mono font-semibold tabular-nums">{reference}</span>
+          </p>
+        )}
         <Button variant="outline" className="mt-6" onClick={() => setStatus("idle")}>
           Send another enquiry
         </Button>

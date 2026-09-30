@@ -1,7 +1,8 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
-import { MolecularFormula, ProductVisual } from "@/components/product-visual"
+import { MolecularFormula } from "@/components/product-visual"
+import { ProductImage } from "@/components/product-image"
 import { cn } from "@/lib/utils"
 import { categoryName, productHref, type Product } from "@/lib/products-data"
 
@@ -17,7 +18,7 @@ export function ProductCard({
   return (
     <article className={cn("tile group flex h-full flex-col overflow-hidden", className)}>
       <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-muted">
-        <ProductVisual
+        <ProductImage
           product={product}
           className="transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
@@ -67,7 +68,7 @@ export function ProductRow({ product }: { product: Product }) {
   return (
     <article className="group relative flex items-center gap-4 border-b border-border py-4 last:border-0">
       <div className="hidden h-16 w-20 shrink-0 overflow-hidden rounded-md border border-border sm:block">
-        <ProductVisual product={product} />
+        <ProductImage product={product} sizes="80px" />
       </div>
       <div className="min-w-0 flex-1">
         <h3 className="text-sm font-semibold">
