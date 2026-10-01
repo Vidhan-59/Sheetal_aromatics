@@ -152,6 +152,8 @@ export const productImages: Record<string, ProductImage> = {
   "diphenyl-acetic-acid": { kind: "structure", src: "/images/structures/diphenyl-acetic-acid.svg", pubchemCid: 8333 },
   "diphenyl-acetonitrile": { kind: "structure", src: "/images/structures/diphenyl-acetonitrile.svg", pubchemCid: 6837 },
   "ethyl-benzoate": { kind: "structure", src: "/images/structures/ethyl-benzoate.svg", pubchemCid: 7165 },
+  "ethyl-triphenyl-phosphonium-bromide": { kind: "structure", src: "/images/structures/ethyl-triphenyl-phosphonium-bromide.svg", pubchemCid: 73727 },
+  "ethyl-triphenyl-phosphonium-iodide": { kind: "structure", src: "/images/structures/ethyl-triphenyl-phosphonium-iodide.svg", pubchemCid: 78474 },
   "eucalyptus-oil": {
     kind: "photo",
     src: "/images/products/eucalyptus-oil.webp",
@@ -329,9 +331,11 @@ export const productImages: Record<string, ProductImage> = {
     },
   },
   "menthol": { kind: "structure", src: "/images/structures/menthol.svg", pubchemCid: 1254 },
+  "methoxymethyl-triphenyl-phosphonium-chloride": { kind: "structure", src: "/images/structures/methoxymethyl-triphenyl-phosphonium-chloride.svg", pubchemCid: 2723799 },
   "methyl-benzoate": { kind: "structure", src: "/images/structures/methyl-benzoate.svg", pubchemCid: 7150 },
   "methyl-eugenol": { kind: "structure", src: "/images/structures/methyl-eugenol.svg", pubchemCid: 7127 },
   "methyl-salicylate": { kind: "structure", src: "/images/structures/methyl-salicylate.svg", pubchemCid: 4133 },
+  "methyl-triphenyl-phosphonium-bromide": { kind: "structure", src: "/images/structures/methyl-triphenyl-phosphonium-bromide.svg", pubchemCid: 74505 },
   "moringa-powder": {
     kind: "photo",
     src: "/images/products/moringa-powder.webp",
@@ -519,6 +523,12 @@ export const productImages: Record<string, ProductImage> = {
       sourceUrl: "https://commons.wikimedia.org/wiki/File:Dry_Ginger_1.jpg",
     },
   },
+  "tetrabutyl-ammonium-bromide": { kind: "structure", src: "/images/structures/tetrabutyl-ammonium-bromide.svg", pubchemCid: 74236 },
+  "tetrabutyl-ammonium-fluoride": { kind: "structure", src: "/images/structures/tetrabutyl-ammonium-fluoride.svg", pubchemCid: 2724141 },
+  "tetrabutyl-ammonium-hydrogen-sulphate": { kind: "structure", src: "/images/structures/tetrabutyl-ammonium-hydrogen-sulphate.svg", pubchemCid: 94433 },
+  "tetrabutyl-ammonium-iodide": { kind: "structure", src: "/images/structures/tetrabutyl-ammonium-iodide.svg", pubchemCid: 67553 },
+  "tetraethyl-ammonium-bromide": { kind: "structure", src: "/images/structures/tetraethyl-ammonium-bromide.svg", pubchemCid: 6285 },
+  "tetraethyl-ammonium-tetrafluoroborate": { kind: "structure", src: "/images/structures/tetraethyl-ammonium-tetrafluoroborate.svg", pubchemCid: 2724277 },
   "tea-tree-oil": {
     kind: "photo",
     src: "/images/products/tea-tree-oil.webp",

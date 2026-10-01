@@ -187,13 +187,13 @@ export const productCategories: ProductCategory[] = [
     name: "Phase Transfer Catalysts",
     tagline: "Quaternary ammonium and phosphonium salts",
     description:
-      "Quaternary ammonium and phosphonium salts including TEBAC, benzyl tributyl ammonium chloride and triphenyl phosphonium chlorides for synthesis and polymer work.",
+      "Quaternary ammonium and phosphonium salts including TEBAC, TBAB, TBAF, TBAI, and triphenyl phosphonium salts for synthesis and polymer work.",
     intro:
       "Our phase transfer catalyst range covers the quaternary ammonium and phosphonium salts used to carry reactants between aqueous and organic phases — in alkylation, substitution and condensation chemistry for pharmaceutical, agrochemical and fine chemical manufacture — along with triphenyl phosphonium salts used as Wittig reagent precursors and curing accelerators. Share the assay, moisture limit and packing you work to and we will respond with availability and a quotation.",
     seo: {
       title: "Phase Transfer Catalysts Supplier, India",
       description:
-        "TEBAC, benzyl tributyl ammonium chloride, phenyl trimethyl ammonium chloride and benzyl / butyl triphenyl phosphonium chloride. Ahmedabad, India.",
+        "TEBAC, TBAB, TBAF, TBAI, triphenyl phosphonium halides, and quaternary ammonium catalysts from Ahmedabad, India.",
     },
   },
 ]
@@ -1285,6 +1285,310 @@ export const productsDatabase: Product[] = [
         "Butyl triphenyl phosphonium chloride (CAS 13371-17-0) for Wittig reactions, phase transfer catalysis and polymer work. Ahmedabad, India — request a quotation.",
     },
   },
+  {
+    slug: "ethyl-triphenyl-phosphonium-bromide",
+    name: "Ethyl Triphenyl Phosphonium Bromide",
+    category: "phase-transfer-catalysts",
+    summary: "Quaternary phosphonium salt used as a Wittig olefination reagent and phase transfer catalyst.",
+    overview:
+      "Ethyl triphenyl phosphonium bromide (ETPPB) is an organophosphorus quaternary salt widely used as the precursor to the ethylidene ylide in Wittig reactions, converting aldehydes and ketones into alkenes. It also serves as an effective phase transfer catalyst in organic synthesis and as an accelerator or curing catalyst in epoxy resins and powder coatings. Specification, assay and packaging are confirmed per enquiry.",
+    casNumber: "1530-32-1",
+    molecularFormula: "C20H20BrP",
+    molecularWeight: "371.25 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White to off-white crystalline powder",
+    meltingPoint: "203–208 °C",
+    synonyms: ["ETPPB", "Ethyltriphenylphosphonium bromide", "(Ethyl)triphenylphosphonium bromide"],
+    applications: [
+      "Wittig Reaction Reagent",
+      "Phase Transfer Catalysis",
+      "Pharmaceutical Synthesis",
+      "Epoxy Resin & Polymer Chemistry",
+      "Fine Chemical Manufacturing",
+    ],
+    keywords: ["etppb", "ethyltriphenylphosphonium", "phosphonium salt", "wittig", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: ethyl triphenyl phosphonium bromide is hygroscopic and should be stored in tightly sealed containers in a cool, dry place under an inert atmosphere where possible. This is general chemistry context and not a statement regarding a specific grade supplied by Sheetal Aromatics.",
+    seo: {
+      title: "Ethyl Triphenyl Phosphonium Bromide | CAS 1530-32-1",
+      description:
+        "Ethyl triphenyl phosphonium bromide (CAS 1530-32-1) for Wittig reactions, phase transfer catalysis and epoxy systems. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "ethyl-triphenyl-phosphonium-iodide",
+    name: "Ethyl Triphenyl Phosphonium Iodide",
+    category: "phase-transfer-catalysts",
+    summary: "Quaternary phosphonium iodide used as a Wittig reagent precursor and catalyst in resin curing.",
+    overview:
+      "Ethyl triphenyl phosphonium iodide is a quaternary phosphonium salt used in organic synthesis, notably in Wittig olefination reactions, and as an active catalyst and promoter in the curing and advancement of phenolic and epoxy resins. Moisture limits, assay and packaging are confirmed against customer enquiry.",
+    casNumber: "4736-60-1",
+    molecularFormula: "C20H20IP",
+    molecularWeight: "418.25 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White to off-white crystalline powder",
+    meltingPoint: "161–166 °C",
+    synonyms: ["ETPPI", "Ethyltriphenylphosphonium iodide", "(Ethyl)triphenylphosphonium iodide"],
+    applications: [
+      "Wittig Reaction Reagent",
+      "Phase Transfer Catalysis",
+      "Phenolic & Epoxy Resin Curing",
+      "Organic Synthesis",
+    ],
+    keywords: ["etppi", "ethyltriphenylphosphonium", "phosphonium iodide", "wittig", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: ethyl triphenyl phosphonium iodide is light-sensitive and hygroscopic; standard practice requires storage in light-resistant, sealed containers under dry conditions. This is general scientific context about the substance.",
+    seo: {
+      title: "Ethyl Triphenyl Phosphonium Iodide Supplier | CAS 4736-60-1",
+      description:
+        "Ethyl triphenyl phosphonium iodide (CAS 4736-60-1) for Wittig olefination and resin curing catalysis. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "methyl-triphenyl-phosphonium-bromide",
+    name: "Methyl Triphenyl Phosphonium Bromide",
+    category: "phase-transfer-catalysts",
+    summary: "Key precursor to methylenetriphenylphosphorane for Wittig methylenation of carbonyl compounds.",
+    overview:
+      "Methyl triphenyl phosphonium bromide (MTPPB) is one of the most widely used quaternary phosphonium salts in synthetic organic chemistry. It serves as the direct precursor to the methylidene ylide in Wittig methylenation reactions, converting aldehydes and ketones into terminal alkenes. It also functions as a cationic phase transfer catalyst and building block in pharmaceutical synthesis. Grade, assay and packaging confirmed upon enquiry.",
+    casNumber: "1779-49-3",
+    molecularFormula: "C19H18BrP",
+    molecularWeight: "357.22 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White to off-white crystalline powder",
+    meltingPoint: "230–235 °C",
+    synonyms: ["MTPPB", "Methyltriphenylphosphonium bromide", "(Methyl)triphenylphosphonium bromide"],
+    applications: [
+      "Wittig Methylenation",
+      "Phase Transfer Catalysis",
+      "Pharmaceutical Synthesis",
+      "Organic Synthesis",
+    ],
+    keywords: ["mtppb", "methyltriphenylphosphonium", "wittig methylenation", "phosphonium salt", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: methyl triphenyl phosphonium bromide is moderately hygroscopic and sensitive to humidity. Material is kept in tightly closed containers in a dry, ventilated area. This note provides general chemical context.",
+    seo: {
+      title: "Methyl Triphenyl Phosphonium Bromide (MTPPB)",
+      description:
+        "Methyl triphenyl phosphonium bromide (MTPPB, CAS 1779-49-3) for Wittig methylenation and phase transfer catalysis. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "methoxymethyl-triphenyl-phosphonium-chloride",
+    name: "Methoxymethyl Triphenyl Phosphonium Chloride",
+    category: "phase-transfer-catalysts",
+    summary: "Wittig reagent precursor for one-carbon aldehyde homologation and stereoselective alkene synthesis.",
+    overview:
+      "Methoxymethyl triphenyl phosphonium chloride is a versatile phosphonium salt used extensively in organic synthesis as a Wittig reagent for carbonyl homologation. Reaction with aldehydes and ketones generates methoxyalkenes (enol ethers) that hydrolyze directly to the homologated aldehydes. It is an essential reagent in the total synthesis of natural products, pharmaceuticals and fine chemicals. Assay and packaging confirmed per enquiry.",
+    casNumber: "4009-98-7",
+    molecularFormula: "C20H20ClOP",
+    molecularWeight: "342.80 g/mol",
+    typicalGrade: "98%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White to pale yellow crystalline powder",
+    meltingPoint: "185–195 °C (dec.)",
+    synonyms: ["MMPPC", "MTPC", "(Methoxymethyl)triphenylphosphonium chloride", "Triphenyl(methoxymethyl)phosphonium chloride"],
+    applications: [
+      "Wittig Homologation",
+      "Carbonyl Homologation to Aldehydes",
+      "Pharmaceutical Synthesis",
+      "Phase Transfer Catalysis",
+    ],
+    keywords: ["methoxymethyltriphenylphosphonium", "mmppc", "wittig homologation", "aldehyde synthesis", "phosphonium salt", "ptc"],
+    technicalNote:
+      "General information: methoxymethyl triphenyl phosphonium chloride is hygroscopic and may decompose if exposed to excessive moisture or heat. Stored under dry conditions. This represents general scientific information.",
+    seo: {
+      title: "Methoxymethyl Triphenyl Phosphonium Chloride | CAS 4009-98-7",
+      description:
+        "Methoxymethyl triphenyl phosphonium chloride (CAS 4009-98-7) for Wittig homologation and fine chemical synthesis. Ahmedabad, India.",
+    },
+  },
+  {
+    slug: "tetrabutyl-ammonium-bromide",
+    name: "Tetrabutyl Ammonium Bromide",
+    category: "phase-transfer-catalysts",
+    summary: "TBAB — the benchmark quaternary ammonium phase transfer catalyst for biphasic organic transformations.",
+    overview:
+      "Tetrabutyl ammonium bromide (TBAB) is among the most widely used and versatile phase transfer catalysts in commercial and laboratory organic synthesis. Its lipophilic tetrabutyl chains enable rapid migration of anions across aqueous-organic interfaces, accelerating alkylations, oxidations, reductions, nucleophilic substitutions and Heck reactions. It also serves as a molten salt ionic liquid medium. Assay, moisture limit and packaging are confirmed against enquiry.",
+    casNumber: "1643-19-2",
+    molecularFormula: "C16H36BrN",
+    molecularWeight: "322.37 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White crystalline powder",
+    meltingPoint: "103–106 °C",
+    synonyms: ["TBAB", "Tetrabutylammonium bromide", "Tetra-n-butylammonium bromide"],
+    applications: [
+      "Phase Transfer Catalysis",
+      "Alkylation Reactions",
+      "Pharmaceutical Synthesis",
+      "Agrochemical Synthesis",
+      "Ionic Liquid Precursor",
+    ],
+    keywords: ["tbab", "tetrabutylammonium bromide", "quaternary ammonium", "phase transfer catalyst", "ptc", "quat"],
+    technicalNote:
+      "General information: TBAB is hygroscopic and deliquescent in humid atmospheres; storage in tightly closed containers in a cool, dry area is standard industry practice. This note provides general chemical context.",
+    seo: {
+      title: "Tetrabutyl Ammonium Bromide (TBAB) | CAS 1643-19-2",
+      description:
+        "Tetrabutyl ammonium bromide (TBAB, CAS 1643-19-2), high-purity phase transfer catalyst for synthesis and industry. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "tetrabutyl-ammonium-fluoride",
+    name: "Tetrabutyl Ammonium Fluoride",
+    category: "phase-transfer-catalysts",
+    summary: "TBAF — premier fluoride source for selective silyl ether deprotection and phase transfer reactions.",
+    overview:
+      "Tetrabutyl ammonium fluoride (TBAF) is an indispensable reagent in organic and medicinal chemistry, celebrated as the reagent of choice for cleaving silyl protecting groups (such as TBS, TBDPS, TMS and TIPS) under mild conditions. It is also used as a nucleophilic fluoride source, a mild base in carbon-carbon bond forming reactions, and as a phase transfer catalyst. Form (hydrate/solution), assay and packaging are confirmed against each enquiry.",
+    casNumber: "429-41-4",
+    molecularFormula: "C16H36FN",
+    molecularWeight: "261.46 g/mol",
+    typicalGrade: "98%+",
+    physicalForm: "Crystalline solid",
+    appearance: "White to off-white crystalline solid",
+    meltingPoint: "62–63 °C",
+    synonyms: ["TBAF", "Tetrabutylammonium fluoride", "Tetra-n-butylammonium fluoride"],
+    applications: [
+      "Silyl Ether Deprotection",
+      "Fluorination Reagent",
+      "Phase Transfer Catalysis",
+      "Mild Base for Condensations",
+      "Polymer Chemistry",
+    ],
+    keywords: ["tbaf", "tetrabutylammonium fluoride", "deprotection", "silyl ether", "fluoride source", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: TBAF is extremely hygroscopic and typically supplied as a trihydrate or solution in THF to prevent decomposition. Avoid skin and eye contact. This is general chemical context.",
+    seo: {
+      title: "Tetrabutyl Ammonium Fluoride (TBAF) Supplier",
+      description:
+        "Tetrabutyl ammonium fluoride (TBAF, CAS 429-41-4) for silyl deprotection and organic synthesis. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "tetrabutyl-ammonium-hydrogen-sulphate",
+    name: "Tetrabutyl Ammonium Hydrogen Sulphate",
+    category: "phase-transfer-catalysts",
+    summary: "TBAHS — quaternary ammonium phase transfer catalyst and widely used ion-pair chromatography reagent.",
+    overview:
+      "Tetrabutyl ammonium hydrogen sulphate (TBAHS, tetrabutylammonium bisulfate) is a versatile quaternary ammonium salt used as an efficient phase transfer catalyst in biphasic alkylations, oxidations and esterifications. Because of its lipophilic cation and acidic bisulfate anion, it is also widely employed as an ion-pairing reagent in reverse-phase HPLC and chromatography. Assay, purity grade and packing confirmed upon enquiry.",
+    casNumber: "32503-27-8",
+    molecularFormula: "C16H37NO4S",
+    molecularWeight: "339.54 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White crystalline powder",
+    meltingPoint: "169–173 °C",
+    synonyms: ["TBAHS", "Tetrabutylammonium hydrogen sulfate", "Tetrabutylammonium bisulfate"],
+    applications: [
+      "Phase Transfer Catalysis",
+      "Ion-Pair Chromatography",
+      "Alkylation & Acylation Reactions",
+      "Pharmaceutical Synthesis",
+    ],
+    keywords: ["tbahs", "tetrabutylammonium hydrogen sulphate", "tetrabutylammonium bisulfate", "ion pair chromatography", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: TBAHS is hygroscopic and forms acidic aqueous solutions (pH ~1-2). Stored in tightly sealed containers protected from atmospheric moisture. This provides general chemistry context.",
+    seo: {
+      title: "Tetrabutyl Ammonium Hydrogen Sulphate (TBAHS)",
+      description:
+        "Tetrabutyl ammonium hydrogen sulphate (TBAHS, CAS 32503-27-8) for phase transfer catalysis and HPLC ion-pairing. Ahmedabad, India — request a quote.",
+    },
+  },
+  {
+    slug: "tetrabutyl-ammonium-iodide",
+    name: "Tetrabutyl Ammonium Iodide",
+    category: "phase-transfer-catalysts",
+    summary: "TBAI — quaternary ammonium iodide catalyst for enhanced nucleophilic substitutions and cross-coupling.",
+    overview:
+      "Tetrabutyl ammonium iodide (TBAI) is a quaternary ammonium phase transfer catalyst that combines the phase-shuttling capabilities of the tetrabutylammonium cation with the nucleophilic catalytic enhancement of the iodide anion. In substitution reactions, catalytic TBAI in situ generates reactive alkyl iodides from less reactive alkyl chlorides or bromides, dramatically speeding up reactions. Specification, purity and packaging confirmed against enquiry.",
+    casNumber: "311-28-4",
+    molecularFormula: "C16H36IN",
+    molecularWeight: "369.37 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White to light yellow crystalline powder",
+    meltingPoint: "144–147 °C",
+    synonyms: ["TBAI", "Tetrabutylammonium iodide", "Tetra-n-butylammonium iodide"],
+    applications: [
+      "Phase Transfer Catalysis",
+      "Nucleophilic Substitution",
+      "Etherification & Esterification",
+      "Electrolyte & Analytical Reagent",
+    ],
+    keywords: ["tbai", "tetrabutylammonium iodide", "phase transfer catalyst", "quaternary ammonium", "nucleophilic substitution", "ptc"],
+    technicalNote:
+      "General information: TBAI is sensitive to light and moisture; prolonged exposure to air/light can cause discoloration due to trace iodine liberation. Stored in opaque, airtight containers. This is general chemistry context.",
+    seo: {
+      title: "Tetrabutyl Ammonium Iodide (TBAI) | CAS 311-28-4",
+      description:
+        "Tetrabutyl ammonium iodide (TBAI, CAS 311-28-4) for nucleophilic substitution and phase transfer catalysis. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "tetraethyl-ammonium-bromide",
+    name: "Tetraethyl Ammonium Bromide",
+    category: "phase-transfer-catalysts",
+    summary: "TEAB — compact quaternary ammonium bromide catalyst for organic synthesis and electrochemical applications.",
+    overview:
+      "Tetraethyl ammonium bromide (TEAB) is a water-soluble quaternary ammonium salt used as a phase transfer catalyst in organic synthesis and as a source of tetraethylammonium ions in chemical and electrochemical processes. It facilitates biphasic halogenations, substitutions and condensations, and serves as a supporting electrolyte. Assay and packaging confirmed against each customer enquiry.",
+    casNumber: "71-91-0",
+    molecularFormula: "C8H20BrN",
+    molecularWeight: "210.16 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White to off-white crystalline powder",
+    meltingPoint: "284–286 °C (dec.)",
+    synonyms: ["TEAB", "Tetraethylammonium bromide", "Tetramethylene ammonium bromide"],
+    applications: [
+      "Phase Transfer Catalysis",
+      "Organic Synthesis",
+      "Electrolyte in Electrochemistry",
+      "Pharmaceutical Intermediates",
+    ],
+    keywords: ["teab", "tetraethylammonium bromide", "quaternary ammonium", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: TEAB is hygroscopic and decomposes at elevated temperatures near its melting point. Standard storage requires tightly closed containers in a dry, ventilated area. This note reflects general scientific literature.",
+    seo: {
+      title: "Tetraethyl Ammonium Bromide (TEAB) | CAS 71-91-0",
+      description:
+        "Tetraethyl ammonium bromide (TEAB, CAS 71-91-0) for phase transfer catalysis and electrochemical synthesis. Ahmedabad, India — request a quotation.",
+    },
+  },
+  {
+    slug: "tetraethyl-ammonium-tetrafluoroborate",
+    name: "Tetraethyl Ammonium Tetrafluoro Borate",
+    category: "phase-transfer-catalysts",
+    summary: "TEABF4 — high-conductivity quaternary ammonium electrolyte salt for supercapacitors and electro-synthesis.",
+    overview:
+      "Tetraethyl ammonium tetrafluoroborate (TEABF4) is a quaternary ammonium salt renowned for its high electrochemical stability window, high ionic conductivity and wide temperature tolerance. It is the premier electrolyte salt in double-layer electric capacitors (supercapacitors), lithium-ion battery research, and electrochemical synthesis, as well as a phase transfer reagent and ionic material. Assay, water content and packing confirmed upon enquiry.",
+    casNumber: "429-06-1",
+    molecularFormula: "C8H20BF4N",
+    molecularWeight: "217.06 g/mol",
+    typicalGrade: "99%+",
+    physicalForm: "Crystalline powder",
+    appearance: "White crystalline powder",
+    meltingPoint: "375–378 °C (dec.)",
+    synonyms: ["TEABF4", "Tetraethylammonium tetrafluoroborate", "Tetraethylammonium fluoborate", "Tetraethyl ammonium tetrafluoro borate"],
+    applications: [
+      "Supercapacitor Electrolyte",
+      "Electrochemical Synthesis",
+      "Phase Transfer & Ionic Media",
+      "Energy Storage Materials",
+      "Organic Synthesis",
+    ],
+    keywords: ["teabf4", "tetraethylammonium tetrafluoroborate", "electrolyte", "supercapacitor", "phase transfer catalyst", "ptc"],
+    technicalNote:
+      "General information: TEABF4 for electrochemical applications is typically controlled for ultra-low moisture and trace halide content. Stored in tightly sealed containers under dry conditions. This provides general chemical context.",
+    seo: {
+      title: "Tetraethyl Ammonium Tetrafluoroborate (TEABF4)",
+      description:
+        "Tetraethyl ammonium tetrafluoroborate (TEABF4, CAS 429-06-1) for supercapacitors and electrochemical applications. Ahmedabad, India.",
+    },
+  },
 ]
 
 /* ------------------------------------------------------------------------ */
@@ -1383,6 +1687,16 @@ const searchSynonyms: Record<string, string[]> = {
   quat: ["quaternary ammonium", "phosphonium"],
   teba: ["benzyl triethyl ammonium chloride"],
   tebac: ["benzyl triethyl ammonium chloride"],
+  tbab: ["tetrabutyl ammonium bromide"],
+  tbaf: ["tetrabutyl ammonium fluoride"],
+  tbahs: ["tetrabutyl ammonium hydrogen sulphate"],
+  tbai: ["tetrabutyl ammonium iodide"],
+  teab: ["tetraethyl ammonium bromide"],
+  teabf4: ["tetraethyl ammonium tetrafluoroborate"],
+  etppb: ["ethyl triphenyl phosphonium bromide"],
+  etppi: ["ethyl triphenyl phosphonium iodide"],
+  mtppb: ["methyl triphenyl phosphonium bromide"],
+  mmppc: ["methoxymethyl triphenyl phosphonium chloride"],
   wittig: ["phosphonium"],
 }
 
