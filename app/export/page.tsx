@@ -4,6 +4,7 @@ import { Boxes, ClipboardList, FileCheck2, MessageSquare, Ship, TriangleAlert } 
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
+import { SiteImage } from "@/components/site-media"
 import { Reveal } from "@/components/reveal"
 import { CtaBand } from "@/components/cta-band"
 import { pageMetadata } from "@/lib/seo"
@@ -67,7 +68,11 @@ export default function ExportPage() {
       <Breadcrumbs trail={[{ name: "Export", href: "/export" }]} />
 
       <section className="relative overflow-hidden bg-forest-900 text-white">
-        <div aria-hidden="true" className="grid-texture absolute inset-0 opacity-70" />
+        <SiteImage name="warehouse" priority className="absolute inset-0" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-r from-forest-950/95 via-forest-900/85 to-forest-900/40"
+        />
         <Container className="relative py-16 sm:py-20 lg:py-24">
           <div className="max-w-3xl">
             <p className="eyebrow text-brass-400">

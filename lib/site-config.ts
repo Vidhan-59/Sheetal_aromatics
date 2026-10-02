@@ -20,7 +20,7 @@ export const siteConfig = {
 
   tagline: "Manufacturer of Aromatic & Organic Chemicals",
   shortDescription:
-    "Aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts for B2B and export buyers. Ahmedabad, India.",
+    "Manufacturer, supplier and exporter of aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts for B2B and export buyers. Ahmedabad, India.",
 
   address: {
     line1: "A/7, Tirth Industrial Park 3A",
@@ -135,13 +135,31 @@ export function whatsappLink(message: string) {
   return `https://wa.me/${siteConfig.contact.phonePrimary.digits}?text=${encodeURIComponent(message)}`
 }
 
-export function mailtoLink(subject: string, body?: string) {
-  const params = new URLSearchParams({ subject })
+/**
+ * Clean mailto: link compliant with RFC 6068 (uses %20 for spaces instead of
+ * '+' so email clients like Outlook, Apple Mail and Gmail web don't display
+ * literal '+' signs in subject and body).
+ */
+export function mailtoLink(subject?: string, body?: string) {
+  const parts: string[] = []
+  if (subject) parts.push(`subject=${encodeURIComponent(subject)}`)
+  if (body) parts.push(`body=${encodeURIComponent(body)}`)
+  return `mailto:${siteConfig.contact.email}${parts.length ? `?${parts.join("&")}` : ""}`
+}
+
+/** Direct compose link in Gmail web with prefilled recipient, subject and body. */
+export function gmailLink(subject?: string, body?: string) {
+  const params = new URLSearchParams()
+  params.set("view", "cm")
+  params.set("fs", "1")
+  params.set("to", siteConfig.contact.email)
+  if (subject) params.set("su", subject)
   if (body) params.set("body", body)
-  return `mailto:${siteConfig.contact.email}?${params.toString()}`
+  return `https://mail.google.com/mail/?${params.toString()}`
 }
 
 /** Standard enquiry wording reused by product pages, WhatsApp and mailto links. */
 export function productEnquiryMessage(productName: string) {
   return `Hello, I am interested in purchasing ${productName}. Please share availability, specification, MOQ, packaging and quotation.`
 }
+

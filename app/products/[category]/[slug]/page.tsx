@@ -11,6 +11,7 @@ import { MolecularFormula } from "@/components/product-visual"
 import { ProductImage } from "@/components/product-image"
 import { ProductCard } from "@/components/product-card"
 import { QuoteForm } from "@/components/quote-form"
+import { EmailEnquiryButton } from "@/components/email-enquiry-button"
 import { JsonLd } from "@/components/json-ld"
 import { BASE_URL, pageMetadata, productSchema } from "@/lib/seo"
 import { mailtoLink, productEnquiryMessage, siteConfig, whatsappLink } from "@/lib/site-config"
@@ -217,12 +218,12 @@ export default async function ProductPage({ params }: { params: Params }) {
                     WhatsApp
                   </a>
                 </Button>
-                <Button asChild size="lg" variant="ghost">
-                  <a href={mailtoLink(`Enquiry: ${product.name}`, enquiry)}>
-                    <Mail aria-hidden="true" className="h-4 w-4" />
-                    Email
-                  </a>
-                </Button>
+                <EmailEnquiryButton
+                  subject={`Enquiry: ${product.name}`}
+                  body={enquiry}
+                  variant="ghost"
+                  size="lg"
+                />
               </div>
 
               <p className="mt-4 text-xs leading-relaxed text-muted-foreground">

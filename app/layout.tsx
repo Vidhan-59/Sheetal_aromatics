@@ -1,4 +1,5 @@
 import type React from "react"
+import { Suspense } from "react"
 import type { Metadata, Viewport } from "next"
 import { Archivo, Inter, Plus_Jakarta_Sans } from "next/font/google"
 
@@ -7,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader, MobileQuoteBar } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { JsonLd } from "@/components/json-ld"
+import { VisitorTracker } from "@/components/visitor-tracker"
 import { BASE_URL, organizationSchema, websiteSchema } from "@/lib/seo"
 import { siteConfig } from "@/lib/site-config"
 
@@ -76,6 +78,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <Suspense fallback={null}>
+          <VisitorTracker />
+        </Suspense>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <a
             href="#main"

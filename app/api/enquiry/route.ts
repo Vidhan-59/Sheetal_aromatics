@@ -1,8 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import nodemailer from "nodemailer"
+import { Resend } from "resend"
 
 import { addressLines, siteConfig, whatsappLink } from "@/lib/site-config"
+import { logEnquiry } from "@/lib/logger"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -95,29 +97,66 @@ function makeReference(now: Date): string {
   return `SA-${ymd}-${suffix}`
 }
 
-function buildTransport() {
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE, GMAIL_USER, GMAIL_APP_PASSWORD } = process.env
+interface OutgoingMail {
+  from: string
+  to: string
+  replyTo?: string
+  subject: string
+  text: string
+  html: string
+}
 
-  if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+interface Mailer {
+  /** Bare sender address, e.g. quotes@sheetalaromatics.com. */
+  from: string
+  /** True when the sender is Resend's shared test address, which can only mail the account owner. */
+  testSender: boolean
+  send(mail: OutgoingMail): Promise<void>
+}
+
+/**
+ * Picks the first configured provider: Resend (API key), then any SMTP server,
+ * then Gmail with an App Password.
+ */
+function buildTransport(): Mailer | null {
+  const { RESEND_API_KEY, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE, GMAIL_USER, GMAIL_APP_PASSWORD } =
+    process.env
+
+  if (RESEND_API_KEY) {
+    const resend = new Resend(RESEND_API_KEY)
+    // onboarding@resend.dev works before a domain is verified, but only for mail to the Resend account owner.
+    const from = process.env.RESEND_FROM ?? process.env.CONTACT_FROM ?? "onboarding@resend.dev"
     return {
-      transporter: nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: Number(SMTP_PORT ?? 587),
-        secure: SMTP_SECURE === "true" || Number(SMTP_PORT) === 465,
-        auth: { user: SMTP_USER, pass: SMTP_PASS },
-      }),
-      from: process.env.CONTACT_FROM ?? SMTP_USER,
+      from,
+      testSender: from.endsWith("@resend.dev"),
+      async send(mail) {
+        // The SDK reports API failures in `error` rather than throwing.
+        const { error } = await resend.emails.send(mail)
+        if (error) throw new Error(`Resend ${error.name}: ${error.message}`)
+      },
     }
   }
 
-  if (GMAIL_USER && GMAIL_APP_PASSWORD) {
+  const smtp = SMTP_HOST && SMTP_USER && SMTP_PASS
+  if (smtp || (GMAIL_USER && GMAIL_APP_PASSWORD)) {
+    const transporter = smtp
+      ? nodemailer.createTransport({
+          host: SMTP_HOST,
+          port: Number(SMTP_PORT ?? 587),
+          secure: SMTP_SECURE === "true" || Number(SMTP_PORT) === 465,
+          auth: { user: SMTP_USER, pass: SMTP_PASS },
+        })
+      : nodemailer.createTransport({
+          service: "gmail",
+          // Google shows App Passwords in groups of four; accept them pasted with spaces.
+          auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD!.replace(/\s+/g, "") },
+        })
     return {
-      transporter: nodemailer.createTransport({
-        service: "gmail",
-        // Google shows App Passwords in groups of four; accept them pasted with spaces.
-        auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD.replace(/\s+/g, "") },
-      }),
-      from: process.env.CONTACT_FROM ?? GMAIL_USER,
+      from: process.env.CONTACT_FROM ?? (smtp ? SMTP_USER! : GMAIL_USER!),
+      testSender: false,
+      async send(mail) {
+        await transporter.sendMail(mail)
+      },
     }
   }
 
@@ -319,17 +358,36 @@ export async function POST(request: NextRequest) {
   const receivedAt = new Date()
   const reference = makeReference(receivedAt)
   const team = teamEmail(data, reference, receivedAt)
+  const clientIp = clientKey(request)
 
   const mail = buildTransport()
 
   if (!mail) {
-    // No credentials configured — log rather than lose the enquiry, and tell
+    // No credentials configured — log immediately so the quote is NEVER lost, and tell
     // the visitor honestly instead of showing a false success message.
-    console.error("[enquiry] No mail transport configured. Enquiry not delivered:\n" + team.text)
+    console.error("[enquiry] No mail transport configured. Enquiry recorded in logs/enquiries.log:\n" + team.text)
+    await logEnquiry({
+      reference,
+      kind: data.kind,
+      name: data.name,
+      company: data.company,
+      email: data.email,
+      phone: data.phone,
+      country: data.country,
+      product: data.product,
+      quantity: data.quantity,
+      specification: data.specification,
+      message: data.message,
+      page: data.page,
+      ip: clientIp,
+      emailDelivered: false,
+      error: "No mail transport configured (set RESEND_API_KEY, SMTP_* or GMAIL_* in the environment)",
+    })
+
     return NextResponse.json(
       {
         ok: false,
-        error: `The enquiry form is not connected to email yet. Please write to ${siteConfig.contact.email} and we will respond.`,
+        error: `The enquiry form is not connected to email yet. Please write to ${siteConfig.contact.email} and we will respond. (Your quote Ref ${reference} has been logged)`,
       },
       { status: 503 },
     )
@@ -338,16 +396,52 @@ export async function POST(request: NextRequest) {
   const inbox = process.env.CONTACT_TO ?? siteConfig.contact.email
 
   try {
-    await mail.transporter.sendMail({
-      from: `"${siteConfig.name} Website" <${mail.from}>`,
+    await mail.send({
+      from: `${siteConfig.name} Website <${mail.from}>`,
       to: inbox,
       replyTo: sanitizeHeader(data.email),
       subject: team.subject,
       text: team.text,
       html: team.html,
     })
+
+    await logEnquiry({
+      reference,
+      kind: data.kind,
+      name: data.name,
+      company: data.company,
+      email: data.email,
+      phone: data.phone,
+      country: data.country,
+      product: data.product,
+      quantity: data.quantity,
+      specification: data.specification,
+      message: data.message,
+      page: data.page,
+      ip: clientIp,
+      emailDelivered: true,
+    })
   } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error)
     console.error(`[enquiry] ${reference} failed to send:`, error)
+    await logEnquiry({
+      reference,
+      kind: data.kind,
+      name: data.name,
+      company: data.company,
+      email: data.email,
+      phone: data.phone,
+      country: data.country,
+      product: data.product,
+      quantity: data.quantity,
+      specification: data.specification,
+      message: data.message,
+      page: data.page,
+      ip: clientIp,
+      emailDelivered: false,
+      error: errMsg,
+    })
+
     return NextResponse.json(
       { ok: false, error: `We could not send your enquiry. Please email ${siteConfig.contact.email} directly.` },
       { status: 502 },
@@ -357,11 +451,12 @@ export async function POST(request: NextRequest) {
   // The buyer's acknowledgement is best-effort: the enquiry has already reached
   // the team, so a failure here is logged but never reported as a failed send.
   let acknowledged = false
-  if (process.env.CONTACT_AUTOREPLY !== "false") {
+  // Skipped while on Resend's test sender, which cannot deliver to buyers' addresses.
+  if (process.env.CONTACT_AUTOREPLY !== "false" && !mail.testSender) {
     const ack = customerEmail(data, reference)
     try {
-      await mail.transporter.sendMail({
-        from: `"${siteConfig.name}" <${mail.from}>`,
+      await mail.send({
+        from: `${siteConfig.name} <${mail.from}>`,
         to: sanitizeHeader(data.email),
         replyTo: inbox,
         subject: ack.subject,

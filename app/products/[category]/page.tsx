@@ -6,12 +6,21 @@ import { ArrowRight } from "lucide-react"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
 import { CategoryGrid } from "@/components/category-grid"
+import { SiteImage, type SiteImageName } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
 import { getCategory, getProductsByCategory, productCategories } from "@/lib/products-data"
 
 type Params = Promise<{ category: string }>
+
+/** Header photography for categories that have a fitting image. */
+const categoryBanners: Partial<Record<string, SiteImageName>> = {
+  "essential-oils": "botanicals",
+  "aromatic-chemicals": "botanicals",
+  "pharma-intermediates": "qc-lab",
+  "phase-transfer-catalysts": "plant",
+}
 
 export function generateStaticParams() {
   return productCategories.map((category) => ({ category: category.slug }))
@@ -43,6 +52,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
   if (!category) notFound()
 
   const products = getProductsByCategory(category.slug)
+  const banner = categoryBanners[category.slug]
   const others = productCategories.filter((c) => c.slug !== category.slug)
 
   return (
@@ -59,12 +69,19 @@ export default async function CategoryPage({ params }: { params: Params }) {
 
       <Section tone="paper" spacing="tight">
         <Container>
-          <SectionHeading
-            as="h1"
-            eyebrow={`${products.length} products`}
-            title={category.name}
-            description={category.intro}
-          />
+          <div className={banner ? "grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16" : undefined}>
+            <SectionHeading
+              as="h1"
+              eyebrow={`${products.length} products`}
+              title={category.name}
+              description={category.intro}
+            />
+            {banner && (
+              <div className="aspect-[16/10] overflow-hidden rounded-xl border border-border shadow-md">
+                <SiteImage name={banner} priority sizes="(min-width: 1024px) 520px, 100vw" />
+              </div>
+            )}
+          </div>
         </Container>
       </Section>
 

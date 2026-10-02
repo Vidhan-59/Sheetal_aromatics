@@ -65,7 +65,7 @@ export function SiteHeader() {
           </div>
           <div className="flex items-center gap-5">
             <span className="text-forest-100/75">
-              Established {siteConfig.establishedYear} · Ahmedabad, India · Export &amp; domestic supply
+              Established {siteConfig.establishedYear} · Ahmedabad, India · Manufacturing, Export &amp; Supply
             </span>
             <ThemeToggle />
           </div>

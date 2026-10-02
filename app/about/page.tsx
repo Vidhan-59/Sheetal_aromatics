@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
+import { SiteImage } from "@/components/site-media"
 import { Reveal } from "@/components/reveal"
 import { CtaBand } from "@/components/cta-band"
 import { pageMetadata } from "@/lib/seo"
@@ -85,24 +86,24 @@ export default function AboutPage() {
               <SectionHeading
                 as="h1"
                 eyebrow={`Established ${siteConfig.establishedYear}`}
-                title="Two decades supplying chemical and natural products"
+                title="Over two decades in chemical manufacturing, supply and export"
                 description={
                   <>
                     <p>
                       Sheetal Aromatics is a {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat. Since{" "}
-                      {siteConfig.establishedYear} we have supplied aromatic chemicals, essential oils, Ayurvedic
+                      {siteConfig.establishedYear} we have been actively engaged in manufacturing, processing and supplying aromatic chemicals, essential oils, Ayurvedic
                       products, metals, pharma intermediates and phase transfer catalysts to manufacturers, formulators, distributors and
-                      importers.
+                      importers worldwide.
                     </p>
                     <p className="mt-4">
-                      The firm is run by its partners, {siteConfig.partners.map((p) => p.name).join(" and ")}. That
-                      matters more than it sounds: the people who source the material are the people who answer your
-                      enquiry, which is why specifications get confirmed properly and awkward questions get straight
+                      The firm is run directly by its partners, {siteConfig.partners.map((p) => p.name).join(" and ")}. That
+                      matters more than it sounds: the people who manage manufacturing and sourcing are the people who answer your
+                      enquiry, which is why specifications get confirmed properly, quality parameters are strictly met, and technical questions get straight
                       answers.
                     </p>
                     <p className="mt-4">
-                      We are a supplier and exporter, not a marketplace. The catalogue on this site reflects what we
-                      handle regularly — and where we cannot help, we would rather tell you than take the order.
+                      We are a manufacturer, supplier and exporter, not a trading marketplace. The catalogue on this site reflects the materials we
+                      produce and supply regularly with direct quality control — and where we cannot help, we would rather tell you than take the order.
                     </p>
                   </>
                 }
@@ -163,6 +164,10 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
+
+          <div className="mt-14 aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
+            <SiteImage name="plant" sizes="(min-width: 1280px) 1200px, 100vw" />
+          </div>
         </Container>
       </Section>
 
@@ -191,11 +196,16 @@ export default function AboutPage() {
       <Section tone="paper">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-            <SectionHeading
-              eyebrow="How we operate"
-              title="Four things we do not compromise on"
-              description="None of this is unusual. It is simply what a buyer is entitled to expect from a supplier that has been trading for two decades."
-            />
+            <div>
+              <SectionHeading
+                eyebrow="How we operate"
+                title="Four things we do not compromise on"
+                description="None of this is unusual. It is simply what a buyer is entitled to expect from a supplier that has been trading for two decades."
+              />
+              <div className="mt-10 aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
+                <SiteImage name="qc-lab" sizes="(min-width: 1024px) 480px, 100vw" />
+              </div>
+            </div>
             <ul className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
               {principles.map((principle, i) => (
                 <Reveal as="li" key={principle.title} delay={i * 70}>

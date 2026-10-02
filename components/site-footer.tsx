@@ -28,7 +28,7 @@ export function SiteFooter() {
         <div className="lg:col-span-4">
           <Logo size="md" inverted showTagline={false} />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-forest-100/75">
-            A {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat, supplying aromatic chemicals, essential
+            A {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat, manufacturing and supplying aromatic chemicals, essential
             oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts to B2B and export customers since{" "}
             {siteConfig.establishedYear}.
           </p>

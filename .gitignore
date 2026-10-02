@@ -26,3 +26,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# enquiry and visitor logs (contain buyer contact details)
+/logs/

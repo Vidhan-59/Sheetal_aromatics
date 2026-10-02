@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Container, Eyebrow, Section, SectionHeading } from "@/components/layout-primitives"
 import { Reveal } from "@/components/reveal"
 import { ProductImage } from "@/components/product-image"
+import { QualityLabVideo, SiteImage } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { FaqList } from "@/components/faq-list"
 import { JsonLd } from "@/components/json-ld"
@@ -103,11 +104,11 @@ export default function HomePage() {
             </Eyebrow>
 
             <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">
-              Chemical, aromatic and natural product supply for global markets
+              Chemical, aromatic and natural product manufacturing &amp; global supply
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/85">
-              {yearsOfExperience}+ years supplying aromatic chemicals, essential oils, Ayurvedic products, metals,
+              {yearsOfExperience}+ years in manufacturing, processing and supply of aromatic chemicals, essential oils, Ayurvedic products, metals,
               pharma intermediates and phase transfer catalysts to manufacturers, distributors, importers and
               procurement teams.
             </p>
@@ -285,6 +286,20 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
+
+          <Reveal className="mt-14">
+            <div className="relative aspect-video overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
+              <QualityLabVideo />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-forest-950/70 via-forest-950/10 to-transparent"
+              />
+              <p className="absolute bottom-5 left-5 right-5 max-w-xl text-sm font-medium leading-relaxed text-white sm:bottom-7 sm:left-7 sm:text-base">
+                Every enquiry is matched against the specification you work to — grade, assay and documentation
+                confirmed before an order is placed.
+              </p>
+            </div>
+          </Reveal>
         </Container>
       </Section>
 
@@ -304,6 +319,9 @@ export default function HomePage() {
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Link>
               </Button>
+              <div className="mt-10 aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-md">
+                <SiteImage name="warehouse" sizes="(min-width: 1024px) 560px, 100vw" />
+              </div>
             </div>
 
             <ol className="relative space-y-8 border-l border-border pl-8">
