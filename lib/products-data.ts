@@ -25,6 +25,7 @@ export type CategorySlug =
   | "metals"
   | "pharma-intermediates"
   | "phase-transfer-catalysts"
+  | "food-pharma-ingredients"
 
 export type VisualForm =
   | "liquid"
@@ -115,7 +116,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "Our aromatic chemicals range covers the benzyl and isoamyl ester family, aromatic alcohols, salicylates and specialty crystals used across fragrance houses, flavour compounders, cosmetic manufacturers and industrial formulators. Each enquiry is handled against your own specification sheet — share the grade, purity and packaging you work to and we will respond with availability and a quotation.",
     seo: {
-      title: "Aromatic Chemicals Supplier & Exporter",
+      title: "Aromatic Chemicals Supplier in Ahmedabad, India",
       description:
         "Benzyl acetate, benzyl alcohol, benzyl benzoate, isoamyl acetate, methyl salicylate, menthol and more, from Ahmedabad, India. Request a quotation.",
     },
@@ -130,7 +131,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "We supply steam-distilled essential oils alongside the isolated aroma compounds derived from them, such as eugenol, methyl eugenol and anethole. Oils are sourced against the constituent profile our customers work to; specification sheets and sampling arrangements are discussed at enquiry stage.",
     seo: {
-      title: "Essential Oils Supplier & Exporter, India",
+      title: "Essential Oils Supplier & Exporter, Ahmedabad",
       description:
         "Lemongrass, eucalyptus, clove, peppermint, patchouli, sandalwood oils plus eugenol and anethole, from Ahmedabad, India. Request a quotation.",
     },
@@ -146,7 +147,7 @@ export const productCategories: ProductCategory[] = [
       "Our Ayurvedic range covers both whole herbs and raw materials and the milled powders produced from them. Buyers working to a mesh size, assay marker or moisture limit should share those requirements with the enquiry so the material can be sourced and quoted against the correct specification.",
     groups: ["Herbs & Raw Materials", "Powders"],
     seo: {
-      title: "Ayurvedic Herbs & Powders Supplier, India",
+      title: "Ayurvedic Raw Material Supplier, Ahmedabad",
       description:
         "Ashwagandha, Amla, Harad, Baheda, Shatavari, Triphala, Neem, Tulsi, Moringa and more, as herbs or milled powders. Ahmedabad, India.",
     },
@@ -176,7 +177,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "Our pharma intermediates range supports customers manufacturing active ingredients and fine chemicals. Enquiries are handled against your specification — share the assay, impurity limits and documentation you require and we will confirm what can be supplied and quote accordingly.",
     seo: {
-      title: "Pharma Intermediates Supplier, India",
+      title: "Pharma Intermediates Supplier, Ahmedabad",
       description:
         "2-Mercapto-5-methoxybenzimidazole, diphenyl acetonitrile, diphenyl acetic acid and related building blocks. Ahmedabad, India — request a quotation.",
     },
@@ -194,6 +195,21 @@ export const productCategories: ProductCategory[] = [
       title: "Phase Transfer Catalysts Supplier, India",
       description:
         "TEBAC, TBAB, TBAF, TBAI, triphenyl phosphonium halides, and quaternary ammonium catalysts from Ahmedabad, India.",
+    },
+  },
+  {
+    slug: "food-pharma-ingredients",
+    name: "Food & Pharma Ingredients",
+    cover: "sodium-benzoate",
+    tagline: "Preservatives, humectants and excipients",
+    description:
+      "Food preservatives and pharmaceutical raw materials including sodium benzoate, potassium sorbate, calcium propionate and sorbitol 70% solution.",
+    intro:
+      "Our food and pharma ingredients range covers the preservatives, humectants and excipients used by food and beverage manufacturers, bakeries, pharmaceutical formulators and personal-care brands — sodium benzoate, potassium sorbate, calcium propionate and sorbitol 70% solution. Food- and pharma-grade use is governed by the regulations of the destination market, so please state the grade, pharmacopoeia or food-standard reference and documentation you require with the enquiry.",
+    seo: {
+      title: "Food & Pharma Ingredients Supplier, Gujarat",
+      description:
+        "Sodium benzoate, potassium sorbate, calcium propionate and sorbitol 70% solution for food, pharma and personal care. Supplier in Ahmedabad, India.",
     },
   },
 ]
@@ -1341,7 +1357,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: ethyl triphenyl phosphonium iodide is light-sensitive and hygroscopic; standard practice requires storage in light-resistant, sealed containers under dry conditions. This is general scientific context about the substance.",
     seo: {
-      title: "Ethyl Triphenyl Phosphonium Iodide Supplier | CAS 4736-60-1",
+      title: "Ethyl Triphenyl Phosphonium Iodide | CAS 4736-60-1",
       description:
         "Ethyl triphenyl phosphonium iodide (CAS 4736-60-1) for Wittig olefination and resin curing catalysis. Ahmedabad, India — request a quotation.",
     },
@@ -1401,7 +1417,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: methoxymethyl triphenyl phosphonium chloride is hygroscopic and may decompose if exposed to excessive moisture or heat. Stored under dry conditions. This represents general scientific information.",
     seo: {
-      title: "Methoxymethyl Triphenyl Phosphonium Chloride | CAS 4009-98-7",
+      title: "Methoxymethyl Triphenyl Phosphonium Chloride",
       description:
         "Methoxymethyl triphenyl phosphonium chloride (CAS 4009-98-7) for Wittig homologation and fine chemical synthesis. Ahmedabad, India.",
     },
@@ -1589,6 +1605,99 @@ export const productsDatabase: Product[] = [
         "Tetraethyl ammonium tetrafluoroborate (TEABF4, CAS 429-06-1) for supercapacitors and electrochemical applications. Ahmedabad, India.",
     },
   },
+  /* --------------------------- Food & Pharma Ingredients ---------------- */
+  {
+    slug: "sodium-benzoate",
+    name: "Sodium Benzoate",
+    category: "food-pharma-ingredients",
+    summary: "Widely used preservative (E211) for acidic foods, beverages, pharmaceuticals and personal care.",
+    overview:
+      "Sodium benzoate is the sodium salt of benzoic acid and one of the most widely used preservatives in acidic foods and beverages, sauces, pickles, syrups and liquid pharmaceutical and personal-care formulations. Grade (food, pharma or technical), form and documentation are confirmed against each enquiry.",
+    casNumber: "532-32-1",
+    molecularFormula: "C7H5NaO2",
+    molecularWeight: "144.10 g/mol",
+    physicalForm: "Powder / Granules",
+    synonyms: ["E211", "Benzoic acid sodium salt", "Sodium benzenecarboxylate"],
+    applications: [
+      "Food & Beverage Preservation",
+      "Pharmaceutical Formulation",
+      "Cosmetics & Personal Care",
+      "Industrial Corrosion Inhibition",
+    ],
+    keywords: ["sodium benzoate", "e211", "preservative", "food grade", "benzoate", "sodium benzoate supplier gujarat"],
+    technicalNote:
+      "General information: sodium benzoate acts through undissociated benzoic acid, so it is most effective in acidic products (roughly pH 4.5 and below). Permitted uses and limits in food are set by the regulations of each market, such as FSSAI in India. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
+    seo: {
+      title: "Sodium Benzoate Supplier in Gujarat | CAS 532-32-1",
+      description:
+        "Sodium benzoate (E211, CAS 532-32-1) for food, beverage, pharma and personal-care preservation. Supplier in Ahmedabad, Gujarat — request a quote.",
+    },
+  },
+  {
+    slug: "potassium-sorbate",
+    name: "Potassium Sorbate",
+    category: "food-pharma-ingredients",
+    summary: "Mould and yeast inhibitor (E202) for bakery, dairy, beverages, wine and personal care.",
+    overview:
+      "Potassium sorbate is the potassium salt of sorbic acid, used to inhibit moulds and yeasts in baked goods, cheese, beverages, wine, dried fruit and cosmetic formulations. Grade, form (granular or powder) and documentation are confirmed against each enquiry.",
+    casNumber: "24634-61-5",
+    molecularFormula: "C6H7KO2",
+    molecularWeight: "150.22 g/mol",
+    physicalForm: "Granules / Powder",
+    synonyms: ["E202", "Sorbic acid potassium salt", "Potassium (E,E)-hexa-2,4-dienoate"],
+    applications: ["Food & Beverage Preservation", "Bakery & Dairy", "Wine & Beverages", "Cosmetics & Personal Care"],
+    keywords: ["potassium sorbate", "e202", "sorbate", "preservative", "mould inhibitor", "potassium sorbate supplier india"],
+    technicalNote:
+      "General information: sorbates remain effective up to a higher pH than benzoates (roughly pH 6.5), which is why they are common in bakery and dairy. Permitted uses and limits are set by each market's food regulations. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
+    seo: {
+      title: "Potassium Sorbate Supplier in India | CAS 24634-61-5",
+      description:
+        "Potassium sorbate (E202, CAS 24634-61-5), a mould and yeast inhibitor for bakery, dairy, beverages and cosmetics. Ahmedabad, India — request a quote.",
+    },
+  },
+  {
+    slug: "calcium-propionate",
+    name: "Calcium Propionate",
+    category: "food-pharma-ingredients",
+    summary: "Mould inhibitor (E282) used mainly in bread and bakery products, and in animal feed.",
+    overview:
+      "Calcium propionate is the calcium salt of propionic acid and the standard mould inhibitor in bread and other yeast-raised bakery products, where it does not interfere with fermentation. It is also used in processed foods and animal feed. Grade and documentation are confirmed against each enquiry.",
+    casNumber: "4075-81-4",
+    molecularFormula: "C6H10CaO4",
+    molecularWeight: "186.22 g/mol",
+    physicalForm: "Powder",
+    synonyms: ["E282", "Calcium dipropionate", "Propanoic acid calcium salt"],
+    applications: ["Bakery Preservation", "Processed Foods", "Animal Feed", "Dairy Products"],
+    keywords: ["calcium propionate", "e282", "bakery preservative", "mould inhibitor", "propionate", "calcium propionate supplier gujarat"],
+    seo: {
+      title: "Calcium Propionate Supplier in Gujarat",
+      description:
+        "Calcium propionate (E282, CAS 4075-81-4), the bakery mould inhibitor for bread, processed foods and feed. Supplier in Ahmedabad, Gujarat — request a quote.",
+    },
+  },
+  {
+    slug: "sorbitol-70-solution",
+    name: "Sorbitol 70% Solution",
+    category: "food-pharma-ingredients",
+    summary: "Aqueous sorbitol solution used as a humectant, sweetener and excipient in pharma, oral care and food.",
+    overview:
+      "Sorbitol 70% solution is an aqueous solution of the sugar alcohol D-sorbitol, used as a humectant and bodying agent in toothpaste, as a sweetener and stabiliser in confectionery and food, and as an excipient in syrups and other liquid pharmaceutical formulations. Crystallising and non-crystallising grades are both traded — please state which you require, with the pharmacopoeia or food standard you work to.",
+    casNumber: "50-70-4",
+    molecularFormula: "C6H14O6",
+    molecularWeight: "182.17 g/mol",
+    typicalGrade: "70% solution",
+    physicalForm: "Liquid (aqueous solution)",
+    synonyms: ["Sorbitol solution 70%", "D-Sorbitol", "D-Glucitol", "E420"],
+    applications: ["Pharmaceutical Excipient", "Oral Care & Toothpaste", "Food & Confectionery", "Cosmetics & Personal Care"],
+    keywords: ["sorbitol", "sorbitol 70", "sorbitol 70% solution", "e420", "humectant", "excipient", "sorbitol supplier ahmedabad"],
+    technicalNote:
+      "General information: the CAS number, formula and molecular weight shown refer to sorbitol itself; the 70% product is its aqueous solution. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
+    seo: {
+      title: "Sorbitol 70% Solution Supplier in Ahmedabad",
+      description:
+        "Sorbitol 70% solution (CAS 50-70-4) for pharmaceutical syrups, toothpaste, food and personal care. Supplier in Ahmedabad, India — request a quote.",
+    },
+  },
 ]
 
 /* ------------------------------------------------------------------------ */
@@ -1698,6 +1807,11 @@ const searchSynonyms: Record<string, string[]> = {
   mtppb: ["methyl triphenyl phosphonium bromide"],
   mmppc: ["methoxymethyl triphenyl phosphonium chloride"],
   wittig: ["phosphonium"],
+  e211: ["sodium benzoate"],
+  e202: ["potassium sorbate"],
+  e282: ["calcium propionate"],
+  e420: ["sorbitol"],
+  preservative: ["sodium benzoate", "potassium sorbate", "calcium propionate"],
 }
 
 function haystack(product: Product): string {
@@ -1759,10 +1873,14 @@ export function searchProducts(query: string, category?: string): Product[] {
  */
 export function productSeoTitle(product: Product): string {
   if (product.seo?.title) return product.seo.title
-  if (product.casNumber && product.name.length <= 22) {
-    return `${product.name} Supplier | CAS ${product.casNumber}`
-  }
-  return `${product.name} Supplier & Exporter`
+  // First candidate that leaves room for the " | Sheetal Aromatics" suffix.
+  const candidates = [
+    product.casNumber && `${product.name} Supplier in Ahmedabad | CAS ${product.casNumber}`,
+    `${product.name} Supplier in Ahmedabad, India`,
+    `${product.name} Supplier & Exporter, India`,
+    `${product.name} Supplier`,
+  ].filter(Boolean) as string[]
+  return candidates.find((t) => t.length <= 46) ?? candidates[candidates.length - 1]
 }
 
 /** Kept at or under 158 characters so search results are not truncated. */
@@ -1770,14 +1888,18 @@ export function productSeoDescription(product: Product): string {
   if (product.seo?.description) return product.seo.description
 
   const identity = product.casNumber ? ` (CAS ${product.casNumber})` : ""
-  const tail = "Ahmedabad, India — request a quotation."
-  const head = `${product.name}${identity} supplied for `
+  const tails = [
+    "Supplier & exporter in Ahmedabad, India since 2005 — request a quote.",
+    "Supplier in Ahmedabad, India — request a quote.",
+  ]
 
-  for (const count of [3, 2, 1]) {
-    const uses = product.applications.slice(0, count).join(", ").toLowerCase()
-    const candidate = `${head}${uses}. ${tail}`
-    if (candidate.length <= 158) return candidate
+  for (const tail of tails) {
+    for (const count of [3, 2, 1]) {
+      const uses = product.applications.slice(0, count).join(", ").toLowerCase()
+      const candidate = `${product.name}${identity} for ${uses}. ${tail}`
+      if (candidate.length <= 158) return candidate
+    }
   }
 
-  return `${product.name}${identity} supplied by Sheetal Aromatics. ${tail}`
+  return `${product.name}${identity} from Sheetal Aromatics. ${tails[1]}`
 }

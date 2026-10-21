@@ -9,6 +9,8 @@ import { productCategories } from "@/lib/products-data"
 const companyLinks = [
   { href: "/about", label: "About Us" },
   { href: "/export", label: "Global Supply & Export" },
+  { href: "/industries", label: "Industries Served" },
+  { href: "/guides", label: "Buyer Guides" },
   { href: "/faq", label: "Buyer FAQs" },
   { href: "/contact", label: "Contact" },
   { href: "/request-a-quote", label: "Request a Quote" },

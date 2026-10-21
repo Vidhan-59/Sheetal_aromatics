@@ -9,6 +9,8 @@ import { SiteHeader, MobileQuoteBar } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { JsonLd } from "@/components/json-ld"
 import { VisitorTracker } from "@/components/visitor-tracker"
+import { Analytics } from "@/components/analytics"
+import { BackToTop, SmoothScroll } from "@/components/smooth-scroll"
 import { BASE_URL, organizationSchema, websiteSchema } from "@/lib/seo"
 import { siteConfig } from "@/lib/site-config"
 
@@ -37,7 +39,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Sheetal Aromatics | Chemical & Natural Product Supplier and Exporter, India",
+    default: "Sheetal Aromatics | Aromatic Chemicals Supplier & Exporter, Ahmedabad",
     template: "%s | Sheetal Aromatics",
   },
   description: siteConfig.shortDescription,
@@ -48,7 +50,11 @@ export const metadata: Metadata = {
   category: "Chemicals",
   formatDetection: { telephone: true, address: false, email: true },
   robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
-  alternates: { canonical: BASE_URL },
+  // Search-console ownership tokens, set in the hosting environment (never hard-coded).
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } } : {}),
+  },
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: [{ url: "/apple-icon.png" }],
@@ -81,6 +87,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Suspense fallback={null}>
           <VisitorTracker />
         </Suspense>
+        <Analytics />
+        <SmoothScroll />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <a
             href="#main"
@@ -94,6 +102,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </main>
           <SiteFooter />
           <MobileQuoteBar />
+          <BackToTop />
         </ThemeProvider>
       </body>
     </html>

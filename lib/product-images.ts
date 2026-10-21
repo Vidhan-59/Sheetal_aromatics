@@ -42,6 +42,10 @@ export type ProductImage =
     }
 
 export const productImages: Record<string, ProductImage> = {
+  "calcium-propionate": { kind: "structure", src: "/images/structures/calcium-propionate.svg", pubchemCid: 19999 },
+  "potassium-sorbate": { kind: "structure", src: "/images/structures/potassium-sorbate.svg", pubchemCid: 23676745 },
+  "sodium-benzoate": { kind: "structure", src: "/images/structures/sodium-benzoate.svg", pubchemCid: 517055 },
+  "sorbitol-70-solution": { kind: "structure", src: "/images/structures/sorbitol-70-solution.svg", pubchemCid: 5780 },
   "2-2-diphenyl-4-bromo-butyronitrile": { kind: "structure", src: "/images/structures/2-2-diphenyl-4-bromo-butyronitrile.svg", pubchemCid: 96575 },
   "2-mercapto-5-methoxybenzimidazole": { kind: "structure", src: "/images/structures/2-mercapto-5-methoxybenzimidazole.svg", pubchemCid: 665603 },
   "2-mercapto-benzimidazole": { kind: "structure", src: "/images/structures/2-mercapto-benzimidazole.svg", pubchemCid: 707035 },

@@ -6,7 +6,8 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
 import { QuoteForm } from "@/components/quote-form"
 import { CtaBand } from "@/components/cta-band"
-import { pageMetadata } from "@/lib/seo"
+import { localBusinessSchema, pageMetadata } from "@/lib/seo"
+import { JsonLd } from "@/components/json-ld"
 import { addressLines, directionsLink, mapsEmbed, mapsLink, siteConfig, whatsappLink } from "@/lib/site-config"
 
 export const metadata: Metadata = pageMetadata({
@@ -55,6 +56,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <JsonLd data={localBusinessSchema()} />
       <Breadcrumbs trail={[{ name: "Contact", href: "/contact" }]} />
 
       <Section tone="paper" spacing="tight">

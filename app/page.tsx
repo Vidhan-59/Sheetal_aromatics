@@ -10,7 +10,8 @@ import { QualityLabVideo, SiteImage } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { FaqList } from "@/components/faq-list"
 import { JsonLd } from "@/components/json-ld"
-import { pageMetadata, faqSchema } from "@/lib/seo"
+import { pageMetadata, faqSchema, localBusinessSchema } from "@/lib/seo"
+import { industries, industryHref } from "@/lib/industries"
 import { siteConfig, yearsOfExperience } from "@/lib/site-config"
 import { featuredFaqs } from "@/lib/faqs"
 import {
@@ -22,9 +23,9 @@ import {
 } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Sheetal Aromatics | Chemical & Natural Product Supplier and Exporter, India",
+  title: "Aromatic Chemicals Supplier & Exporter, Ahmedabad | Sheetal Aromatics",
   description:
-    "Aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts for B2B and export buyers. Ahmedabad, India.",
+    "Aromatic chemicals, essential oils, pharma & food ingredients, phase transfer catalysts and Ayurvedic raw materials from Ahmedabad, India, since 2005.",
   path: "/",
   keywords: [
     "chemical supplier India",
@@ -35,6 +36,9 @@ export const metadata: Metadata = pageMetadata({
     "pharma intermediates supplier",
     "phase transfer catalyst supplier India",
     "chemical supplier Ahmedabad",
+    "aromatic chemicals trader Ahmedabad",
+    "chemical exporter Gujarat",
+    "food grade chemical supplier Gujarat",
     "Sheetal Aromatics",
   ],
 })
@@ -80,14 +84,14 @@ const capabilities = [
 export default function HomePage() {
   const stats = [
     { value: `${yearsOfExperience}+`, label: "Years in the industry" },
-    { value: String(productCategories.length), label: "Product categories" },
-    { value: `${productsDatabase.length}`, label: "Products listed" },
+    { value: siteConfig.productPortfolio, label: "Products in portfolio" },
+    { value: siteConfig.exportCountries, label: "Countries supplied" },
     { value: String(siteConfig.establishedYear), label: "Established" },
   ]
 
   return (
     <>
-      <JsonLd data={faqSchema(featuredFaqs)} />
+      <JsonLd data={[faqSchema(featuredFaqs), localBusinessSchema()]} />
 
       {/* ------------------------------- Hero ------------------------------ */}
       <section className="relative overflow-hidden bg-forest-900 text-white">
@@ -104,7 +108,7 @@ export default function HomePage() {
             </Eyebrow>
 
             <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">
-              Chemical, aromatic and natural product manufacturing &amp; global supply
+              Aromatic chemical manufacturing, supply &amp; export from Ahmedabad, India
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/85">
@@ -344,6 +348,32 @@ export default function HomePage() {
                 </Reveal>
               ))}
             </ol>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------------------- Local / industries -------------------- */}
+      <Section tone="paper" spacing="tight">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <SectionHeading
+              eyebrow="Ahmedabad, Gujarat · India · Export"
+              title="A chemical supplier in Ahmedabad, serving India and 50+ countries"
+              description={`From our office on the Old Ahmedabad–Bhavnagar Highway we supply manufacturers across Gujarat and India's industrial centres, and export to buyers in ${siteConfig.exportCountries} countries. Choose your industry to see the materials it typically sources from us.`}
+            />
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {industries.map((industry) => (
+                <li key={industry.slug}>
+                  <Link
+                    href={industryHref(industry)}
+                    className="group flex h-full flex-col rounded-md border border-border bg-card p-4 transition-colors hover:border-forest-300 hover:bg-secondary"
+                  >
+                    <span className="text-sm font-semibold group-hover:text-primary">{industry.name}</span>
+                    <span className="mt-1 text-xs leading-relaxed text-muted-foreground">{industry.summary}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </Section>

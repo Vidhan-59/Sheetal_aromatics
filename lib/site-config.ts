@@ -13,10 +13,23 @@ export const siteConfig = {
   legalName: "Sheetal Aromatics",
   /** Constitution of the business. */
   legalForm: "Partnership Firm",
-  url: "https://sheetalaromatics.com",
+  /**
+   * Preferred (canonical) origin. Vercel serves the site on www and redirects
+   * the bare domain to it, so canonicals, the sitemap and structured data must
+   * use www too — otherwise every canonical URL points at a redirect.
+   * Override with NEXT_PUBLIC_SITE_URL if the primary domain changes in Vercel.
+   */
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sheetalaromatics.com").replace(/\/$/, ""),
   domain: "sheetalaromatics.com",
 
   establishedYear: 2005,
+
+  /** Scale figures supplied by the company (October 2026). */
+  productPortfolio: "500+",
+  exportCountries: "50+",
+
+  /** Last substantive content update — used as the sitemap lastmod. Update when pages change. */
+  contentUpdated: "2026-10-21",
 
   tagline: "Manufacturer of Aromatic & Organic Chemicals",
   shortDescription:

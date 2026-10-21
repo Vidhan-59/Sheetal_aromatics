@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowRight, Info, Mail, MessageCircle } from "lucide-react"
+import { ArrowRight, FileText, Info, Mail, MessageCircle, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Breadcrumbs } from "@/components/breadcrumbs"
@@ -16,6 +16,7 @@ import { JsonLd } from "@/components/json-ld"
 import { BASE_URL, pageMetadata, productSchema } from "@/lib/seo"
 import { mailtoLink, productEnquiryMessage, siteConfig, whatsappLink } from "@/lib/site-config"
 import { productImageFor } from "@/lib/product-images"
+import { industriesForProduct, industryHref } from "@/lib/industries"
 import {
   categoryName,
   getCategory,
@@ -113,6 +114,10 @@ export default async function ProductPage({ params }: { params: Params }) {
   const category = getCategory(product.category)!
   const related = getRelatedProducts(product)
   const enquiry = productEnquiryMessage(product.name)
+  const productIndustries = industriesForProduct(product)
+  const specRequest = `Hello, please share the specification sheet / COA for ${product.name}${
+    product.casNumber ? ` (CAS ${product.casNumber})` : ""
+  }.`
 
   const specs: { label: string; value: React.ReactNode }[] = [
     { label: "Product name", value: product.name },
@@ -226,6 +231,17 @@ export default async function ProductPage({ params }: { params: Params }) {
                 />
               </div>
 
+              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                <a href={whatsappLink(specRequest)} target="_blank" rel="noopener noreferrer" className="link-underline">
+                  <FileText aria-hidden="true" className="h-3.5 w-3.5" />
+                  Request specifications
+                </a>
+                <a href={`tel:${siteConfig.contact.phonePrimary.e164}`} className="link-underline">
+                  <Phone aria-hidden="true" className="h-3.5 w-3.5" />
+                  Discuss bulk requirements
+                </a>
+              </div>
+
               <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
                 Price, minimum order quantity, packing and lead time are confirmed per enquiry.
               </p>
@@ -300,6 +316,24 @@ export default async function ProductPage({ params }: { params: Params }) {
                         className="rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground"
                       >
                         {synonym}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {productIndustries.length > 0 && (
+                <div>
+                  <h2 className="text-xl font-semibold tracking-tight">Industries served</h2>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {productIndustries.map((industry) => (
+                      <li key={industry.slug}>
+                        <Link
+                          href={industryHref(industry)}
+                          className="inline-block rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-forest-300 hover:text-primary"
+                        >
+                          {industry.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>

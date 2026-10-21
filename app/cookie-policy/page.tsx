@@ -2,10 +2,13 @@ import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal-page"
 import { pageMetadata } from "@/lib/seo"
 import { siteConfig } from "@/lib/site-config"
+import { analyticsEnabled } from "@/lib/analytics"
 
 export const metadata: Metadata = pageMetadata({
   title: "Cookie Policy",
-  description: `What this website stores in your browser. ${siteConfig.name} sets no advertising or analytics cookies.`,
+  description: analyticsEnabled
+    ? `What this website stores in your browser, including the Google Analytics cookies ${siteConfig.name} uses to measure visits.`
+    : `What this website stores in your browser. ${siteConfig.name} sets no advertising or analytics cookies.`,
   path: "/cookie-policy",
 })
 
@@ -15,7 +18,11 @@ export default function CookiePolicyPage() {
       title="Cookie Policy"
       path="/cookie-policy"
       updated="September 2026"
-      intro="A short page, because there is not much to report: this site sets no advertising or analytics cookies."
+      intro={
+        analyticsEnabled
+          ? "This site sets no advertising cookies. It uses Google Analytics to understand how visitors find and use the site, as described below."
+          : "A short page, because there is not much to report: this site sets no advertising or analytics cookies."
+      }
     >
       <section>
         <h2>What we store</h2>
@@ -33,10 +40,24 @@ export default function CookiePolicyPage() {
           <li>No cross-site tracking or profiling.</li>
           <li>No selling or sharing of browsing data.</li>
         </ul>
-        <p>
-          Because nothing here requires consent, this site does not interrupt you with a cookie banner.
-        </p>
+        {!analyticsEnabled && (
+          <p>
+            Because nothing here requires consent, this site does not interrupt you with a cookie banner.
+          </p>
+        )}
       </section>
+
+      {analyticsEnabled && (
+        <section>
+          <h2>Analytics</h2>
+          <p>
+            We use Google Analytics to count visits and see which pages and enquiry options are used, so we can
+            improve the site. Google Analytics sets first-party cookies (named _ga and _ga_*) that last up to two
+            years. The data is aggregated and is not used for advertising. You can block these cookies in your browser
+            settings or with the Google Analytics opt-out browser add-on.
+          </p>
+        </section>
+      )}
 
       <section>
         <h2>Third-party content</h2>

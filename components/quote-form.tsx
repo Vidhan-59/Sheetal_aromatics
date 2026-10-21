@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { categoryName, productsDatabase } from "@/lib/products-data"
 import { siteConfig } from "@/lib/site-config"
+import { trackEvent } from "@/lib/analytics"
 
 type Kind = "quote" | "general"
 
@@ -66,6 +67,8 @@ export function QuoteForm({ defaultProduct = "", defaultMessage = "", kind = "qu
         setStatus("sent")
         setFeedback(result.message)
         setReference(result.reference ?? "")
+        // GA4's recommended lead event — the main organic conversion for this site.
+        trackEvent("generate_lead", { form_kind: kind, product: values.product || "general" })
         setValues({ ...initial, product: defaultProduct })
       } else {
         setStatus("error")

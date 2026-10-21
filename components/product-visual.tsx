@@ -22,6 +22,7 @@ const palettes: Record<CategorySlug, { from: string; to: string; ink: string; ac
   metals: { from: "#F2F4F5", to: "#E1E7E9", ink: "#26363B", accent: "#7A8A90" },
   "pharma-intermediates": { from: "#F0F6F6", to: "#DDEAEA", ink: "#14403E", accent: "#2C6E6A" },
   "phase-transfer-catalysts": { from: "#F2F3F8", to: "#E0E3EF", ink: "#27325A", accent: "#5B6BA8" },
+  "food-pharma-ingredients": { from: "#F8F4EE", to: "#EDE3D3", ink: "#4A3320", accent: "#B07A3A" },
 }
 
 export function categoryPalette(category: CategorySlug) {

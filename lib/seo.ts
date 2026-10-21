@@ -4,6 +4,7 @@ import {
   streetAddress,
   geo,
   mapsLink,
+  mapsShortLink,
   yearsOfExperience,
 } from "@/lib/site-config"
 import {
@@ -139,9 +140,12 @@ export function organizationSchema() {
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: BASE_URL,
+    // Raster logo: Google's logo guidelines need a crawlable image of at least 112×112.
     logo: {
       "@type": "ImageObject",
-      url: `${BASE_URL}/logo/sheetal-aromatics-logo.svg`,
+      url: `${BASE_URL}/icon-512.png`,
+      width: 512,
+      height: 512,
       caption: `${siteConfig.name} logo`,
     },
     image: `${BASE_URL}/opengraph-image`,
@@ -154,12 +158,76 @@ export function organizationSchema() {
     email: siteConfig.contact.email,
     telephone: siteConfig.contact.phonePrimary.e164,
     hasMap: mapsLink,
+    sameAs: [mapsShortLink],
+    areaServed: areaServed,
     knowsAbout: productCategories.map((c) => c.name),
     identifier: siteConfig.registrations.map((r) => ({
       "@type": "PropertyValue",
       name: r.label.replace(/\.$/, ""),
       value: r.value,
     })),
+  }
+}
+
+const areaServed = [
+  { "@type": "City", name: "Ahmedabad" },
+  { "@type": "State", name: "Gujarat" },
+  { "@type": "Country", name: "India" },
+  "Worldwide",
+]
+
+/**
+ * LocalBusiness node for the Ahmedabad office — the verified address, phone,
+ * hours and map pin qualify it. Emitted on the home and contact pages and
+ * linked to the Organization rather than duplicating it.
+ */
+export function localBusinessSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${BASE_URL}/#localbusiness`,
+    name: siteConfig.name,
+    description: siteConfig.shortDescription,
+    url: BASE_URL,
+    image: `${BASE_URL}/opengraph-image`,
+    logo: `${BASE_URL}/icon-512.png`,
+    telephone: siteConfig.contact.phonePrimary.e164,
+    email: siteConfig.contact.email,
+    address: postalAddress,
+    geo: officePlace.geo,
+    hasMap: mapsShortLink,
+    openingHoursSpecification: officePlace.openingHoursSpecification,
+    areaServed,
+    foundingDate: String(siteConfig.establishedYear),
+    parentOrganization: { "@id": `${BASE_URL}/#organization` },
+    sameAs: [mapsShortLink],
+  }
+}
+
+/** Article markup for buyer guides. Authored by the company; no invented people or reviews. */
+export function articleSchema(article: {
+  title: string
+  description: string
+  path: string
+  datePublished: string
+  dateModified: string
+  image?: string
+}) {
+  const url = `${BASE_URL}${article.path}`
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: article.title,
+    description: article.description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: article.datePublished,
+    dateModified: article.dateModified,
+    image: article.image ? `${BASE_URL}${article.image}` : `${BASE_URL}/opengraph-image`,
+    inLanguage: "en",
+    author: { "@id": `${BASE_URL}/#organization` },
+    publisher: { "@id": `${BASE_URL}/#organization` },
   }
 }
 

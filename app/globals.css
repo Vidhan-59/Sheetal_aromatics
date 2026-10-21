@@ -217,7 +217,10 @@
   }
 
   html {
+    /* Native fallback when Lenis is not running (it overrides this while active). */
     scroll-behavior: smooth;
+    /* Keeps in-page anchors clear of the sticky header. */
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -276,12 +279,13 @@
 
   /* Product / category tiles: restrained lift, no scale-jumping */
   .tile {
-    @apply relative rounded-lg border border-border bg-card transition-[border-color,box-shadow,transform] duration-200 ease-out;
+    @apply relative rounded-lg border border-border bg-card transition-[border-color,box-shadow,transform] duration-300;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .tile:hover {
-    @apply border-forest-300 shadow-[0_10px_30px_-18px_rgb(10_36_26_/_0.45)];
-    transform: translateY(-2px);
+    @apply border-forest-300 shadow-[0_18px_40px_-22px_rgb(10_36_26_/_0.5)];
+    transform: translateY(-3px);
   }
 
   .link-underline {
@@ -306,8 +310,9 @@
   */
   .js .reveal {
     opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(18px);
+    /* Expo-out: quick to start, long gentle settle — reads as "smooth". */
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .js .reveal.is-visible {
