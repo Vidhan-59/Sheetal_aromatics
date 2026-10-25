@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Container, Eyebrow, Section, SectionHeading } from "@/components/layout-primitives"
 import { Reveal } from "@/components/reveal"
 import { ProductImage } from "@/components/product-image"
+import { MolecularField } from "@/components/molecular-field"
 import { QualityLabVideo, SiteImage } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { FaqList } from "@/components/faq-list"
@@ -23,9 +24,9 @@ import {
 } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Aromatic Chemicals Supplier & Exporter, Ahmedabad | Sheetal Aromatics",
+  title: "Chemical Trader & Supplier in Ahmedabad, Gujarat | Sheetal Aromatics",
   description:
-    "Aromatic chemicals, essential oils, pharma & food ingredients, phase transfer catalysts and Ayurvedic raw materials from Ahmedabad, India, since 2005.",
+    "Chemical trader, supplier & exporter in Ahmedabad, Gujarat since 2005 — aromatic chemicals, PTCs, pharma intermediates, food ingredients, essential oils.",
   path: "/",
   keywords: [
     "chemical supplier India",
@@ -36,6 +37,10 @@ export const metadata: Metadata = pageMetadata({
     "pharma intermediates supplier",
     "phase transfer catalyst supplier India",
     "chemical supplier Ahmedabad",
+    "chemical trader in Gujarat",
+    "chemical traders in Ahmedabad",
+    "chemical supplier in Gujarat",
+    "chemical trading company India",
     "aromatic chemicals trader Ahmedabad",
     "chemical exporter Gujarat",
     "food grade chemical supplier Gujarat",
@@ -95,24 +100,25 @@ export default function HomePage() {
 
       {/* ------------------------------- Hero ------------------------------ */}
       <section className="relative overflow-hidden bg-forest-900 text-white">
-        <div aria-hidden="true" className="grid-texture absolute inset-0 opacity-70" />
+        <div aria-hidden="true" className="grid-texture absolute inset-0 opacity-30" />
         <div
           aria-hidden="true"
-          className="absolute -right-40 top-1/2 h-[42rem] w-[42rem] -translate-y-1/2 rounded-full bg-forest-700/40 blur-3xl"
+          className="glow-drift absolute -right-40 top-1/2 h-[42rem] w-[42rem] -translate-y-1/2 rounded-full bg-forest-700/45 blur-3xl"
         />
+        <MolecularField className="[mask-image:linear-gradient(100deg,transparent_8%,black_55%)]" />
 
         <Container className="relative grid gap-14 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-28">
           <div>
             <Eyebrow className="text-brass-400">
-              Established {siteConfig.establishedYear} · Ahmedabad, India
+              Chemical trader in Gujarat · since {siteConfig.establishedYear}
             </Eyebrow>
 
             <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">
-              Aromatic chemical manufacturing, supply &amp; export from Ahmedabad, India
+              Chemical trading, custom manufacturing &amp; export from Ahmedabad, Gujarat
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/85">
-              {yearsOfExperience}+ years in manufacturing, processing and supply of aromatic chemicals, essential oils, Ayurvedic products, metals,
+              {yearsOfExperience}+ years trading, supplying and custom-manufacturing aromatic chemicals, essential oils, Ayurvedic products, metals,
               pharma intermediates and phase transfer catalysts to manufacturers, distributors, importers and
               procurement teams.
             </p>
@@ -148,14 +154,14 @@ export default function HomePage() {
           <div className="relative hidden lg:block">
             <div className="grid grid-cols-3 gap-3">
               {heroSamples.map((product, i) => (
-                <div
-                  key={product!.slug}
-                  className={`overflow-hidden rounded-lg border border-white/15 shadow-2xl ${
-                    i % 2 === 0 ? "translate-y-5" : ""
-                  }`}
-                >
-                  <div className="aspect-square">
-                    <ProductImage product={product!} sizes="180px" priority={i < 3} />
+                <div key={product!.slug} className={i % 2 === 0 ? "translate-y-5" : undefined}>
+                  <div
+                    className="float-slow zoom-on-hover overflow-hidden rounded-lg border border-white/15 shadow-2xl"
+                    style={{ animationDelay: `${-i * 1.3}s`, animationDuration: `${7 + (i % 3)}s` }}
+                  >
+                    <div className="aspect-square">
+                      <ProductImage product={product!} sizes="180px" priority={i < 3} />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -291,7 +297,7 @@ export default function HomePage() {
             </ul>
           </div>
 
-          <Reveal className="mt-14">
+          <Reveal className="reveal-image mt-14">
             <div className="relative aspect-video overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
               <QualityLabVideo />
               <div
@@ -323,9 +329,11 @@ export default function HomePage() {
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Link>
               </Button>
-              <div className="mt-10 aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-md">
-                <SiteImage name="warehouse" sizes="(min-width: 1024px) 560px, 100vw" />
-              </div>
+              <Reveal className="reveal-image mt-10">
+                <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-md">
+                  <SiteImage name="warehouse" kenBurns sizes="(min-width: 1024px) 560px, 100vw" />
+                </div>
+              </Reveal>
             </div>
 
             <ol className="relative space-y-8 border-l border-border pl-8">
@@ -358,7 +366,7 @@ export default function HomePage() {
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
             <SectionHeading
               eyebrow="Ahmedabad, Gujarat · India · Export"
-              title="A chemical supplier in Ahmedabad, serving India and 50+ countries"
+              title={`Chemical trader in Gujarat, supplying India and ${siteConfig.exportCountries} countries`}
               description={`From our office on the Old Ahmedabad–Bhavnagar Highway we supply manufacturers across Gujarat and India's industrial centres, and export to buyers in ${siteConfig.exportCountries} countries. Choose your industry to see the materials it typically sources from us.`}
             />
             <ul className="grid gap-3 sm:grid-cols-2">

@@ -5,13 +5,14 @@ import { Boxes, ClipboardList, FileCheck2, MessageSquare, Ship, TriangleAlert } 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
 import { SiteImage } from "@/components/site-media"
+import { Parallax } from "@/components/motion"
 import { Reveal } from "@/components/reveal"
 import { CtaBand } from "@/components/cta-band"
 import { pageMetadata } from "@/lib/seo"
 import { siteConfig, yearsOfExperience } from "@/lib/site-config"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Global Supply & Export from Ahmedabad, India",
+  title: "Chemical Exporter from India | Export from Gujarat",
   description:
     "How we handle export enquiries: specification, packing, documentation and shipment coordination for international B2B buyers. IEC 0805014608.",
   path: "/export",
@@ -68,7 +69,9 @@ export default function ExportPage() {
       <Breadcrumbs trail={[{ name: "Export", href: "/export" }]} />
 
       <section className="relative overflow-hidden bg-forest-900 text-white">
-        <SiteImage name="warehouse" priority className="absolute inset-0" />
+        <Parallax speed={0.14}>
+          <SiteImage name="warehouse" priority />
+        </Parallax>
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-r from-forest-950/95 via-forest-900/85 to-forest-900/40"

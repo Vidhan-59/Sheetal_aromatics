@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- pre-sized WebP renditions with a hand-written srcset; the
    Next image optimiser is disabled for this site (see next.config.mjs). */
 import { cn } from "@/lib/utils"
+import { InViewMotion } from "@/components/motion"
 
 /**
  * Company photography and video used outside the product catalogue.
@@ -31,15 +32,18 @@ export function SiteImage({
   name,
   sizes = "100vw",
   priority = false,
+  kenBurns = false,
   className,
 }: {
   name: SiteImageName
   sizes?: string
   priority?: boolean
+  /** Slow ambient zoom/pan while on screen (disabled for reduced motion). */
+  kenBurns?: boolean
   className?: string
 }) {
   const image = siteImages[name]
-  return (
+  const img = (
     <img
       src={`${image.src}-800.webp`}
       srcSet={`${image.src}-800.webp 800w, ${image.src}.webp 1600w`}
@@ -50,9 +54,10 @@ export function SiteImage({
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       fetchPriority={priority ? "high" : undefined}
-      className={cn("h-full w-full object-cover", className)}
+      className={cn("h-full w-full object-cover", kenBurns && "ken-burns", className)}
     />
   )
+  return kenBurns ? <InViewMotion className="h-full w-full overflow-hidden">{img}</InViewMotion> : img
 }
 
 /** Muted, looping background clip of the quality-control lab. */

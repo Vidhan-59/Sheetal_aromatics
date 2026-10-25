@@ -1,0 +1,236 @@
+{
+  "note": "Products still waiting for an appearance image. Priority 1 = currently a structure diagram or drawn fallback; 2 = currently a representative photo of the source plant. Generate 4:3, save as scripts/raw-generated/<slug>.png, then add renditions + a 'generated' entry in lib/product-images.ts. Five were already generated in Canva on 25 Oct 2026 (media IDs MAHY_yim5yg TBAHS, MAHY_wSmL5o benzyl acetate, MAHY_5bn4_8 benzyl alcohol, MAHY__qfiIM benzyl benzoate, MAHY_1UbidU benzyl propionate) and can be downloaded from Canva Uploads instead.",
+  "queue": [
+    {
+      "slug": "isoamyl-acetate",
+      "name": "Isoamyl Acetate",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Clear colourless liquid (isoamyl acetate) in a narrow clear glass bottle with a plain black screw cap beside it. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "isoamyl-butyrate",
+      "name": "Isoamyl Butyrate",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Clear colourless liquid (isoamyl butyrate) in a clear glass volumetric flask with a glass stopper. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "ethyl-benzoate",
+      "name": "Ethyl Benzoate",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Clear colourless liquid (ethyl benzoate) in a clear glass reagent bottle and a small glass measuring cylinder. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "indole-powder",
+      "name": "Indole Powder",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. White to faintly yellowish shiny crystalline flakes (indole) heaped on a clear glass watch glass. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "methyl-benzoate",
+      "name": "Methyl Benzoate",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Clear colourless liquid (methyl benzoate) in an amber glass bottle with a glass dropper resting on a watch glass. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "yara-yara-crystal",
+      "name": "Yara Yara Crystal",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. White crystalline flakes and small plates (2-methoxynaphthalene, Nerolin Yara Yara) in a white porcelain dish. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "eugenol",
+      "name": "Eugenol",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Pale yellow clear oily liquid (eugenol) in an amber glass bottle and a small clear glass beaker showing its pale yellow colour. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "methyl-eugenol",
+      "name": "Methyl Eugenol",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Very pale yellow, nearly colourless clear liquid (methyl eugenol) in a clear glass sample bottle, a few drops on a watch glass. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "anethole",
+      "name": "Anethole",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Clear colourless liquid (trans-anethole) in a clear glass bottle beside a small glass dish of white solidified anethole crystals. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "shatavari",
+      "name": "Shatavari",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Dried creamy-white tuberous roots (shatavari, Asparagus racemosus) in a small heap on a woven tray. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "nasottar",
+      "name": "Nasottar",
+      "current": "none",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Dried pieces of turpeth root (Operculina turpethum, nasottar) in a shallow woven tray — CONFIRM BOTANICAL IDENTITY WITH OWNER FIRST. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "vavding",
+      "name": "Vavding",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Dried small round dark brown-black berries (vidanga, Embelia ribes) in a wooden bowl and scattered on a linen cloth. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "amla-powder",
+      "name": "Amla Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine light beige-brown powder (amla, Indian gooseberry powder) in a ceramic bowl with two fresh green amla fruits beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "harad-powder",
+      "name": "Harad Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine yellowish-brown powder (haritaki, harad powder) in a wooden bowl with a few dried wrinkled haritaki fruits beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "triphala-powder",
+      "name": "Triphala Powder",
+      "current": "none",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine brown herbal powder (Triphala churna) in a small wooden bowl with dried haritaki, bibhitaki and amla fruits beside it on a light linen cloth. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "neem-powder",
+      "name": "Neem Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine olive-green leaf powder (neem leaf powder) in a ceramic bowl with a few fresh neem leaves beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "tulsi-powder",
+      "name": "Tulsi Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine green-brown dried leaf powder (holy basil, tulsi powder) in a wooden bowl with a sprig of fresh tulsi beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "gokhru-powder",
+      "name": "Gokhru Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine light brownish powder (gokshura, Tribulus terrestris powder) in a ceramic bowl with a few dried spiny gokhru fruits beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "karela-powder",
+      "name": "Karela Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine pale greenish-beige powder (bitter gourd, karela powder) in a glass bowl with a few dried bitter gourd slices beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "garcinia-cambogia-powder",
+      "name": "Garcinia Cambogia Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B botanical ingredient supplier catalogue. Fine brown powder (garcinia cambogia fruit-rind powder) in a wooden bowl with pieces of dried dark garcinia rind beside it. Soft natural daylight, clean light neutral background, shallow depth of field, photorealistic catalogue photograph. No text, no labels, no logos, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "selenium-metal-powder",
+      "name": "Selenium Metal Powder",
+      "current": "representative photo",
+      "priority": 2,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Fine dark grey to black metallic powder (selenium powder) in a clear glass petri dish. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "2-mercapto-5-methoxybenzimidazole",
+      "name": "2-Mercapto-5-Methoxybenzimidazole",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Off-white to pale beige fine powder (5-methoxy-2-mercaptobenzimidazole) in a clear glass petri dish. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "2-mercapto-benzimidazole",
+      "name": "2-Mercapto Benzimidazole",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Pale cream, very light yellow crystalline powder (2-mercaptobenzimidazole) in a white plastic weighing boat. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "diphenyl-acetonitrile",
+      "name": "Diphenyl Acetonitrile",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. White to pale yellowish crystalline flakes (diphenylacetonitrile) in a clear glass crystallising dish. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "diphenyl-acetic-acid",
+      "name": "Diphenyl Acetic Acid",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. White crystalline powder (diphenylacetic acid) in a small clear glass beaker with a stainless steel spatula. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "dimethyl-isopropyl-chloride-hydrochloride",
+      "name": "Dimethyl Isopropyl Chloride Hydrochloride",
+      "current": "none",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. White crystalline powder (an amine hydrochloride salt) in a tightly sealable clear glass jar with a spatula. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "benzhydryl-thioacetamide",
+      "name": "Benzhydryl Thioacetamide",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Off-white fine powder (2-(benzhydrylthio)acetamide) in an amber glass jar with the lid removed. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "2-2-diphenyl-4-bromo-butyronitrile",
+      "name": "2,2-Diphenyl-4-Bromo Butyronitrile",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. White to off-white crystalline powder (4-bromo-2,2-diphenylbutyronitrile) on a watch glass beside a capped glass vial. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "2-phenyl-butyric-acid",
+      "name": "2-Phenyl Butyric Acid",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Colourless to white waxy crystalline solid (2-phenylbutyric acid) in a glass petri dish. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "tetrabutyl-ammonium-fluoride",
+      "name": "Tetrabutyl Ammonium Fluoride",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Translucent white waxy crystalline lumps (tetrabutylammonium fluoride trihydrate) in a clear glass jar with its screw lid beside it. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "tetrabutyl-ammonium-iodide",
+      "name": "Tetrabutyl Ammonium Iodide",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Off-white crystalline powder with a faint cream tint (tetrabutylammonium iodide) in an amber glass petri dish, a steel scoop in front. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "tetraethyl-ammonium-bromide",
+      "name": "Tetraethyl Ammonium Bromide",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Fine white crystalline powder (tetraethylammonium bromide) in a shallow stainless steel tray with a small scoop. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    },
+    {
+      "slug": "tetraethyl-ammonium-tetrafluoroborate",
+      "name": "Tetraethyl Ammonium Tetrafluoro Borate",
+      "current": "structure",
+      "priority": 1,
+      "prompt": "Professional product photograph for a B2B chemical supplier catalogue. Fine white crystalline powder (tetraethylammonium tetrafluoroborate) in a tightly capped clear glass bottle and a small heap on a watch glass beside a glass desiccator. Clean pale grey laboratory bench, soft diffused studio lighting, shallow depth of field, softly blurred neutral laboratory background in cool grey and muted green tones. Photorealistic. No text, no labels, no logos, no brand names, no people. Landscape 4:3, subject centred."
+    }
+  ]
+}

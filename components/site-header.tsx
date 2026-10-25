@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowRight, ChevronDown, Clock, Mail, Menu, Phone, X } from "lucide-react"
+import { ArrowRight, ChevronDown, Clock, Mail, Menu, MessageCircle, Phone, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -11,7 +11,7 @@ import { Logo } from "@/components/brand/logo"
 import { ProductQuickSearch } from "@/components/product-quick-search"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
-import { siteConfig } from "@/lib/site-config"
+import { siteConfig, whatsappLink } from "@/lib/site-config"
 import { navLinks, navMenus, type NavItem, type NavMenu } from "@/lib/navigation"
 
 /** A menu counts as active when the current page is its overview or one of its links. */
@@ -122,7 +122,7 @@ export function SiteHeader() {
               </div>
               <div className="flex items-center gap-5">
                 <span className="text-forest-100/75">
-                  Established {siteConfig.establishedYear} · Ahmedabad, India · Manufacturing, Export &amp; Supply
+                  Established {siteConfig.establishedYear} · Ahmedabad, India · Trading, Custom Manufacturing &amp; Export
                 </span>
                 <ThemeToggle />
               </div>
@@ -467,6 +467,15 @@ export function MobileQuoteBar() {
       <div className="flex items-center gap-2">
         <Button asChild className="flex-1" size="default">
           <Link href="/request-a-quote">Request a Quote</Link>
+        </Button>
+        <Button asChild variant="outline" size="icon" aria-label="WhatsApp Sheetal Aromatics">
+          <a
+            href={whatsappLink("Hello, I would like a quotation from Sheetal Aromatics.")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MessageCircle className="h-4 w-4" />
+          </a>
         </Button>
         <Button asChild variant="outline" size="icon" aria-label="Call Sheetal Aromatics">
           <a href={`tel:${siteConfig.contact.phonePrimary.e164}`}>

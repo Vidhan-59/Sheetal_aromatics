@@ -28,7 +28,7 @@ export default function GuidesPage() {
       />
       <Breadcrumbs trail={[{ name: "Buyer Guides", href: "/guides" }]} />
 
-      <Section tone="paper" spacing="tight">
+      <Section tone="paper" spacing="tight" className="hex-drift">
         <Container>
           <SectionHeading
             as="h1"

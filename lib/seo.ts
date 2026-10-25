@@ -160,7 +160,7 @@ export function organizationSchema() {
     hasMap: mapsLink,
     sameAs: [mapsShortLink],
     areaServed: areaServed,
-    knowsAbout: productCategories.map((c) => c.name),
+    knowsAbout: [...productCategories.map((c) => c.name), "Chemical trading", "Custom chemical manufacturing"],
     identifier: siteConfig.registrations.map((r) => ({
       "@type": "PropertyValue",
       name: r.label.replace(/\.$/, ""),
@@ -286,6 +286,22 @@ export function productImageSchema(product: Product) {
     }
   }
 
+  if (image.kind === "generated") {
+    // Illustrative image created for the site; labelled as such, owned by the company.
+    return {
+      "@type": "ImageObject",
+      contentUrl: `${BASE_URL}${image.src}`,
+      url: `${BASE_URL}${image.src}`,
+      encodingFormat: "image/webp",
+      width: 1200,
+      height: 900,
+      caption: productImageAlt(product, image),
+      description: `Illustrative image of ${product.name} showing its typical appearance (AI-generated, not a photograph of supplied material).`,
+      creditText: siteConfig.name,
+      copyrightHolder: { "@id": `${BASE_URL}/#organization` },
+    }
+  }
+
   return {
     "@type": "ImageObject",
     contentUrl: `${BASE_URL}${image.src}`,
@@ -335,8 +351,9 @@ export function productSchema(product: Product) {
     ...(image ? { image } : {}),
     ...(product.casNumber ? { productID: `CAS:${product.casNumber}` } : {}),
     ...(product.synonyms?.length ? { alternateName: product.synonyms } : {}),
-    brand: { "@type": "Brand", name: siteConfig.name },
-    manufacturer: { "@id": `${BASE_URL}/#organization` },
+    // Sheetal Aromatics trades most of its range and custom-manufactures to order,
+    // so manufacture is only claimed for products explicitly marked madeInHouse.
+    ...(product.madeInHouse ? { manufacturer: { "@id": `${BASE_URL}/#organization` } } : {}),
     additionalProperty: properties.map((p) => ({
       "@type": "PropertyValue",
       name: p.name,

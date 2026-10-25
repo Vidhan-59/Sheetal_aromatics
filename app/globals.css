@@ -319,6 +319,113 @@
     opacity: 1;
     transform: none;
   }
+
+  /* ---------------------------------------------------------- Ambient motion
+     All transform/opacity/clip-path only (compositor-friendly). Ken Burns runs
+     only inside an <InViewMotion> wrapper that is on screen. */
+
+  .ken-burns {
+    transform-origin: 62% 42%;
+    animation: ken-burns 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  [data-motion="paused"] .ken-burns {
+    animation-play-state: paused;
+  }
+
+  @keyframes ken-burns {
+    from {
+      transform: scale(1.03) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.13) translate3d(-1.6%, -1.2%, 0);
+    }
+  }
+
+  /* Hero product tiles bob gently, out of phase with one another. */
+  .float-slow {
+    animation: float-y 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes float-y {
+    from {
+      transform: translate3d(0, -7px, 0);
+    }
+    to {
+      transform: translate3d(0, 7px, 0);
+    }
+  }
+
+  /* Soft light that wanders across dark sections. */
+  .glow-drift {
+    animation: glow-drift 24s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-drift {
+    from {
+      transform: translate3d(0, -50%, 0) scale(1);
+      opacity: 0.85;
+    }
+    to {
+      transform: translate3d(-14%, -38%, 0) scale(1.15);
+      opacity: 1;
+    }
+  }
+
+  /* Barely-there honeycomb drifting behind light page headers. */
+  .hex-drift {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .hex-drift::before {
+    content: "";
+    position: absolute;
+    inset: -100px -56px;
+    z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%2312432F' stroke-opacity='0.06'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%2312432F' stroke-opacity='0.045'/%3E%3C/svg%3E");
+    mask-image: radial-gradient(ellipse 70% 90% at 85% 30%, black, transparent 75%);
+    animation: hex-drift 70s linear infinite;
+    pointer-events: none;
+  }
+
+  .dark .hex-drift::before {
+    filter: invert(1);
+  }
+
+  @keyframes hex-drift {
+    to {
+      transform: translate3d(56px, 100px, 0);
+    }
+  }
+
+  /* Photography wipes in from the top as it enters the viewport (with .reveal). */
+  .js .reveal.reveal-image {
+    clip-path: inset(0 0 100% 0 round 0.75rem);
+    transform: scale(1.04);
+    transition:
+      clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s ease-out;
+  }
+
+  .js .reveal.reveal-image.is-visible {
+    clip-path: inset(0 0 0 0 round 0.75rem);
+    transform: none;
+  }
+
+  /* Photo cards: slow zoom on hover. */
+  .zoom-on-hover img,
+  .zoom-on-hover video {
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .zoom-on-hover:hover img,
+  .zoom-on-hover:hover video {
+    transform: scale(1.05);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -337,5 +444,16 @@
   .js .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .js .reveal.reveal-image {
+    clip-path: none;
+  }
+
+  .ken-burns,
+  .float-slow,
+  .glow-drift,
+  .hex-drift::before {
+    animation: none !important;
   }
 }

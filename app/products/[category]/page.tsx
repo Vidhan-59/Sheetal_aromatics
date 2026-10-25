@@ -67,7 +67,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
         ]}
       />
 
-      <Section tone="paper" spacing="tight">
+      <Section tone="paper" spacing="tight" className="hex-drift">
         <Container>
           <div className={banner ? "grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16" : undefined}>
             <SectionHeading
@@ -78,7 +78,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
             />
             {banner && (
               <div className="aspect-[16/10] overflow-hidden rounded-xl border border-border shadow-md">
-                <SiteImage name={banner} priority sizes="(min-width: 1024px) 520px, 100vw" />
+                <SiteImage name={banner} priority kenBurns sizes="(min-width: 1024px) 520px, 100vw" />
               </div>
             )}
           </div>

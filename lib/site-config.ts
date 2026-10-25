@@ -26,20 +26,20 @@ export const siteConfig = {
 
   /** Scale figures supplied by the company (October 2026). */
   productPortfolio: "500+",
-  exportCountries: "50+",
+  exportCountries: "5+",
 
   /** Last substantive content update — used as the sitemap lastmod. Update when pages change. */
   contentUpdated: "2026-10-21",
 
-  tagline: "Manufacturer of Aromatic & Organic Chemicals",
+  tagline: "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals",
   shortDescription:
-    "Manufacturer, supplier and exporter of aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts for B2B and export buyers. Ahmedabad, India.",
+    "Trader, supplier and exporter of aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts, with custom manufacturing to buyer specification. Ahmedabad, India.",
 
   address: {
     line1: "A/7, Tirth Industrial Park 3A",
     line2: "Old Ahmedabad Bhavnagar Highway",
     line3: "Paldi Kankaj, Nr. Kamod Circle",
-    line4: "Tal. Dasvroi",
+    line4: "Tal. Daskroi",
     city: "Ahmedabad",
     postalCode: "382425",
     state: "Gujarat",

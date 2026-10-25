@@ -19,11 +19,12 @@ export function generateStaticParams() {
 async function imageDataUrl(slug: string): Promise<{ src: string; kind: "photo" | "structure" } | null> {
   const image = productImageFor(slug)
   if (!image) return null
-  const file = image.kind === "photo" ? image.og : image.src
+  const raster = image.kind !== "structure"
+  const file = raster ? image.og : image.src
   try {
     const data = await readFile(path.join(process.cwd(), "public", file))
-    const mime = image.kind === "photo" ? "image/jpeg" : "image/svg+xml"
-    return { src: `data:${mime};base64,${data.toString("base64")}`, kind: image.kind }
+    const mime = raster ? "image/jpeg" : "image/svg+xml"
+    return { src: `data:${mime};base64,${data.toString("base64")}`, kind: raster ? "photo" : "structure" }
   } catch {
     return null
   }

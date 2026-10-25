@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/json-ld"
 import { addressLines, directionsLink, mapsEmbed, mapsLink, siteConfig, whatsappLink } from "@/lib/site-config"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Contact Us | Ahmedabad, Gujarat, India",
+  title: "Contact | Chemical Supplier in Ahmedabad, Gujarat",
   description: `Contact us in Ahmedabad, Gujarat — ${siteConfig.contact.email}, ${siteConfig.contact.phonePrimary.display}. Send a product enquiry or start an export discussion.`,
   path: "/contact",
   keywords: [

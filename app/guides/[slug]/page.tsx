@@ -38,7 +38,7 @@ export default async function GuidePage({ params }: { params: Params }) {
   const path = `/guides/${guide.slug}`
   const products = guide.relatedProducts.map(getProductBySlug).filter(Boolean)
   const relatedIndustries = guide.relatedIndustries.map(getIndustry).filter(Boolean)
-  const leadImage = products.map((p) => productImageFor(p!.slug)).find((img) => img?.kind === "photo")
+  const leadImage = products.map((p) => productImageFor(p!.slug)).find((img) => img?.kind === "photo" || img?.kind === "generated")
 
   return (
     <>
@@ -49,7 +49,7 @@ export default async function GuidePage({ params }: { params: Params }) {
           path,
           datePublished: guide.datePublished,
           dateModified: guide.dateModified,
-          image: leadImage?.kind === "photo" ? leadImage.src : undefined,
+          image: leadImage?.src,
         })}
       />
       <Breadcrumbs

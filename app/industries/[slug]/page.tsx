@@ -52,7 +52,7 @@ export default async function IndustryPage({ params }: { params: Params }) {
         ]}
       />
 
-      <Section tone="paper" spacing="tight">
+      <Section tone="paper" spacing="tight" className="hex-drift">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
             <div>

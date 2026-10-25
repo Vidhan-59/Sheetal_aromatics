@@ -99,6 +99,11 @@ export interface Product {
   technicalNote?: string
   /** Overrides the generated meta description when a hand-written one reads better. */
   seo?: { title?: string; description?: string }
+  /**
+   * True only for products the firm manufactures itself (custom manufacturing).
+   * Traded products leave this unset, so structured data never claims manufacture.
+   */
+  madeInHouse?: boolean
 }
 
 /* ------------------------------------------------------------------------ */
@@ -941,46 +946,25 @@ export const productsDatabase: Product[] = [
     keywords: ["turmeric", "haldi", "powder", "curcuma", "curcumin"],
   },
   {
-    slug: "shilajit-powder-3",
-    name: "Shilajit Powder (3% Fulvic Acid)",
+    slug: "shilajit-powder",
+    name: "Shilajit Powder",
     category: "ayurvedic-products",
     group: "Powders",
     visual: "resin",
     tone: "#3B2E24",
-    summary: "Shilajit powder offered at a 3% fulvic acid specification.",
-    typicalGrade: "3% fulvic acid",
+    summary: "Shilajit powder standardised to 3%, 5% or 7% fulvic acid for supplement and Ayurvedic manufacturers.",
+    overview:
+      "Shilajit (asphaltum) powder is offered in three fulvic acid specifications — 3%, 5% and 7%. State the grade you need together with any heavy-metal, microbial or other test requirements of your destination market; specification and documentation are confirmed per lot on enquiry.",
+    typicalGrade: "3%, 5% or 7% fulvic acid",
     physicalForm: "Powder",
-    synonyms: ["Shilajit 3%", "Asphaltum powder"],
+    synonyms: ["Shilajit 3%", "Shilajit 5%", "Shilajit 7%", "Asphaltum powder", "Mumijo"],
     applications: ["Dietary Supplements", "Ayurvedic Formulation", "Nutraceutical Blending"],
-    keywords: ["shilajit", "powder", "fulvic acid", "3%", "asphaltum"],
-  },
-  {
-    slug: "shilajit-powder-5",
-    name: "Shilajit Powder (5% Fulvic Acid)",
-    category: "ayurvedic-products",
-    group: "Powders",
-    visual: "resin",
-    tone: "#33271E",
-    summary: "Shilajit powder offered at a 5% fulvic acid specification.",
-    typicalGrade: "5% fulvic acid",
-    physicalForm: "Powder",
-    synonyms: ["Shilajit 5%", "Asphaltum powder"],
-    applications: ["Dietary Supplements", "Ayurvedic Formulation", "Nutraceutical Blending"],
-    keywords: ["shilajit", "powder", "fulvic acid", "5%", "asphaltum"],
-  },
-  {
-    slug: "shilajit-powder-7",
-    name: "Shilajit Powder (7% Fulvic Acid)",
-    category: "ayurvedic-products",
-    group: "Powders",
-    visual: "resin",
-    tone: "#2B2019",
-    summary: "Shilajit powder offered at a 7% fulvic acid specification.",
-    typicalGrade: "7% fulvic acid",
-    physicalForm: "Powder",
-    synonyms: ["Shilajit 7%", "Asphaltum powder"],
-    applications: ["Dietary Supplements", "Ayurvedic Formulation", "Nutraceutical Blending"],
-    keywords: ["shilajit", "powder", "fulvic acid", "7%", "asphaltum"],
+    keywords: ["shilajit", "shilajit powder", "fulvic acid", "3%", "5%", "7%", "asphaltum", "bulk shilajit powder"],
+    seo: {
+      title: "Shilajit Powder Bulk Supplier | 3%, 5%, 7% Fulvic Acid",
+      description:
+        "Bulk shilajit powder at 3%, 5% or 7% fulvic acid for supplement and Ayurvedic manufacturers. Specs and test documents on enquiry. Ahmedabad, India.",
+    },
   },
 
   /* ------------------------------------ Metals -------------------------- */

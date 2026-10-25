@@ -30,7 +30,7 @@ export function ProductImage({
 
   const loading = priority ? "eager" : "lazy"
 
-  if (image.kind === "photo") {
+  if (image.kind === "photo" || image.kind === "generated") {
     return (
       <img
         src={image.srcSmall}

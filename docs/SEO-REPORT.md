@@ -36,7 +36,7 @@ Already in good shape (kept): one H1 per page, unique titles, per-page canonical
 - `docs/SEO-REPORT.md` (this file)
 
 **Modified**
-- `lib/site-config.ts` — canonical origin → `https://www.sheetalaromatics.com` (overridable via `NEXT_PUBLIC_SITE_URL`); `productPortfolio` (500+), `exportCountries` (50+), `contentUpdated`
+- `lib/site-config.ts` — canonical origin → `https://www.sheetalaromatics.com` (overridable via `NEXT_PUBLIC_SITE_URL`); `productPortfolio` (500+), `exportCountries` (5+, corrected from 50+ on 25 Oct), `contentUpdated`
 - `app/layout.tsx` — removed root canonical; Search Console / Bing verification via env; new default title; GA component
 - `lib/seo.ts` — `localBusinessSchema()`, `articleSchema()`, raster logo, `sameAs`, `areaServed`
 - `lib/products-data.ts` — new *Food & Pharma Ingredients* category + 4 products; location-aware category titles; new product title/description templates; search synonyms (E211, E202, E282, E420); shortened 3 over-long titles
@@ -148,9 +148,9 @@ Ahmedabad and Gujarat are targeted on the homepage, contact page, category and p
 3. **Google Search Console** — see §7. Add the token as `GOOGLE_SITE_VERIFICATION` in Vercel and redeploy.
 4. **Google Analytics 4** — create a GA4 property, set `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel, redeploy. Mark `generate_lead`, `click_to_call`, `whatsapp_click` and `email_click` as key events.
 5. **Confirm business facts** (nothing below was invented — please confirm or correct):
-   - Positioning: the site says *manufacturer, supplier and exporter*; your brief says *trader, supplier and exporter*. Tell us which is accurate and the copy will be aligned everywhere.
+   - ✅ Positioning resolved (25 Oct): trading + custom manufacturing — copy, tagline and schema aligned.
    - The 4 new food/pharma products are supplied, and in which grades (food / IP / BP / USP).
-   - "500+ products" and "50+ countries" — now shown on the homepage. Send the full product list (only 88 have pages) and the main export markets.
+   - ✅ Export reach resolved: 5+ countries (homepage corrected). Still useful: the full product list (only 88 have pages) and the names of the export countries.
 6. **Enquiry/visitor logs** — move `lib/logger.ts` to a persistent store (e.g. a database or Vercel Blob) if you need records beyond email; disk writes do not persist on Vercel. The visitor log records IP addresses, so mention it in the privacy policy.
 7. **Resend** — verify `sheetalaromatics.com` in Resend so buyers receive confirmation emails.
 8. **Google Business Profile** — checklist below.

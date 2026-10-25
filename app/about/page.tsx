@@ -11,7 +11,7 @@ import { addressLines, directionsLink, siteConfig, yearsOfExperience } from "@/l
 import { productCategories, productsDatabase } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "About Us | Chemical Supplier & Exporter Since 2005",
+  title: "About Us | Chemical Trader in Ahmedabad Since 2005",
   description: `A partnership firm established in ${siteConfig.establishedYear} in Ahmedabad, Gujarat, supplying chemical and natural products to B2B and export customers.`,
   path: "/about",
   keywords: [
@@ -86,24 +86,26 @@ export default function AboutPage() {
               <SectionHeading
                 as="h1"
                 eyebrow={`Established ${siteConfig.establishedYear}`}
-                title="Over two decades in chemical manufacturing, supply and export"
+                title="Over two decades in chemical trading, custom manufacturing and export"
                 description={
                   <>
                     <p>
                       Sheetal Aromatics is a {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat. Since{" "}
-                      {siteConfig.establishedYear} we have been actively engaged in manufacturing, processing and supplying aromatic chemicals, essential oils, Ayurvedic
+                      {siteConfig.establishedYear} we have been trading, supplying and custom-manufacturing aromatic chemicals, essential oils, Ayurvedic
                       products, metals, pharma intermediates and phase transfer catalysts to manufacturers, formulators, distributors and
                       importers worldwide.
                     </p>
                     <p className="mt-4">
                       The firm is run directly by its partners, {siteConfig.partners.map((p) => p.name).join(" and ")}. That
-                      matters more than it sounds: the people who manage manufacturing and sourcing are the people who answer your
+                      matters more than it sounds: the people who manage sourcing and custom manufacturing are the people who answer your
                       enquiry, which is why specifications get confirmed properly, quality parameters are strictly met, and technical questions get straight
                       answers.
                     </p>
                     <p className="mt-4">
-                      We are a manufacturer, supplier and exporter, not a trading marketplace. The catalogue on this site reflects the materials we
-                      produce and supply regularly with direct quality control — and where we cannot help, we would rather tell you than take the order.
+                      We are a trading and custom-manufacturing firm, not a marketplace. The catalogue on this site reflects the
+                      materials we source and supply regularly with direct quality control, and when a buyer needs a product made to
+                      their own specification we take it up as custom manufacturing. Where we cannot help, we would rather tell you
+                      than take the order.
                     </p>
                   </>
                 }
@@ -165,9 +167,11 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="mt-14 aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
-            <SiteImage name="plant" sizes="(min-width: 1280px) 1200px, 100vw" />
-          </div>
+          <Reveal className="reveal-image mt-14">
+            <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
+              <SiteImage name="plant" kenBurns sizes="(min-width: 1280px) 1200px, 100vw" />
+            </div>
+          </Reveal>
         </Container>
       </Section>
 
@@ -202,9 +206,11 @@ export default function AboutPage() {
                 title="Four things we do not compromise on"
                 description="None of this is unusual. It is simply what a buyer is entitled to expect from a supplier that has been trading for two decades."
               />
-              <div className="mt-10 aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
-                <SiteImage name="qc-lab" sizes="(min-width: 1024px) 480px, 100vw" />
-              </div>
+              <Reveal className="reveal-image mt-10">
+                <div className="aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
+                  <SiteImage name="qc-lab" kenBurns sizes="(min-width: 1024px) 480px, 100vw" />
+                </div>
+              </Reveal>
             </div>
             <ul className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
               {principles.map((principle, i) => (

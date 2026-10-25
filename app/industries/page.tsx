@@ -28,7 +28,7 @@ export default function IndustriesPage() {
       />
       <Breadcrumbs trail={[{ name: "Industries", href: "/industries" }]} />
 
-      <Section tone="paper" spacing="tight">
+      <Section tone="paper" spacing="tight" className="hex-drift">
         <Container>
           <SectionHeading
             as="h1"

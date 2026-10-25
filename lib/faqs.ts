@@ -16,8 +16,19 @@ export const faqs: Faq[] = [
   {
     question: "What products does Sheetal Aromatics supply?",
     answer:
-      "We supply six product groups: aromatic chemicals, essential oils, Ayurvedic products (whole herbs, raw materials and milled powders), metals, pharma intermediates, and phase transfer catalysts (quaternary ammonium and phosphonium salts). The full catalogue is listed on the Products pages, and items outside the listed range can be discussed on enquiry.",
+      "We supply seven product groups: aromatic chemicals, essential oils, Ayurvedic products (whole herbs, raw materials and milled powders), metals, pharma intermediates, phase transfer catalysts (quaternary ammonium and phosphonium salts), and food & pharma ingredients (preservatives, humectants and excipients). The full catalogue is listed on the Products pages, and items outside the listed range can be discussed on enquiry.",
     featured: true,
+  },
+  {
+    question: "Is Sheetal Aromatics a chemical trader in Gujarat?",
+    answer:
+      "Yes. Sheetal Aromatics is a chemical trading and custom-manufacturing firm based in Ahmedabad, Gujarat, established in 2005. We supply aromatic chemicals, phase transfer catalysts, pharma intermediates, food and pharma ingredients, essential oils, Ayurvedic raw materials and metals to manufacturers and distributors across Gujarat and India, and export to buyers in other countries.",
+    featured: true,
+  },
+  {
+    question: "Do you offer custom manufacturing?",
+    answer:
+      "Yes. Alongside trading, we take up custom manufacturing of chemicals to a buyer's own specification. Share the product or structure, the specification you need, the quantity and your target timeline, and we will confirm feasibility before quoting.",
   },
   {
     question: "Does Sheetal Aromatics supply international buyers?",

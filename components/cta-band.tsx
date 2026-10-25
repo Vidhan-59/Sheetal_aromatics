@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { MolecularField } from "@/components/molecular-field"
 import { Container } from "@/components/layout-primitives"
 
 interface CtaBandProps {
@@ -21,7 +22,12 @@ export function CtaBand({
 }: CtaBandProps) {
   return (
     <section className="relative overflow-hidden bg-forest-900 text-white">
-      <div aria-hidden="true" className="grid-texture absolute inset-0" />
+      <div aria-hidden="true" className="grid-texture absolute inset-0 opacity-40" />
+      <div
+        aria-hidden="true"
+        className="glow-drift absolute -right-24 top-1/2 h-[30rem] w-[30rem] -translate-y-1/2 rounded-full bg-forest-700/40 blur-3xl"
+      />
+      <MolecularField density={0.7} className="[mask-image:linear-gradient(90deg,transparent_25%,black_75%)]" />
       <Container className="relative py-16 sm:py-20">
         <div className="max-w-3xl">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>

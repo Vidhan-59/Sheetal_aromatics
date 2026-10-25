@@ -55,6 +55,12 @@ const nextConfig = {
         destination: "/products/pharma-intermediates/2-phenyl-butyric-acid",
         permanent: true,
       },
+      // The three Shilajit grade pages (3/5/7% fulvic acid) were merged into one page listing all grades.
+      ...["3", "5", "7"].map((grade) => ({
+        source: `/products/ayurvedic-products/shilajit-powder-${grade}`,
+        destination: "/products/ayurvedic-products/shilajit-powder",
+        permanent: true,
+      })),
       // Spelling corrected from "Benhydryl".
       {
         source: "/products/pharma-intermediates/benhydryl-thioacetamide",

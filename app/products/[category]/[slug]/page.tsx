@@ -15,7 +15,8 @@ import { EmailEnquiryButton } from "@/components/email-enquiry-button"
 import { JsonLd } from "@/components/json-ld"
 import { BASE_URL, pageMetadata, productSchema } from "@/lib/seo"
 import { mailtoLink, productEnquiryMessage, siteConfig, whatsappLink } from "@/lib/site-config"
-import { productImageFor } from "@/lib/product-images"
+import { productImageFor, productStructureFor } from "@/lib/product-images"
+import { categoryPalette } from "@/components/product-visual"
 import { industriesForProduct, industryHref } from "@/lib/industries"
 import {
   categoryName,
@@ -52,6 +53,15 @@ function ImageCaption({ product }: { product: Product }) {
           Wikimedia Commons
         </a>
         .
+      </>
+    )
+  }
+
+  if (image?.kind === "generated") {
+    return (
+      <>
+        Illustrative image: {image.alt.charAt(0).toLowerCase() + image.alt.slice(1)}, created with AI from this product&apos;s
+        documented appearance. Not a photograph of supplied material — appearance can vary by grade and lot.
       </>
     )
   }
@@ -115,6 +125,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   const related = getRelatedProducts(product)
   const enquiry = productEnquiryMessage(product.name)
   const productIndustries = industriesForProduct(product)
+  const structure = productStructureFor(product.slug)
   const specRequest = `Hello, please share the specification sheet / COA for ${product.name}${
     product.casNumber ? ` (CAS ${product.casNumber})` : ""
   }.`
@@ -290,6 +301,39 @@ export default async function ProductPage({ params }: { params: Params }) {
             </div>
 
             <div className="space-y-8">
+              {structure && productImageFor(product.slug)?.kind !== "structure" && (
+                <figure className="overflow-hidden rounded-lg border border-border bg-card">
+                  <div
+                    className="aspect-[4/3]"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${categoryPalette(product.category).from}, ${categoryPalette(product.category).to})`,
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- static SVG drawing */}
+                    <img
+                      src={structure.src}
+                      alt={`Chemical structure of ${product.name}${product.molecularFormula ? ` (${product.molecularFormula})` : ""}`}
+                      width={800}
+                      height={600}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-contain p-[7%]"
+                    />
+                  </div>
+                  <figcaption className="border-t border-border px-4 py-2.5 text-xs text-muted-foreground">
+                    <span className="font-semibold text-foreground">Chemical structure</span> · drawn from{" "}
+                    <a
+                      href={`https://pubchem.ncbi.nlm.nih.gov/compound/${structure.pubchemCid}`}
+                      className="underline underline-offset-2 hover:text-foreground"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      PubChem CID {structure.pubchemCid}
+                    </a>
+                  </figcaption>
+                </figure>
+              )}
+
               <div>
                 <h2 className="text-xl font-semibold tracking-tight">Applications</h2>
                 <ul className="mt-4 space-y-2">
