@@ -47,7 +47,8 @@ Legend: ✅ done · 🟡 code ready, needs config/account · ⬜ pending · ⛔ 
 | Consent Mode v2 for EU/UK | ⬜ | Needed before emailing/advertising to Europe — see seo-playbook §Technical |
 | Search Console verification | 🟡 | `GOOGLE_SITE_VERIFICATION` env var supported; a DNS TXT token reportedly exists |
 | Sitemap submitted, top-25 URLs inspected | ⬜ | Owner action in GSC |
-| Bing Webmaster import + IndexNow | ⬜ | `BING_SITE_VERIFICATION` supported; IndexNow key file not yet added |
+| Bing Webmaster import + IndexNow | 🟡 | `BING_SITE_VERIFICATION` supported; IndexNow key file `public/0f97b13c852662cc3c4259cb4f7334d1.txt` added — after each deploy run `npx tsx scripts/indexnow.mts`. Bing import from GSC still to do |
+| llms.txt for AI assistants | ✅ | `/llms.txt` (site map) and `/llms-full.txt` (all product data + FAQs), generated from the catalogue by `lib/llms.ts`. Not a Google feature — nothing to submit in Search Console |
 | Meta Pixel | ⬜ | Only when Meta Ads start |
 
 ### Trust & consistency
@@ -65,12 +66,13 @@ Legend: ✅ done · 🟡 code ready, needs config/account · ⬜ pending · ⛔ 
 ### Website / technical SEO
 | Item | Status | Notes |
 |---|---|---|
-| Canonical www, sitemap, robots, schema, unique titles, alt text, 0 broken links | ✅ | Verified by crawl of 118 URLs |
+| Canonical www, sitemap, robots, schema, unique titles, alt text, 0 broken links | ✅ | Verified by crawl of 116 URLs (27 Oct) |
+| Open Graph + Twitter cards on every page | ✅ | `pageMetadata()` in `lib/seo.ts`: brand in shared titles, per-product share images, guides typed `article` with dates |
 | LocalBusiness, Article, ItemList schema; industries + guides pages | ✅ | |
 | Products loading skeleton (`app/products/loading.tsx`) | ✅ | Deleted (25 Oct) |
 | Full product list server-rendered on `/products` | ✅ | "Full product list" section — all product links in the initial HTML |
 | Merge Shilajit 3/5/7% into one page | ✅ | `shilajit-powder`; old URLs 308-redirect (`next.config.mjs`) |
-| Product appearance image for every product | 🟡 | 43 photos + 9 AI-generated (Figma) + 31 structure-only + 3 drawn. Remaining prompts in `scripts/product-image-queue.json` (Figma AI credits reset daily; 5 more already generated in Canva — see the file's note) |
+| Product appearance image for every product | ✅ | All 86: 43 photos + 43 AI-generated illustrative (Figma/Canva, captioned as illustrative). Nasottar is shown as dried turpeth root — confirm with the owner. Optional upgrades of 10 representative plant photos are in `scripts/product-image-queue.json`; add new ones with `npx tsx scripts/add-product-images.mts <manifest.json>` |
 | Ambient motion (hero molecular field, Ken Burns, parallax, image reveals) | ✅ | `components/molecular-field.tsx`, `components/motion.tsx`, motion CSS in `app/globals.css`; all respect reduced motion |
 | Product `manufacturer` only where true; `madeInHouse` flag | ✅ | Flag exists on `Product`; no product is flagged yet — ask which (if any) are made in-house |
 | Organization `sameAs` (LinkedIn, directories) | ⬜ | After profiles exist; `lib/seo.ts` |

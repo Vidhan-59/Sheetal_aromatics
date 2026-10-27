@@ -123,7 +123,7 @@ Ahmedabad and Gujarat are targeted on the homepage, contact page, category and p
 | `tsc --noEmit` | ✅ pass |
 | `next build` | ✅ pass — 214 static pages |
 | ESLint | ⚠️ not run — ESLint is not installed in the project (`npm run lint` would prompt to install) |
-| Sitemap | ✅ 118 URLs, all on `https://www.sheetalaromatics.com`, all return 200, none noindexed; 81 image entries, 0 broken; single stable lastmod |
+| Sitemap | ✅ 116 URLs, all on `https://www.sheetalaromatics.com`, all return 200, none noindexed; 86 image entries, 0 broken (re-checked 27 Oct 2026); single stable lastmod |
 | robots.txt | ✅ allows all pages; blocks `/api/` and `/products?*` filter URLs; Host and Sitemap on www |
 | Canonicals | ✅ all 118 pages self-canonical to their sitemap URL |
 | H1 | ✅ exactly one per page (118/118) |

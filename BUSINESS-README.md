@@ -437,7 +437,7 @@ Header: **Products** (mega menu: 7 categories with counts + popular products) ·
 
 ### Key features
 - Product pages: CAS/formula/MW, typical grade, applications, synonyms, industries served, related products, pre-filled quote form, WhatsApp/email/call buttons, "Request specifications" and "Discuss bulk requirements" CTAs.
-- Images: 44 structure diagrams + 37 licensed photos; site photography (warehouse, production, QC lab, botanicals) and a muted lab video on the home page.
+- Images: 43 licensed photos + 43 AI-generated illustrative images (captioned as such) + structure diagrams for every chemical; site photography (warehouse, production, QC lab, botanicals) and a muted lab video on the home page.
 - Smooth scrolling, condensing glass header with reading-progress line, back-to-top button, scroll-reveal animations (all disabled for visitors who prefer reduced motion).
 - Per-product share cards (Open Graph images) showing the product's photo or structure.
 - Light/dark theme toggle.
@@ -576,7 +576,7 @@ Qualified enquiries by source (primary) · indexed pages · organic impressions/
 | Years in business | 21+ (since 2005) |
 | Product categories | 7 |
 | Products with pages | 86 (Shilajit 3/5/7% merged into one page, 25 Oct 2026) |
-| Product images | 43 photos · 9 AI-generated illustrative · 31 structure diagrams · 3 drawn — remaining queued in `scripts/product-image-queue.json` |
+| Product images | All 86 products: 43 photos · 43 AI-generated illustrative — optional photo upgrades listed in `scripts/product-image-queue.json` |
 | Industry pages | 7 |
 | Buyer guides | 4 |
 | Indexable URLs | 118 |

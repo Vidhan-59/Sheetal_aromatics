@@ -65,14 +65,15 @@ for (const e of entries) {
   const oneLine = new RegExp(`^  ${escapeRe(key)}: \\{ kind: "structure"[^\\n]*\\},\\n`, "m")
   const multiLine = new RegExp(`^  ${escapeRe(key)}: \\{\\n[\\s\\S]*?\\n  \\},\\n`, "m")
   const mapStart = ts.indexOf("export const productImages")
-  const mapEnd = ts.indexOf("\n}\n", mapStart)
-  if (mapStart < 0 || mapEnd < 0) throw new Error("Could not find the productImages map in lib/product-images.ts")
+  // Keep the last entry's trailing newline inside the map so the patterns below match it too.
+  const mapEnd = ts.indexOf("\n}\n", mapStart) + 1
+  if (mapStart < 0 || mapEnd < 1) throw new Error("Could not find the productImages map in lib/product-images.ts")
   const before = ts.slice(0, mapStart)
   let map = ts.slice(mapStart, mapEnd)
   const after = ts.slice(mapEnd)
   if (oneLine.test(map)) map = map.replace(oneLine, block + "\n")
   else if (multiLine.test(map)) map = map.replace(multiLine, block + "\n")
-  else map = map + "\n" + block
+  else map = map + block + "\n"
   ts = before + map + after
   console.log(`added ${e.slug}`)
 }

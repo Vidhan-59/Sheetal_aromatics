@@ -29,6 +29,8 @@ interface PageMetaInput {
   index?: boolean
   /** Absolute or root-relative override; defaults to the site-wide OG card. */
   ogImage?: string
+  /** Marks the page as an article (guides) so shares and crawlers get its dates. */
+  article?: { publishedTime: string; modifiedTime: string }
 }
 
 export function pageMetadata({
@@ -38,13 +40,20 @@ export function pageMetadata({
   keywords,
   index = true,
   ogImage: ogImageInput,
+  article,
 }: PageMetaInput): Metadata {
   const url = `${BASE_URL}${path === "/" ? "" : path}`
   const ogImage = ogImageInput ?? `${BASE_URL}/opengraph-image`
 
   // Titles that already name the company are marked absolute, otherwise the
   // root template appends the brand a second time.
-  const resolvedTitle = title.includes(siteConfig.name) ? { absolute: title } : title
+  const namesBrand = title.includes(siteConfig.name)
+  const resolvedTitle = namesBrand ? { absolute: title } : title
+  // Link previews (WhatsApp, LinkedIn) show only og:title, so it carries the brand too.
+  const shareTitle = namesBrand ? title : `${title} | ${siteConfig.name}`
+  const ogType = article
+    ? { type: "article" as const, publishedTime: article.publishedTime, modifiedTime: article.modifiedTime }
+    : { type: "website" as const }
 
   return {
     title: resolvedTitle,
@@ -55,17 +64,17 @@ export function pageMetadata({
       ? { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 }
       : { index: false, follow: true },
     openGraph: {
-      type: "website",
+      ...ogType,
       siteName: siteConfig.name,
       locale: "en_IN",
       url,
-      title,
+      title: shareTitle,
       description,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: `${title} — ${siteConfig.name}` }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: shareTitle }],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: shareTitle,
       description,
       images: [ogImage],
     },

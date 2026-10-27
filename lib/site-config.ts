@@ -29,7 +29,7 @@ export const siteConfig = {
   exportCountries: "5+",
 
   /** Last substantive content update — used as the sitemap lastmod. Update when pages change. */
-  contentUpdated: "2026-10-21",
+  contentUpdated: "2026-10-27",
 
   tagline: "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals",
   shortDescription:

@@ -25,7 +25,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug } = await params
   const guide = getGuide(slug)
   if (!guide) return {}
-  return pageMetadata({ title: guide.seoTitle, description: guide.description, path: `/guides/${guide.slug}` })
+  return pageMetadata({
+    title: guide.seoTitle,
+    description: guide.description,
+    path: `/guides/${guide.slug}`,
+    article: { publishedTime: guide.datePublished, modifiedTime: guide.dateModified },
+  })
 }
 
 const dateFormat = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", year: "numeric" })

@@ -190,14 +190,17 @@ app/
   privacy-policy/ terms-and-conditions/ cookie-policy/
   api/enquiry/route.ts                  Form handler
   sitemap.ts robots.ts manifest.ts opengraph-image.tsx
+  llms.txt/ llms-full.txt/              Plain-text site map for AI assistants (built by lib/llms.ts)
 components/                             Site components (ui/ is shadcn)
 scripts/draw-structure.py               Draws a chemical structure SVG from a CAS number
+scripts/indexnow.mts                    Pings Bing & other IndexNow engines after a deploy
 lib/
   site-config.ts                        Company facts — single source of truth
   products-data.ts                      Catalogue + search + SEO copy
   product-images.ts                     Product photo / structure mapping and credits
   faqs.ts                               FAQ content (also used for FAQ schema)
   seo.ts                                Metadata helpers and JSON-LD
+  llms.ts                               Content of /llms.txt and /llms-full.txt
 ```
 
 Stack: Next.js 15 (App Router), React 19, Tailwind CSS v4, shadcn/ui,
