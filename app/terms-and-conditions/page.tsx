@@ -14,7 +14,7 @@ export default function TermsPage() {
     <LegalPage
       title="Terms & Conditions"
       path="/terms-and-conditions"
-      updated="September 2026"
+      updated="November 2026"
       intro={`These terms cover use of this website and the status of the information published on it. Terms of sale are agreed separately for each order.`}
     >
       <section>
@@ -52,6 +52,16 @@ export default function TermsPage() {
           <li>Prices, minimum quantities, packing and lead times are quoted per enquiry and are valid only as stated in that quotation.</li>
           <li>An order exists only once we have accepted it in writing.</li>
           <li>Terms of sale, delivery terms and payment terms are those agreed for the specific order.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Private labelling and custom packaging</h2>
+        <ul>
+          <li>Private-label and custom-packaging work is agreed per order, including pack sizes, materials, label content and artwork.</li>
+          <li>You confirm that you have the right to use the brand names, logos and artwork you supply to us.</li>
+          <li>You approve the final label before packing, and you are responsible for label content meeting the rules of the markets where you sell.</li>
+          <li>Availability of private labelling, minimum quantities and lead times are confirmed in the quotation for each product.</li>
         </ul>
       </section>
 

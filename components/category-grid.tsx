@@ -1,35 +1,38 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Search } from "lucide-react"
 
-import { ProductCard } from "@/components/product-card"
 import { cn } from "@/lib/utils"
-import { searchProducts, type Product } from "@/lib/products-data"
+import { applyListFilter } from "@/lib/list-filter"
 
 /**
- * Within-category browsing: an optional sub-group filter plus a text filter.
- * Kept local to the page — it does not rewrite the URL, so the category page
- * stays canonical and never generates crawlable filter permutations.
+ * Within-category browsing: an optional sub-group filter plus a text filter over
+ * the server-rendered product grid passed as children. Kept local to the page —
+ * it does not rewrite the URL, so the category page stays canonical and never
+ * generates crawlable filter permutations.
  */
 export function CategoryGrid({
-  products,
   categorySlug,
   groups,
+  total,
+  children,
 }: {
-  products: Product[]
   categorySlug: string
-  groups?: string[]
+  groups?: { name: string; count: number }[]
+  total: number
+  children: ReactNode
 }) {
+  const listRef = useRef<HTMLDivElement>(null)
   const [group, setGroup] = useState("")
   const [query, setQuery] = useState("")
+  const [shown, setShown] = useState(total)
 
-  const visible = useMemo(() => {
-    const base = query.trim() ? searchProducts(query, categorySlug) : products
-    return group ? base.filter((p) => p.group === group) : base
-  }, [products, categorySlug, query, group])
+  useEffect(() => {
+    if (listRef.current) setShown(applyListFilter(listRef.current, { query, attr: "group", value: group }))
+  }, [query, group])
 
-  const showControls = (groups?.length ?? 0) > 0 || products.length > 8
+  const showControls = (groups?.length ?? 0) > 0 || total > 8
 
   return (
     <div>
@@ -38,11 +41,11 @@ export function CategoryGrid({
           {groups && groups.length > 0 ? (
             <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by type">
               <Chip active={group === ""} onClick={() => setGroup("")}>
-                All ({products.length})
+                All ({total})
               </Chip>
               {groups.map((g) => (
-                <Chip key={g} active={group === g} onClick={() => setGroup(g)}>
-                  {g} ({products.filter((p) => p.group === g).length})
+                <Chip key={g.name} active={group === g.name} onClick={() => setGroup(g.name)}>
+                  {g.name} ({g.count})
                 </Chip>
               ))}
             </div>
@@ -71,18 +74,14 @@ export function CategoryGrid({
       )}
 
       <p aria-live="polite" className="sr-only">
-        {visible.length} products shown
+        {shown} products shown
       </p>
 
-      {visible.length > 0 ? (
-        <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {visible.map((product) => (
-            <li key={product.slug} className="h-full">
-              <ProductCard product={product} />
-            </li>
-          ))}
-        </ul>
-      ) : (
+      <div ref={listRef} className="mt-8">
+        {children}
+      </div>
+
+      {shown === 0 && (
         <p className="mt-10 rounded-md border border-dashed border-border bg-muted p-8 text-center text-sm text-muted-foreground">
           No products in this category match that filter.
         </p>

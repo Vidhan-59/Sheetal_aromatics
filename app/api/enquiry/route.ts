@@ -11,8 +11,9 @@ export const dynamic = "force-dynamic"
 
 /* ------------------------------ Validation ------------------------------- */
 
-const enquirySchema = z.object({
-  kind: z.enum(["quote", "general"]).default("quote"),
+const enquirySchema = z
+  .object({
+  kind: z.enum(["quote", "general", "private-label"]).default("quote"),
   name: z.string().trim().min(2, "Please enter your name").max(120),
   company: z.string().trim().max(160).optional().or(z.literal("")),
   email: z.string().trim().email("Please enter a valid business email").max(200),
@@ -21,7 +22,10 @@ const enquirySchema = z.object({
   product: z.string().trim().max(200).optional().or(z.literal("")),
   quantity: z.string().trim().max(120).optional().or(z.literal("")),
   specification: z.string().trim().max(2000).optional().or(z.literal("")),
-  message: z.string().trim().min(10, "Please add a few details about your requirement").max(4000),
+  /** Private-label enquiries: pack sizes / materials wanted, and label or brand requirements. */
+  packaging: z.string().trim().max(500).optional().or(z.literal("")),
+  branding: z.string().trim().max(2000).optional().or(z.literal("")),
+  message: z.string().trim().max(4000).optional().or(z.literal("")),
   /** Site path the form was submitted from, so the team knows which page produced the lead. */
   page: z.string().trim().max(300).optional().or(z.literal("")),
   /**
@@ -33,7 +37,11 @@ const enquirySchema = z.object({
   website: z.string().max(500).optional(),
   /** Milliseconds the form was on screen before submission. */
   elapsed: z.number().int().nonnegative().optional(),
-})
+  })
+  // Quote and general enquiries need a message; private-label ones carry their detail in the branding field.
+  .refine((d) => (d.kind === "private-label" ? (d.branding ?? "").length >= 10 : (d.message ?? "").length >= 10), {
+    message: "Please add a few details about your requirement",
+  })
 
 type Enquiry = z.infer<typeof enquirySchema>
 
@@ -213,8 +221,10 @@ function button(href: string, label: string, primary = true): string {
 }
 
 /** Notification delivered to the company inbox. */
+const kindLabel = { quote: "quote request", general: "enquiry", "private-label": "private-label enquiry" } as const
+
 function teamEmail(data: Enquiry, reference: string, receivedAt: Date) {
-  const label = data.kind === "quote" ? "quote request" : "enquiry"
+  const label = kindLabel[data.kind]
   const pageUrl = data.page ? `${siteConfig.url}${data.page.startsWith("/") ? data.page : `/${data.page}`}` : ""
   const phoneDigits = (data.phone ?? "").replace(/\D/g, "")
 
@@ -227,13 +237,18 @@ function teamEmail(data: Enquiry, reference: string, receivedAt: Date) {
     ["Country", data.country || "—"],
     ["Product", data.product || "—"],
     ["Quantity required", data.quantity || "—"],
-    ["Required specification", data.specification || "—"],
+    ...(data.kind === "private-label"
+      ? ([
+          ["Packaging preference", data.packaging || "—"],
+          ["Branding requirements", data.branding || "—"],
+        ] as [string, string][])
+      : ([["Required specification", data.specification || "—"]] as [string, string][])),
     ["Submitted from", pageUrl || "—"],
     ["Received", receivedAt.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }) + " IST"],
   ]
 
   const subject = sanitizeHeader(
-    `${data.kind === "quote" ? "Quote request" : "Enquiry"} ${reference} — ${data.product || "General"} — ${data.name}${
+    `${label.charAt(0).toUpperCase() + label.slice(1)} ${reference} — ${data.product || "General"} — ${data.name}${
       data.company ? ` (${data.company})` : ""
     }`,
   )
@@ -249,7 +264,7 @@ function teamEmail(data: Enquiry, reference: string, receivedAt: Date) {
     ...rows.map(([k, v]) => `${k}: ${v}`),
     "",
     "Message:",
-    data.message,
+    data.message || "—",
     "",
     "Reply to this email to respond to the buyer directly.",
   ].join("\n")
@@ -263,7 +278,7 @@ function teamEmail(data: Enquiry, reference: string, receivedAt: Date) {
 ${detailsTable(rows)}
 <p style="margin:22px 0 6px;font:600 13px ${FONT};color:${BRAND.muted}">Message</p>
 <div style="padding:14px 16px;background:${BRAND.paper};border-radius:6px;white-space:pre-wrap;font:14px/1.6 ${FONT}">${escapeHtml(
-      data.message,
+      data.message || "—",
     )}</div>
 <div style="margin-top:24px">${button(replyHref, "Reply to buyer")}${whatsappHref ? button(whatsappHref, "WhatsApp buyer", false) : ""}</div>
 <p style="margin:12px 0 0;font:12px ${FONT};color:${BRAND.muted}">Pressing Reply in your mail app also goes straight to the buyer.</p>`,
@@ -274,7 +289,7 @@ ${detailsTable(rows)}
 
 /** Acknowledgement sent to the buyer. */
 function customerEmail(data: Enquiry, reference: string) {
-  const label = data.kind === "quote" ? "quote request" : "enquiry"
+  const label = kindLabel[data.kind]
   // Short fields only, and trimmed: the free-text message is not echoed back so
   // the form cannot be used to relay arbitrary text to a third-party inbox.
   const rows: [string, string][] = [
@@ -282,6 +297,7 @@ function customerEmail(data: Enquiry, reference: string) {
     ...(data.product ? ([["Product", truncate(data.product, 120)]] as [string, string][]) : []),
     ...(data.quantity ? ([["Quantity", truncate(data.quantity, 120)]] as [string, string][]) : []),
     ...(data.specification ? ([["Specification", truncate(data.specification, 300)]] as [string, string][]) : []),
+    ...(data.packaging ? ([["Packaging", truncate(data.packaging, 200)]] as [string, string][]) : []),
   ]
 
   const subject = `We have received your ${label} — ${siteConfig.name} (Ref ${reference})`
@@ -377,7 +393,9 @@ export async function POST(request: NextRequest) {
       product: data.product,
       quantity: data.quantity,
       specification: data.specification,
-      message: data.message,
+      packaging: data.packaging,
+      branding: data.branding,
+      message: data.message ?? "",
       page: data.page,
       ip: clientIp,
       emailDelivered: false,
@@ -416,7 +434,9 @@ export async function POST(request: NextRequest) {
       product: data.product,
       quantity: data.quantity,
       specification: data.specification,
-      message: data.message,
+      packaging: data.packaging,
+      branding: data.branding,
+      message: data.message ?? "",
       page: data.page,
       ip: clientIp,
       emailDelivered: true,
@@ -435,7 +455,9 @@ export async function POST(request: NextRequest) {
       product: data.product,
       quantity: data.quantity,
       specification: data.specification,
-      message: data.message,
+      packaging: data.packaging,
+      branding: data.branding,
+      message: data.message ?? "",
       page: data.page,
       ip: clientIp,
       emailDelivered: false,

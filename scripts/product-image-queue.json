@@ -1,5 +1,5 @@
 {
-  "note": "Optional upgrades: these products currently show a representative photo of the source plant. Generate a 4:3 image from the prompt, then add it with `npx tsx scripts/add-product-images.mts <manifest.json>` (manifest: [{slug, file, alt, generator}]) \u2014 that writes the renditions, the 'generated' entry in lib/product-images.ts and removes the item from this queue.",
+  "note": "Optional upgrades: these products currently show a representative photo of the source plant. Generate a 4:3 image from the prompt, then add it with `npx tsx scripts/add-product-images.mts <manifest.json>` (manifest: [{slug, file, alt, generator}]) — that writes the renditions, the 'generated' entry in lib/product-images.ts and removes the item from this queue.",
   "queue": [
     {
       "slug": "shatavari",

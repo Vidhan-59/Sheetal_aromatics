@@ -44,7 +44,7 @@ Legend: ✅ done · 🟡 code ready, needs config/account · ⬜ pending · ⛔ 
 |---|---|---|
 | GA4 tracking code + events (`generate_lead`, `click_to_call`, `email_click`, `whatsapp_click`) | 🟡 | Built in `components/analytics.tsx`, `lib/analytics.ts`, `components/quote-form.tsx`. Needs a GA4 property and `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel (note: **not** `NEXT_PUBLIC_GA_ID` as the plan's sample code says) |
 | Cookie policy reflects GA | ✅ | `app/cookie-policy/page.tsx` switches automatically |
-| Consent Mode v2 for EU/UK | ⬜ | Needed before emailing/advertising to Europe — see seo-playbook §Technical |
+| Consent for analytics (EU/UK, DPDP) | ✅ | GA loads only after "Accept analytics" (`components/analytics.tsx`); banner shows only when the GA ID is set. An ad-consent option is still needed before any Meta Pixel / LinkedIn Insight Tag |
 | Search Console verification | 🟡 | `GOOGLE_SITE_VERIFICATION` env var supported; a DNS TXT token reportedly exists |
 | Sitemap submitted, top-25 URLs inspected | ⬜ | Owner action in GSC |
 | Bing Webmaster import + IndexNow | 🟡 | `BING_SITE_VERIFICATION` supported; IndexNow key file `public/0f97b13c852662cc3c4259cb4f7334d1.txt` added — after each deploy run `npx tsx scripts/indexnow.mts`. Bing import from GSC still to do |
@@ -67,6 +67,10 @@ Legend: ✅ done · 🟡 code ready, needs config/account · ⬜ pending · ⛔ 
 | Item | Status | Notes |
 |---|---|---|
 | Canonical www, sitemap, robots, schema, unique titles, alt text, 0 broken links | ✅ | Verified by crawl of 116 URLs (27 Oct) |
+| Denatonium Benzoate + Specialty Chemicals category | ✅ | 12 Nov 2026; forms, pack sizes, solution bases, 9 FAQs. Specs/SDS still to come from owner |
+| Private labelling vertical (`/private-label`) | ✅ | Landing page, private-label enquiry form mode, nav/footer/home links, Service + FAQ schema |
+| Product FAQs + forms on priority products | ✅ | Benzyl alcohol, sorbitol 70%, sodium benzoate, potassium sorbate, calcium propionate (FAQPage schema) |
+| Website security page + security.txt | ✅ | `/website-security`; security.txt expires 2027-11-12 |
 | Open Graph + Twitter cards on every page | ✅ | `pageMetadata()` in `lib/seo.ts`: brand in shared titles, per-product share images, guides typed `article` with dates |
 | LocalBusiness, Article, ItemList schema; industries + guides pages | ✅ | |
 | Products loading skeleton (`app/products/loading.tsx`) | ✅ | Deleted (25 Oct) |
@@ -88,7 +92,7 @@ Legend: ✅ done · 🟡 code ready, needs config/account · ⬜ pending · ⛔ 
 ### Off-site & marketing
 | Item | Status |
 |---|---|
-| LinkedIn company page + partner profiles | ⬜ |
+| LinkedIn company page + partner profiles | 🟡 Page exists (1 follower, father is Super admin); step-by-step routine in the "Sheetal Aromatics LinkedIn Playbook" doc (https://claude.ai/artifact/D36dAggEJDSuZfpZBQQtEc). Add the Page URL to `sameAs` and the footer once shared |
 | Google Business Profile optimisation + reviews | ⬜ |
 | Listings: IndiaMART, TradeIndia, GlobalLinker/FIEO, CPHI Online, Echemi/ChemicalBook, JustDial | ⬜ |
 | RCMC (CHEMEXCIL; SHEFEXIL/AYUSHEXCIL), D-U-N-S, ISO 9001 / FSSAI / Halal as relevant | ⬜ |

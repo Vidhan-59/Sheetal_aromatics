@@ -17,19 +17,19 @@ export default function CookiePolicyPage() {
     <LegalPage
       title="Cookie Policy"
       path="/cookie-policy"
-      updated="September 2026"
+      updated="November 2026"
       intro={
         analyticsEnabled
-          ? "This site sets no advertising cookies. It uses Google Analytics to understand how visitors find and use the site, as described below."
+          ? "This site sets no advertising cookies. With your consent, it uses Google Analytics to understand how visitors find and use the site, as described below."
           : "A short page, because there is not much to report: this site sets no advertising or analytics cookies."
       }
     >
       <section>
         <h2>What we store</h2>
         <p>
-          The only thing this site stores in your browser is a small preference recording whether you chose the light
-          or dark appearance, so the site looks the same when you return. It contains no identifier and is not shared
-          with anyone.
+          {analyticsEnabled
+            ? "The only thing this site stores in your browser for its own use is whether you accepted or declined analytics cookies, so you are not asked again on every page. It contains no identifier and is not shared with anyone."
+            : "This site stores nothing in your browser for its own use."}
         </p>
       </section>
 
@@ -51,10 +51,14 @@ export default function CookiePolicyPage() {
         <section>
           <h2>Analytics</h2>
           <p>
-            We use Google Analytics to count visits and see which pages and enquiry options are used, so we can
-            improve the site. Google Analytics sets first-party cookies (named _ga and _ga_*) that last up to two
-            years. The data is aggregated and is not used for advertising. You can block these cookies in your browser
-            settings or with the Google Analytics opt-out browser add-on.
+            With your consent, we use Google Analytics to count visits and see which pages and enquiry options are
+            used, so we can improve the site. Nothing is loaded from Google Analytics until you choose &quot;Accept
+            analytics&quot;. Once accepted, it sets first-party cookies (named _ga and _ga_*) that last up to two years.
+            The data is aggregated and is not used for advertising.
+          </p>
+          <p>
+            You can change your choice at any time with &quot;Cookie settings&quot; in the footer. Declining stops
+            further measurement and removes these cookies.
           </p>
         </section>
       )}
@@ -72,7 +76,7 @@ export default function CookiePolicyPage() {
         <h2>Clearing it</h2>
         <p>
           You can clear site data for this domain at any time through your browser settings. The site will continue to
-          work; it will simply forget your appearance preference.
+          work exactly as before.
         </p>
       </section>
     </LegalPage>

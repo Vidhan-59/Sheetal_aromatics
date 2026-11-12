@@ -1,37 +1,65 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import Link from "next/link"
 import { Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { ProductCard } from "@/components/product-card"
 import { cn } from "@/lib/utils"
-import { countByCategory, productCategories, productsDatabase, searchProducts } from "@/lib/products-data"
+import { applyListFilter, CATALOGUE_QUERY_EVENT } from "@/lib/list-filter"
 
 /**
- * Catalogue browser: free-text search plus a category filter. The whole
- * catalogue ships with the page, so filtering is instant and works offline
- * after first load. The query is mirrored into the URL (replace, not push) so
- * a result set can be shared or bookmarked without flooding history.
+ * Catalogue browser: free-text search plus a category filter over a
+ * server-rendered product grid (passed as children). Filtering shows and hides
+ * those cards in place, so the page ships no catalogue JavaScript and the full
+ * grid is in the initial HTML. The query is mirrored into the URL with
+ * replaceState, so a result set can be shared without a navigation per keystroke.
  */
-export function ProductExplorer({ initialCategory = "" }: { initialCategory?: string }) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get("q") ?? "")
-  const [category, setCategory] = useState(initialCategory || searchParams.get("category") || "")
+export function ProductExplorer({
+  categories,
+  total,
+  children,
+}: {
+  categories: { slug: string; name: string; count: number }[]
+  total: number
+  children: ReactNode
+}) {
+  const listRef = useRef<HTMLDivElement>(null)
+  const [query, setQuery] = useState("")
+  const [category, setCategory] = useState("")
+  const [shown, setShown] = useState(total)
+  const [ready, setReady] = useState(false)
+
+  // Read ?q= and ?category= after mount instead of via useSearchParams, which would
+  // render this whole section on the client and drop the grid from the static HTML.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    setQuery(params.get("q") ?? "")
+    setCategory(params.get("category") ?? "")
+    setReady(true)
+    const onQuery = (event: Event) => {
+      setQuery((event as CustomEvent<string>).detail)
+      setCategory("")
+    }
+    window.addEventListener(CATALOGUE_QUERY_EVENT, onQuery)
+    return () => window.removeEventListener(CATALOGUE_QUERY_EVENT, onQuery)
+  }, [])
 
   useEffect(() => {
+    if (!ready || !listRef.current) return
+    setShown(applyListFilter(listRef.current, { query, attr: "category", value: category }))
     const params = new URLSearchParams()
     if (query.trim()) params.set("q", query.trim())
     if (category) params.set("category", category)
     const qs = params.toString()
-    router.replace(qs ? `/products?${qs}` : "/products", { scroll: false })
-  }, [query, category, router])
+    window.history.replaceState(window.history.state, "", qs ? `/products?${qs}` : "/products")
+  }, [query, category, ready])
 
-  const results = useMemo(() => searchProducts(query, category || undefined), [query, category])
   const filtering = Boolean(query.trim() || category)
+  const clear = () => {
+    setQuery("")
+    setCategory("")
+  }
 
   return (
     <div>
@@ -55,14 +83,11 @@ export function ProductExplorer({ initialCategory = "" }: { initialCategory?: st
         </div>
 
         <p aria-live="polite" className="text-sm text-muted-foreground">
-          {results.length} of {productsDatabase.length} products
+          {shown} of {total} products
           {filtering && (
             <button
               type="button"
-              onClick={() => {
-                setQuery("")
-                setCategory("")
-              }}
+              onClick={clear}
               className="ml-3 inline-flex items-center gap-1 text-primary underline-offset-2 hover:underline"
             >
               <X aria-hidden="true" className="h-3 w-3" />
@@ -76,25 +101,21 @@ export function ProductExplorer({ initialCategory = "" }: { initialCategory?: st
       <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
         <FilterChip active={category === ""} onClick={() => setCategory("")}>
           All categories
-          <Count>{productsDatabase.length}</Count>
+          <Count>{total}</Count>
         </FilterChip>
-        {productCategories.map((c) => (
+        {categories.map((c) => (
           <FilterChip key={c.slug} active={category === c.slug} onClick={() => setCategory(c.slug)}>
             {c.name}
-            <Count>{countByCategory(c.slug)}</Count>
+            <Count>{c.count}</Count>
           </FilterChip>
         ))}
       </div>
 
-      {results.length > 0 ? (
-        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {results.map((product) => (
-            <li key={product.slug} className="h-full">
-              <ProductCard product={product} showCategory={!category} />
-            </li>
-          ))}
-        </ul>
-      ) : (
+      <div ref={listRef} className="mt-10">
+        {children}
+      </div>
+
+      {shown === 0 && (
         <div className="mt-12 rounded-lg border border-dashed border-border bg-muted p-10 text-center">
           <h3 className="text-lg font-semibold">No products match “{query.trim()}”</h3>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
@@ -105,13 +126,7 @@ export function ProductExplorer({ initialCategory = "" }: { initialCategory?: st
             <Button asChild>
               <Link href="/request-a-quote">Send a specification</Link>
             </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setQuery("")
-                setCategory("")
-              }}
-            >
+            <Button variant="outline" onClick={clear}>
               Clear filters
             </Button>
           </div>

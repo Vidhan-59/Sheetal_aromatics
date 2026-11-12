@@ -18,11 +18,12 @@ function header(): string[] {
   return [
     `# ${siteConfig.name}`,
     "",
-    `> ${siteConfig.name} is a chemical trading and custom-manufacturing firm in ${address.city}, ${address.state}, India, established in ${siteConfig.establishedYear}. It supplies aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates, phase transfer catalysts and food & pharma ingredients to manufacturers and distributors across India, and exports to buyers in ${siteConfig.exportCountries} countries.`,
+    `> ${siteConfig.name} is a chemical trading and custom-manufacturing firm in ${address.city}, ${address.state}, India, established in ${siteConfig.establishedYear}. It supplies aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates, phase transfer catalysts, food & pharma ingredients and specialty chemicals to manufacturers and distributors across India, and exports to buyers in ${siteConfig.exportCountries} countries.`,
     "",
     "Key facts:",
     "",
     "- Business model: trading, plus custom manufacturing to a buyer's specification. It is not the manufacturer of every listed product.",
+    `- Services: custom packaging and private labelling under the buyer's own brand (${url("/private-label")})`,
     `- Established: ${siteConfig.establishedYear} (${siteConfig.legalForm.toLowerCase()})`,
     `- Address: ${addressSingleLine}`,
     `- Phone / WhatsApp: ${contact.phonePrimary.display} (${contact.phonePrimary.contactName}), ${contact.phoneSecondary.display} (${contact.phoneSecondary.contactName})`,
@@ -42,6 +43,7 @@ function mainPages(): string[] {
     `- [All products](${url("/products")}): full catalogue, searchable by name or CAS number`,
     `- [Request a quote](${url("/request-a-quote")}): enquiry form for quotations and samples`,
     `- [Export](${url("/export")}): how export enquiries, documentation and shipments are handled`,
+    `- [Private labelling](${url("/private-label")}): product sourcing, custom pack sizes and labels under the buyer's own brand`,
     `- [About](${url("/about")}): company background and partners`,
     `- [Contact](${url("/contact")}): address, phone, WhatsApp, email and map`,
     `- [FAQ](${url("/faq")}): buyer questions on enquiries, specifications and export`,
@@ -92,6 +94,7 @@ export function llmsTxt(): string {
     `- [Sitemap](${url("/sitemap.xml")})`,
     `- [Privacy policy](${url("/privacy-policy")})`,
     `- [Terms and conditions](${url("/terms-and-conditions")})`,
+    `- [Website security](${url("/website-security")})`,
     "",
   ].join("\n")
 }

@@ -6,6 +6,7 @@ import { Archivo, Inter, Plus_Jakarta_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader, MobileQuoteBar } from "@/components/site-header"
+import { navLinks, navMenus } from "@/lib/navigation"
 import { SiteFooter } from "@/components/site-footer"
 import { JsonLd } from "@/components/json-ld"
 import { VisitorTracker } from "@/components/visitor-tracker"
@@ -23,7 +24,6 @@ const inter = Inter({
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  weight: ["500", "600", "700", "800"],
   variable: "--font-jakarta",
 })
 
@@ -89,14 +89,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </Suspense>
         <Analytics />
         <SmoothScroll />
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false} disableTransitionOnChange>
           <a
             href="#main"
             className="sr-only z-[100] focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
           >
             Skip to content
           </a>
-          <SiteHeader />
+          <SiteHeader menus={navMenus} links={navLinks} />
           <main id="main" className="pb-16 lg:pb-0">
             {children}
           </main>

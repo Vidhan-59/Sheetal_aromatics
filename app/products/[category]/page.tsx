@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
 import { CategoryGrid } from "@/components/category-grid"
+import { FilterableProductList } from "@/components/filterable-product-list"
 import { SiteImage, type SiteImageName } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
@@ -88,7 +89,13 @@ export default async function CategoryPage({ params }: { params: Params }) {
       <Section tone="muted" spacing="tight">
         <Container>
           <h2 className="sr-only">{category.name} product list</h2>
-          <CategoryGrid products={products} categorySlug={category.slug} groups={category.groups} />
+          <CategoryGrid
+            categorySlug={category.slug}
+            groups={category.groups?.map((g) => ({ name: g, count: products.filter((p) => p.group === g).length }))}
+            total={products.length}
+          >
+            <FilterableProductList products={products} />
+          </CategoryGrid>
         </Container>
       </Section>
 

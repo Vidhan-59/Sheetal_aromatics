@@ -130,6 +130,7 @@ export const navMenus: NavMenu[] = [
       items: [
         { label: "About Us", href: "/about", description: "Our history, principles and partners" },
         { label: "Global Supply & Export", href: "/export", description: "How we handle international orders" },
+        { label: "Private Labelling", href: "/private-label", description: "Your brand, custom packs and labels" },
         { label: "Contact & Location", href: "/contact", description: "Office, phone, WhatsApp and map" },
       ],
     },
@@ -137,4 +138,7 @@ export const navMenus: NavMenu[] = [
 ]
 
 /** Top-level links with no menu. */
-export const navLinks: NavItem[] = [{ label: "Contact", href: "/contact" }]
+export const navLinks: NavItem[] = [
+  { label: "Private Label", href: "/private-label" },
+  { label: "Contact", href: "/contact" },
+]

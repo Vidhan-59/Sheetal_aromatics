@@ -21,7 +21,7 @@ interface ProductImageProps {
  */
 export function ProductImage({
   product,
-  sizes = "(min-width: 1280px) 300px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw",
+  sizes = "(min-width: 1280px) 300px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 55vw",
   priority = false,
   className,
 }: ProductImageProps) {

@@ -16,7 +16,7 @@ export const faqs: Faq[] = [
   {
     question: "What products does Sheetal Aromatics supply?",
     answer:
-      "We supply seven product groups: aromatic chemicals, essential oils, Ayurvedic products (whole herbs, raw materials and milled powders), metals, pharma intermediates, phase transfer catalysts (quaternary ammonium and phosphonium salts), and food & pharma ingredients (preservatives, humectants and excipients). The full catalogue is listed on the Products pages, and items outside the listed range can be discussed on enquiry.",
+      "We supply eight product groups: aromatic chemicals, essential oils, Ayurvedic products (whole herbs, raw materials and milled powders), metals, pharma intermediates, phase transfer catalysts (quaternary ammonium and phosphonium salts), food & pharma ingredients (preservatives, humectants and excipients), and specialty chemicals such as the bittering agent denatonium benzoate. The full catalogue is listed on the Products pages, and items outside the listed range can be discussed on enquiry.",
     featured: true,
   },
   {
@@ -29,6 +29,12 @@ export const faqs: Faq[] = [
     question: "Do you offer custom manufacturing?",
     answer:
       "Yes. Alongside trading, we take up custom manufacturing of chemicals to a buyer's own specification. Share the product or structure, the specification you need, the quantity and your target timeline, and we will confirm feasibility before quoting.",
+  },
+  {
+    question: "Do you offer private labelling and custom packaging?",
+    answer:
+      "Yes. Distributors, importers and new chemical brands can source products from us under their own brand, with custom pack sizes and labels to their requirements. Availability, minimum quantities and lead times are confirmed per product with the quotation. See our private labelling page for how it works.",
+    featured: true,
   },
   {
     question: "Does Sheetal Aromatics supply international buyers?",
@@ -97,7 +103,7 @@ export const faqs: Faq[] = [
   {
     question: "What packing is available?",
     answer:
-      "Packing depends on the product and the quantity ordered, and is confirmed with the quotation. If you have a required pack size or packaging standard, state it with your enquiry.",
+      "Packing depends on the product and the quantity ordered, and is confirmed with the quotation. Custom pack sizes and private labelling are available on request, so if you have a required pack size, packaging standard or label, state it with your enquiry.",
   },
   {
     question: "Do you provide documentation with shipments?",

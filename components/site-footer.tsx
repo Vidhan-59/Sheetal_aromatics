@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react"
 
 import { Logo } from "@/components/brand/logo"
+import { CookieSettingsButton } from "@/components/analytics"
 import { Container } from "@/components/layout-primitives"
 import { addressLines, directionsLink, siteConfig, yearsOfExperience } from "@/lib/site-config"
 import { productCategories } from "@/lib/products-data"
@@ -9,6 +10,7 @@ import { productCategories } from "@/lib/products-data"
 const companyLinks = [
   { href: "/about", label: "About Us" },
   { href: "/export", label: "Global Supply & Export" },
+  { href: "/private-label", label: "Private Labelling" },
   { href: "/industries", label: "Industries Served" },
   { href: "/guides", label: "Buyer Guides" },
   { href: "/faq", label: "Buyer FAQs" },
@@ -20,6 +22,7 @@ const legalLinks = [
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions", label: "Terms & Conditions" },
   { href: "/cookie-policy", label: "Cookie Policy" },
+  { href: "/website-security", label: "Website Security" },
   { href: "/image-credits", label: "Image Credits" },
 ]
 
@@ -162,6 +165,9 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li>
+              <CookieSettingsButton className="transition-colors hover:text-white" />
+            </li>
           </ul>
         </Container>
       </div>

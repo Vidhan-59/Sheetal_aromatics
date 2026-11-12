@@ -55,7 +55,13 @@ export function MolecularField({
     if (!ctx) return
 
     const colours = TONES[tone]
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    // Phones, data-saver mode and reduced-motion visitors get one still frame: a continuous canvas
+    // animation is the most expensive thing on the page for a low-end phone's main thread.
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true
+    const still =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(max-width: 1023px)").matches ||
+      saveData
     let width = 0
     let height = 0
     let rings: Ring[] = []
@@ -64,6 +70,9 @@ export function MolecularField({
     let last = 0
     let nextPulse = 0
     let visible = true
+    // Animation starts once the browser is idle, so it never competes with the first render.
+    let ready = false
+    let idleHandle = 0
 
     const rand = (min: number, max: number) => min + Math.random() * (max - min)
 
@@ -182,7 +191,12 @@ export function MolecularField({
       void time
     }
 
+    // ~30 fps is plenty for slow drift and halves the main-thread time of the animation.
+    const FRAME_MS = 1000 / 30
+
     function step(time: number) {
+      frame = visible ? requestAnimationFrame(step) : 0
+      if (last && time - last < FRAME_MS) return
       const dt = Math.min(0.05, last ? (time - last) / 1000 : 0)
       last = time
       for (const ring of rings) {
@@ -211,11 +225,10 @@ export function MolecularField({
       }
       pulses = pulses.filter((p) => (p.t += dt / 1.4) < 1)
       draw(time)
-      frame = visible ? requestAnimationFrame(step) : 0
     }
 
     function start() {
-      if (!frame && visible && !reduced) {
+      if (!frame && visible && ready && !still) {
         last = 0
         frame = requestAnimationFrame(step)
       }
@@ -226,12 +239,21 @@ export function MolecularField({
     }
 
     resize()
-    if (reduced) draw(0)
-    else start()
+    draw(0)
+    if (!still) {
+      const begin = () => {
+        ready = true
+        start()
+      }
+      idleHandle =
+        typeof window.requestIdleCallback === "function"
+          ? window.requestIdleCallback(begin, { timeout: 2500 })
+          : window.setTimeout(begin, 1200)
+    }
 
     const ro = new ResizeObserver(() => {
       resize()
-      if (reduced) draw(0)
+      if (!frame) draw(0)
     })
     ro.observe(canvas)
     const io = new IntersectionObserver(([entry]) => {
@@ -249,6 +271,8 @@ export function MolecularField({
 
     return () => {
       stop()
+      if (typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleHandle)
+      window.clearTimeout(idleHandle)
       ro.disconnect()
       io.disconnect()
       document.removeEventListener("visibilitychange", onVisibility)

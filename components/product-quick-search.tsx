@@ -4,22 +4,35 @@ import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { categoryName, productHref, searchProducts } from "@/lib/products-data"
+import { CATALOGUE_QUERY_EVENT } from "@/lib/list-filter"
+import type * as Catalogue from "@/lib/products-data"
 
 /**
  * Header search with inline suggestions. The catalogue is small enough to
  * filter on the client, so results appear as the buyer types without a network
  * round trip. Enter always falls through to the full results page.
+ *
+ * The catalogue module is loaded on first hover or focus rather than with the
+ * page: the header is on every page, and importing it statically put the whole
+ * product database into every page's initial JavaScript.
  */
 export function ProductQuickSearch({ className }: { className?: string }) {
   const router = useRouter()
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(-1)
+  const [catalogue, setCatalogue] = useState<typeof Catalogue | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const listId = useId()
 
-  const results = useMemo(() => (query.trim() ? searchProducts(query).slice(0, 6) : []), [query])
+  function loadCatalogue() {
+    if (!catalogue) import("@/lib/products-data").then((mod) => setCatalogue(mod))
+  }
+
+  const results = useMemo(
+    () => (catalogue && query.trim() ? catalogue.searchProducts(query).slice(0, 6) : []),
+    [catalogue, query],
+  )
 
   useEffect(() => {
     function onPointerDown(event: MouseEvent) {
@@ -32,6 +45,10 @@ export function ProductQuickSearch({ className }: { className?: string }) {
   function goToResults() {
     if (!query.trim()) return
     setOpen(false)
+    // Already on /products: the mounted explorer picks the query up from this event.
+    if (window.location.pathname === "/products") {
+      window.dispatchEvent(new CustomEvent(CATALOGUE_QUERY_EVENT, { detail: query.trim() }))
+    }
     router.push(`/products?q=${encodeURIComponent(query.trim())}`)
   }
 
@@ -45,9 +62,9 @@ export function ProductQuickSearch({ className }: { className?: string }) {
     } else if (event.key === "Enter") {
       event.preventDefault()
       const chosen = results[active]
-      if (chosen) {
+      if (chosen && catalogue) {
         setOpen(false)
-        router.push(productHref(chosen))
+        router.push(catalogue.productHref(chosen))
       } else {
         goToResults()
       }
@@ -57,7 +74,7 @@ export function ProductQuickSearch({ className }: { className?: string }) {
   }
 
   return (
-    <div ref={wrapRef} className={cn("relative", className)}>
+    <div ref={wrapRef} className={cn("relative", className)} onPointerEnter={loadCatalogue}>
       <form
         role="search"
         onSubmit={(e) => {
@@ -87,13 +104,16 @@ export function ProductQuickSearch({ className }: { className?: string }) {
             setOpen(true)
             setActive(-1)
           }}
-          onFocus={() => setOpen(true)}
+          onFocus={() => {
+            loadCatalogue()
+            setOpen(true)
+          }}
           onKeyDown={onKeyDown}
           className="h-10 w-full rounded-md border border-border bg-card pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-forest-400 focus:ring-2 focus:ring-ring/25"
         />
       </form>
 
-      {open && results.length > 0 && (
+      {open && catalogue && results.length > 0 && (
         <ul
           id={listId}
           role="listbox"
@@ -103,7 +123,7 @@ export function ProductQuickSearch({ className }: { className?: string }) {
           {results.map((product, i) => (
             <li key={product.slug} role="option" aria-selected={i === active}>
               <a
-                href={productHref(product)}
+                href={catalogue.productHref(product)}
                 onMouseEnter={() => setActive(i)}
                 className={cn(
                   "flex items-baseline justify-between gap-3 px-3 py-2.5 text-sm transition-colors",
@@ -112,7 +132,7 @@ export function ProductQuickSearch({ className }: { className?: string }) {
               >
                 <span className="font-medium text-foreground">{product.name}</span>
                 <span className="shrink-0 text-xs text-muted-foreground">
-                  {product.casNumber ?? categoryName(product.category)}
+                  {product.casNumber ?? catalogue.categoryName(product.category)}
                 </span>
               </a>
             </li>

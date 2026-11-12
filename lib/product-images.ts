@@ -965,6 +965,14 @@ export const productImages: Record<string, ProductImage> = {
     alt: "White crystalline powder in a glass jar with a steel spatula in front",
     generator: "Figma AI",
   },
+  "denatonium-benzoate": {
+    kind: "generated",
+    src: "/images/products/denatonium-benzoate.webp",
+    srcSmall: "/images/products/denatonium-benzoate-600.webp",
+    og: "/images/products/og/denatonium-benzoate.jpg",
+    alt: "White crystalline powder in a glass petri dish, granules on a watch glass and a clear solution in a glass bottle",
+    generator: "Figma AI",
+  },
 }
 
 /** 2D structures for every chemical, shown on product pages next to the primary image. */
@@ -1013,6 +1021,7 @@ export const productStructures: Record<string, { src: string; pubchemCid: number
   "tetraethyl-ammonium-bromide": { src: "/images/structures/tetraethyl-ammonium-bromide.svg", pubchemCid: 6285 },
   "tetraethyl-ammonium-tetrafluoroborate": { src: "/images/structures/tetraethyl-ammonium-tetrafluoroborate.svg", pubchemCid: 2724277 },
   "yara-yara-crystal": { src: "/images/structures/yara-yara-crystal.svg", pubchemCid: 7119 },
+  "denatonium-benzoate": { src: "/images/structures/denatonium-benzoate.svg", pubchemCid: 19518 },
 }
 
 export function productImageFor(slug: string): ProductImage | undefined {

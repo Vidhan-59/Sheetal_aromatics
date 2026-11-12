@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
-import { Suspense } from "react"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
 import { ProductExplorer } from "@/components/product-explorer"
+import { FilterableProductList } from "@/components/filterable-product-list"
 import { ProductImage } from "@/components/product-image"
 import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
@@ -13,9 +13,7 @@ import { collectionSchema, pageMetadata } from "@/lib/seo"
 import {
   categoryCover,
   countByCategory,
-  getProductsByCategory,
   productCategories,
-  productHref,
   productsDatabase,
 } from "@/lib/products-data"
 
@@ -106,45 +104,12 @@ export default function ProductsPage() {
         <Container>
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Search the catalogue</h2>
           <div className="mt-8">
-            <Suspense fallback={<div className="h-12 animate-pulse rounded-md bg-muted" />}>
-              <ProductExplorer />
-            </Suspense>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Server-rendered index: every product link is in the initial HTML for crawlers and no-JS visitors. */}
-      <Section tone="muted" spacing="tight" id="all-products">
-        <Container>
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Full product list</h2>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            All {productsDatabase.length} catalogued products by category, with CAS numbers where held. Many more are
-            available on request — send us the name or CAS number.
-          </p>
-          <div className="mt-8 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {productCategories.map((category) => (
-              <section key={category.slug} aria-labelledby={`list-${category.slug}`}>
-                <h3 id={`list-${category.slug}`} className="text-sm font-semibold uppercase tracking-[0.12em] text-accent">
-                  <Link href={`/products/${category.slug}`} className="hover:underline">
-                    {category.name}
-                  </Link>
-                </h3>
-                <ul className="mt-3 space-y-1.5">
-                  {getProductsByCategory(category.slug).map((product) => (
-                    <li key={product.slug} className="flex items-baseline justify-between gap-3 text-sm">
-                      <Link href={productHref(product)} className="text-foreground hover:text-primary hover:underline">
-                        {product.name}
-                      </Link>
-                      {product.casNumber && (
-                        <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">
-                          {product.casNumber}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
+            <ProductExplorer
+              categories={productCategories.map((c) => ({ slug: c.slug, name: c.name, count: countByCategory(c.slug) }))}
+              total={productsDatabase.length}
+            >
+              <FilterableProductList products={productsDatabase} showCategory />
+            </ProductExplorer>
           </div>
         </Container>
       </Section>

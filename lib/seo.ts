@@ -169,7 +169,13 @@ export function organizationSchema() {
     hasMap: mapsLink,
     sameAs: [mapsShortLink],
     areaServed: areaServed,
-    knowsAbout: [...productCategories.map((c) => c.name), "Chemical trading", "Custom chemical manufacturing"],
+    knowsAbout: [
+      ...productCategories.map((c) => c.name),
+      "Chemical trading",
+      "Custom chemical manufacturing",
+      "Private label chemical supply",
+      "Custom chemical packaging",
+    ],
     identifier: siteConfig.registrations.map((r) => ({
       "@type": "PropertyValue",
       name: r.label.replace(/\.$/, ""),
@@ -345,6 +351,9 @@ export function productSchema(product: Product) {
     product.molecularWeight && { name: "Molecular Weight", value: product.molecularWeight },
     product.physicalForm && { name: "Physical Form", value: product.physicalForm },
     product.appearance && { name: "Appearance", value: product.appearance },
+    product.forms?.length && { name: "Available Forms", value: product.forms.join(", ") },
+    product.solutionBases?.length && { name: "Solution Bases", value: product.solutionBases.join(", ") },
+    ...(product.packaging ?? []).map((pack) => ({ name: `Pack Sizes (${pack.form})`, value: pack.sizes.join(", ") })),
   ].filter(Boolean) as { name: string; value: string }[]
 
   const image = productImageSchema(product)

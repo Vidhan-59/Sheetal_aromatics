@@ -33,7 +33,7 @@ export const siteConfig = {
 
   tagline: "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals",
   shortDescription:
-    "Trader, supplier and exporter of aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts, with custom manufacturing to buyer specification. Ahmedabad, India.",
+    "Trader, supplier and exporter of aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates, phase transfer catalysts and specialty chemicals, with custom manufacturing, custom packaging and private labelling to buyer specification. Ahmedabad, India.",
 
   address: {
     line1: "A/7, Tirth Industrial Park 3A",

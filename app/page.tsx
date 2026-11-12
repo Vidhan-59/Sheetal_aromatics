@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, FileText, Globe2, PackageSearch, ShieldCheck } from "lucide-react"
+import { ArrowRight, FileText, Globe2, Package, PackageSearch, ShieldCheck, Tags } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Container, Eyebrow, Section, SectionHeading } from "@/components/layout-primitives"
@@ -86,6 +86,20 @@ const capabilities = [
   },
 ]
 
+const privateLabelPoints = [
+  {
+    icon: Tags,
+    title: "Your label and brand",
+    body: "Brand name, logo, product names and the label text your market requires.",
+  },
+  { icon: Package, title: "Custom pack sizes", body: "Pack sizes agreed per product, from small packs to drums." },
+  {
+    icon: PackageSearch,
+    title: "Sourcing to your specification",
+    body: "We source the material against your grade and documents.",
+  },
+]
+
 export default function HomePage() {
   const stats = [
     { value: `${yearsOfExperience}+`, label: "Years in the industry" },
@@ -100,12 +114,23 @@ export default function HomePage() {
 
       {/* ------------------------------- Hero ------------------------------ */}
       <section className="relative overflow-hidden bg-forest-900 text-white">
-        <div aria-hidden="true" className="grid-texture absolute inset-0 opacity-30" />
+        {/* Background photograph, faded under a forest-green wash so the copy stays readable */}
+        <div aria-hidden="true" className="absolute inset-0">
+          {/* Phones get the 800px rendition: the photo sits at half opacity under a dark wash. */}
+          <SiteImage
+            name="plant-exterior"
+            priority
+            kenBurns
+            sizes="(max-width: 767px) 300px, 100vw"
+            className="opacity-50"
+          />
+        </div>
         <div
           aria-hidden="true"
-          className="glow-drift absolute -right-40 top-1/2 h-[42rem] w-[42rem] -translate-y-1/2 rounded-full bg-forest-700/45 blur-3xl"
+          className="absolute inset-0 bg-gradient-to-r from-forest-950/95 via-forest-900/80 to-forest-900/45"
         />
-        <MolecularField className="[mask-image:linear-gradient(100deg,transparent_8%,black_55%)]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-forest-950/50" />
+        <MolecularField className="opacity-60 [mask-image:linear-gradient(100deg,transparent_8%,black_55%)]" />
 
         <Container className="relative grid gap-14 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-28">
           <div>
@@ -160,7 +185,8 @@ export default function HomePage() {
                     style={{ animationDelay: `${-i * 1.3}s`, animationDuration: `${7 + (i % 3)}s` }}
                   >
                     <div className="aspect-square">
-                      <ProductImage product={product!} sizes="180px" priority={i < 3} />
+                      {/* Lazy, not priority: the mosaic is hidden below lg, and hidden lazy images are never fetched. */}
+                      <ProductImage product={product!} sizes="180px" />
                     </div>
                   </div>
                 </div>
@@ -214,7 +240,7 @@ export default function HomePage() {
                       {sample && (
                         <ProductImage
                           product={sample}
-                          sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                          sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 55vw"
                           className="transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                         />
                       )}
@@ -356,6 +382,43 @@ export default function HomePage() {
                 </Reveal>
               ))}
             </ol>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ------------------------- Private labelling ----------------------- */}
+      <Section tone="muted">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
+            <div>
+              <SectionHeading
+                eyebrow="Private labelling & custom packaging"
+                title="Your brand. Our chemical supply expertise."
+                description="Distributors, importers and new chemical brands can source products from us under their own name, in the pack sizes and labels they sell."
+              />
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href="/private-label">
+                    Explore private labelling
+                    <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/private-label#private-label-enquiry">Send a private-label enquiry</Link>
+                </Button>
+              </div>
+            </div>
+            <ul className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-3 lg:grid-cols-1">
+              {privateLabelPoints.map((point, i) => (
+                <Reveal as="li" key={point.title} delay={i * 60} className="flex gap-4 bg-card p-6">
+                  <point.icon aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                  <div>
+                    <h3 className="text-base font-semibold">{point.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{point.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </Container>
       </Section>

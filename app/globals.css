@@ -64,7 +64,8 @@
   --muted: var(--paper-2);
   --muted-foreground: var(--ink-600);
 
-  --accent: var(--brass-600);
+  /* brass-700, not 600: 600 fails WCAG AA contrast for small text and for white text on it. */
+  --accent: var(--brass-700);
   --accent-foreground: #FFFFFF;
 
   --destructive: #A32718;

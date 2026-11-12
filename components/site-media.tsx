@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- pre-sized WebP renditions with a hand-written srcset; the
    Next image optimiser is disabled for this site (see next.config.mjs). */
 import { cn } from "@/lib/utils"
-import { InViewMotion } from "@/components/motion"
+import { InViewMotion, LazyVideo } from "@/components/motion"
 
 /**
  * Company photography and video used outside the product catalogue.
@@ -23,6 +23,11 @@ export const siteImages = {
   plant: {
     src: "/images/site/plant",
     alt: "Stainless-steel process vessels and control panel in a chemical production facility",
+  },
+  /** AI-generated ambient background for the home hero; not a photograph of the company's site. */
+  "plant-exterior": {
+    src: "/images/site/plant-exterior",
+    alt: "Illustrative view of a chemical processing plant at dusk",
   },
 } as const
 
@@ -60,20 +65,14 @@ export function SiteImage({
   return kenBurns ? <InViewMotion className="h-full w-full overflow-hidden">{img}</InViewMotion> : img
 }
 
-/** Muted, looping background clip of the quality-control lab. */
+/** Muted, looping background clip of the quality-control lab; loads only when scrolled near. */
 export function QualityLabVideo({ className }: { className?: string }) {
   return (
-    <video
-      className={cn("h-full w-full object-cover", className)}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="metadata"
+    <LazyVideo
+      src="/media/quality-lab.mp4"
       poster="/media/quality-lab-poster.webp"
-      aria-label="Laboratory analysts weighing and testing samples"
-    >
-      <source src="/media/quality-lab.mp4" type="video/mp4" />
-    </video>
+      label="Laboratory analysts weighing and testing samples"
+      className={className}
+    />
   )
 }

@@ -2,10 +2,11 @@ import type React from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowRight, FileText, Info, Mail, MessageCircle, Phone } from "lucide-react"
+import { ArrowRight, FileText, Info, MessageCircle, Package, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Breadcrumbs } from "@/components/breadcrumbs"
+import { FaqList } from "@/components/faq-list"
 import { Container, DataRow, Section } from "@/components/layout-primitives"
 import { MolecularFormula } from "@/components/product-visual"
 import { ProductImage } from "@/components/product-image"
@@ -13,7 +14,7 @@ import { ProductCard } from "@/components/product-card"
 import { QuoteForm } from "@/components/quote-form"
 import { EmailEnquiryButton } from "@/components/email-enquiry-button"
 import { JsonLd } from "@/components/json-ld"
-import { BASE_URL, pageMetadata, productSchema } from "@/lib/seo"
+import { BASE_URL, faqSchema, pageMetadata, productSchema } from "@/lib/seo"
 import { mailtoLink, productEnquiryMessage, siteConfig, whatsappLink } from "@/lib/site-config"
 import { productImageFor, productStructureFor } from "@/lib/product-images"
 import { categoryPalette } from "@/components/product-visual"
@@ -147,9 +148,16 @@ export default async function ProductPage({ params }: { params: Params }) {
     ...(product.solubility ? [{ label: "Solubility", value: product.solubility }] : []),
   ]
 
+  const hasSupplyDetails = Boolean(product.forms?.length || product.packaging?.length || product.solutionBases?.length)
+  const faqs = product.faqs ?? []
+  // Sections alternate paper / muted; the optional FAQ band shifts the tones after it.
+  const enquiryTone = faqs.length ? "muted" : "paper"
+  const relatedTone = faqs.length ? "paper" : "muted"
+
   return (
     <>
       <JsonLd data={productSchema(product)} />
+      {faqs.length > 0 && <JsonLd data={faqSchema(faqs)} />}
       <Breadcrumbs
         trail={[
           { name: "Products", href: "/products" },
@@ -277,10 +285,50 @@ export default async function ProductPage({ params }: { params: Params }) {
                   <DataRow key={spec.label} label={spec.label} value={spec.value} />
                 ))}
                 <DataRow label="Purity / assay" value="Confirmed against your specification on enquiry" />
-                <DataRow label="Packing" value="Confirmed on enquiry" />
+                <DataRow
+                  label="Packing"
+                  value={product.packaging?.length ? "Standard sizes below; custom sizes on request" : "Confirmed on enquiry"}
+                />
                 <DataRow label="Origin" value="Confirmed on enquiry" />
                 <DataRow label="Documentation" value="Available on request for a specific enquiry" />
               </dl>
+
+              {hasSupplyDetails && (
+                <div className="mt-8">
+                  <h2 className="text-xl font-semibold tracking-tight">Forms &amp; packaging</h2>
+                  {product.forms?.length ? (
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      Supplied as: <span className="font-medium text-foreground">{product.forms.join(" · ")}</span>
+                    </p>
+                  ) : null}
+                  {product.packaging?.length ? (
+                    <dl className="mt-4 rounded-lg border border-border bg-card px-5">
+                      {product.packaging.map((pack) => (
+                        <DataRow key={pack.form} label={pack.form} value={pack.sizes.join(" · ")} />
+                      ))}
+                      <DataRow label="Other sizes" value="Custom packaging on request" />
+                    </dl>
+                  ) : null}
+                  {product.solutionBases?.length ? (
+                    <div className="mt-4">
+                      <h3 className="text-sm font-semibold">Solution bases</h3>
+                      <ul className="mt-2 flex flex-wrap gap-2">
+                        {product.solutionBases.map((base) => (
+                          <li
+                            key={base}
+                            className="rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground"
+                          >
+                            {base}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                        Concentration and specification are confirmed against your enquiry.
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              )}
 
               {product.storage && (
                 <div className="mt-6 rounded-lg border border-border bg-card p-5">
@@ -366,6 +414,23 @@ export default async function ProductPage({ params }: { params: Params }) {
                 </div>
               )}
 
+              <div className="rounded-lg border border-border bg-card p-5">
+                <div className="flex items-start gap-3">
+                  <Package aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                  <div>
+                    <h2 className="text-sm font-semibold">Custom packaging &amp; private labelling</h2>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      Need a different pack size, or {product.name.toLowerCase()} under your own brand? We arrange custom
+                      packaging and private labelling on request.
+                    </p>
+                    <Link href="/private-label" className="link-underline mt-2 text-sm">
+                      Private labelling
+                      <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
               {productIndustries.length > 0 && (
                 <div>
                   <h2 className="text-xl font-semibold tracking-tight">Industries served</h2>
@@ -388,8 +453,26 @@ export default async function ProductPage({ params }: { params: Params }) {
         </Container>
       </Section>
 
+      {/* -------------------------------- FAQs ----------------------------- */}
+      {faqs.length > 0 && (
+        <Section tone="paper" spacing="tight">
+          <Container>
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{product.name}: buyer questions</h2>
+                <p className="mt-4 leading-relaxed text-muted-foreground">
+                  Short answers to what buyers ask most often. Anything specific to your order is confirmed with the
+                  quotation.
+                </p>
+              </div>
+              <FaqList items={faqs} />
+            </div>
+          </Container>
+        </Section>
+      )}
+
       {/* ------------------------------ Enquiry ---------------------------- */}
-      <Section tone="paper" spacing="tight" id="enquiry">
+      <Section tone={enquiryTone} spacing="tight" id="enquiry">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div>
@@ -426,7 +509,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
       {/* ------------------------------ Related ---------------------------- */}
       {related.length > 0 && (
-        <Section tone="muted" spacing="tight">
+        <Section tone={relatedTone} spacing="tight">
           <Container>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 className="text-2xl font-semibold tracking-tight">Related products</h2>

@@ -18,6 +18,8 @@
  *    as a statement about Sheetal Aromatics' own material.
  */
 
+import { matchScore, searchTerms } from "@/lib/search"
+
 export type CategorySlug =
   | "aromatic-chemicals"
   | "essential-oils"
@@ -26,6 +28,7 @@ export type CategorySlug =
   | "pharma-intermediates"
   | "phase-transfer-catalysts"
   | "food-pharma-ingredients"
+  | "specialty-chemicals"
 
 export type VisualForm =
   | "liquid"
@@ -95,6 +98,14 @@ export interface Product {
   synonyms?: string[]
   applications: string[]
   keywords: string[]
+  /** Forms the product is supplied in, as confirmed by the company, e.g. powder, granules, solution. */
+  forms?: string[]
+  /** Standard pack sizes per form, as confirmed by the company. */
+  packaging?: { form: string; sizes: string[] }[]
+  /** Carrier bases a solution form is supplied in. */
+  solutionBases?: string[]
+  /** Buyer questions answered on the product page (and in its FAQPage schema). Facts only. */
+  faqs?: { question: string; answer: string }[]
   /** General published context about the substance, clearly labelled in the UI. */
   technicalNote?: string
   /** Overrides the generated meta description when a hand-written one reads better. */
@@ -217,6 +228,21 @@ export const productCategories: ProductCategory[] = [
         "Sodium benzoate, potassium sorbate, calcium propionate and sorbitol 70% solution for food, pharma and personal care. Supplier in Ahmedabad, India.",
     },
   },
+  {
+    slug: "specialty-chemicals",
+    name: "Specialty Chemicals",
+    cover: "denatonium-benzoate",
+    tagline: "Bittering agents and performance additives",
+    description:
+      "Specialty additives for industrial and consumer formulations, starting with denatonium benzoate, the bittering agent used to discourage accidental ingestion.",
+    intro:
+      "Our specialty chemicals range covers additives that do one specific job in a formulation. It starts with denatonium benzoate, the bittering agent added to antifreeze, solvent-based household products, denatured alcohol and nail-biting deterrents to discourage accidental ingestion. We supply it as powder, granules and ready-to-use solutions, with custom pack sizes and private labelling on request. Tell us the form, concentration, base and documents you need, and we will confirm availability and quote.",
+    seo: {
+      title: "Specialty Chemicals Supplier & Exporter, India",
+      description:
+        "Denatonium benzoate and other specialty additives for industrial and consumer formulations. Powder, granules and solutions from Ahmedabad, India.",
+    },
+  },
 ]
 
 /* ------------------------------------------------------------------------ */
@@ -263,6 +289,29 @@ export const productsDatabase: Product[] = [
     synonyms: ["Phenylmethanol", "Phenylcarbinol", "Benzenemethanol"],
     applications: ["Solvent", "Preservative", "Fragrance", "Pharmaceutical Formulation", "Inks & Coatings"],
     keywords: ["benzyl", "alcohol", "solvent", "preservative", "phenylmethanol"],
+    forms: ["Liquid"],
+    faqs: [
+      {
+        question: "What is benzyl alcohol used for?",
+        answer:
+          "Benzyl alcohol is used as a solvent for inks, paints, resins and coatings; as a preservative in cosmetics and some pharmaceutical formulations; and as a solvent and fixative in fragrance compounding.",
+      },
+      {
+        question: "What is the CAS number of benzyl alcohol?",
+        answer:
+          "The CAS number of benzyl alcohol is 100-51-6. Its molecular formula is C7H8O and its molecular weight is 108.14 g/mol.",
+      },
+      {
+        question: "What grade of benzyl alcohol do you supply?",
+        answer:
+          "Our typical grade is 99.5% or higher. If you work to a pharmacopoeia (IP, BP, USP or EP) or a specific assay, name it in your enquiry and we will confirm what can be supplied against it.",
+      },
+      {
+        question: "Can benzyl alcohol be supplied in our own pack size or brand?",
+        answer:
+          "Pack size is confirmed per enquiry, and custom packaging and private labelling are available on request. Tell us the quantity and packaging you need.",
+      },
+    ],
   },
   {
     slug: "benzyl-benzoate",
@@ -1609,6 +1658,29 @@ export const productsDatabase: Product[] = [
       "Industrial Corrosion Inhibition",
     ],
     keywords: ["sodium benzoate", "e211", "preservative", "food grade", "benzoate", "sodium benzoate supplier gujarat"],
+    forms: ["Powder", "Granules"],
+    faqs: [
+      {
+        question: "What is sodium benzoate used for?",
+        answer:
+          "Sodium benzoate (E211) preserves acidic foods and beverages such as soft drinks, sauces, pickles and syrups. It is also used in liquid pharmaceutical and personal-care formulations, and as a corrosion inhibitor in some industrial products.",
+      },
+      {
+        question: "At what pH does sodium benzoate work best?",
+        answer:
+          "Sodium benzoate works mainly through undissociated benzoic acid, so it is most effective in acidic products, roughly pH 4.5 and below. Above that, much more is needed for the same effect.",
+      },
+      {
+        question: "Should I buy sodium benzoate powder or granules?",
+        answer:
+          "Both are the same substance. Granules make less dust and flow well in dosing equipment, while powder disperses and dissolves quickly. Tell us how you dose it and we will confirm which form is available.",
+      },
+      {
+        question: "Sodium benzoate or potassium sorbate: which should I use?",
+        answer:
+          "It depends mainly on the pH of your product. Sodium benzoate suits acidic products up to about pH 4.5, while potassium sorbate stays effective up to about pH 6.5. Our food preservatives guide compares them in detail.",
+      },
+    ],
     technicalNote:
       "General information: sodium benzoate acts through undissociated benzoic acid, so it is most effective in acidic products (roughly pH 4.5 and below). Permitted uses and limits in food are set by the regulations of each market, such as FSSAI in India. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
     seo: {
@@ -1631,6 +1703,29 @@ export const productsDatabase: Product[] = [
     synonyms: ["E202", "Sorbic acid potassium salt", "Potassium (E,E)-hexa-2,4-dienoate"],
     applications: ["Food & Beverage Preservation", "Bakery & Dairy", "Wine & Beverages", "Cosmetics & Personal Care"],
     keywords: ["potassium sorbate", "e202", "sorbate", "preservative", "mould inhibitor", "potassium sorbate supplier india"],
+    forms: ["Granules", "Powder"],
+    faqs: [
+      {
+        question: "What is potassium sorbate used for?",
+        answer:
+          "Potassium sorbate (E202) inhibits moulds and yeasts in baked goods, cheese, beverages, wine, dried fruit and cosmetic formulations.",
+      },
+      {
+        question: "What is the CAS number of potassium sorbate?",
+        answer:
+          "The CAS number of potassium sorbate is 24634-61-5. Its molecular formula is C6H7KO2 and its molecular weight is 150.22 g/mol.",
+      },
+      {
+        question: "Up to what pH is potassium sorbate effective?",
+        answer:
+          "Sorbates remain effective up to roughly pH 6.5, higher than benzoates. That is why potassium sorbate is common in bakery, dairy and other less acidic products.",
+      },
+      {
+        question: "Do you supply potassium sorbate as granules or powder?",
+        answer:
+          "Both forms are traded. Granules are the more common choice in food manufacturing because they flow well and make less dust. State the form and grade you need in your enquiry.",
+      },
+    ],
     technicalNote:
       "General information: sorbates remain effective up to a higher pH than benzoates (roughly pH 6.5), which is why they are common in bakery and dairy. Permitted uses and limits are set by each market's food regulations. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
     seo: {
@@ -1653,6 +1748,29 @@ export const productsDatabase: Product[] = [
     synonyms: ["E282", "Calcium dipropionate", "Propanoic acid calcium salt"],
     applications: ["Bakery Preservation", "Processed Foods", "Animal Feed", "Dairy Products"],
     keywords: ["calcium propionate", "e282", "bakery preservative", "mould inhibitor", "propionate", "calcium propionate supplier gujarat"],
+    forms: ["Powder"],
+    faqs: [
+      {
+        question: "What is calcium propionate used for?",
+        answer:
+          "Calcium propionate (E282) is the standard mould inhibitor in bread and other yeast-raised bakery products. It is also used in some processed foods and in animal feed.",
+      },
+      {
+        question: "Why is calcium propionate used in bread instead of sorbate?",
+        answer:
+          "Sorbates can slow yeast, so they work against fermentation in yeast-raised dough. Calcium propionate inhibits mould with little effect on yeast, which is why bakers use it for bread.",
+      },
+      {
+        question: "What is the CAS number of calcium propionate?",
+        answer:
+          "The CAS number of calcium propionate is 4075-81-4, and its food additive number is E282. Its molecular formula is C6H10CaO4.",
+      },
+      {
+        question: "What documents should I ask for when buying food-grade calcium propionate?",
+        answer:
+          "Food use is governed by the regulations of your market, such as FSSAI in India. State the grade and the documents you need, typically a certificate of analysis and any food-grade declarations, and we will confirm what is available for your order.",
+      },
+    ],
     seo: {
       title: "Calcium Propionate Supplier in Gujarat",
       description:
@@ -1674,12 +1792,132 @@ export const productsDatabase: Product[] = [
     synonyms: ["Sorbitol solution 70%", "D-Sorbitol", "D-Glucitol", "E420"],
     applications: ["Pharmaceutical Excipient", "Oral Care & Toothpaste", "Food & Confectionery", "Cosmetics & Personal Care"],
     keywords: ["sorbitol", "sorbitol 70", "sorbitol 70% solution", "e420", "humectant", "excipient", "sorbitol supplier ahmedabad"],
+    forms: ["Liquid (70% aqueous solution)"],
+    faqs: [
+      {
+        question: "What is sorbitol 70% solution used for?",
+        answer:
+          "It is used as a humectant and bodying agent in toothpaste, a sweetener and stabiliser in confectionery and food, an excipient in syrups and other liquid medicines, and a humectant in cosmetics.",
+      },
+      {
+        question: "What is the difference between crystallising and non-crystallising sorbitol 70%?",
+        answer:
+          "Crystallising sorbitol 70% is essentially pure sorbitol in water. Non-crystallising grades also contain other polyols that stop sorbitol crystallising out, which matters in syrups and toothpaste. State the grade and pharmacopoeia you need.",
+      },
+      {
+        question: "What does CAS 50-70-4 refer to?",
+        answer:
+          "CAS 50-70-4 is the identifier for sorbitol itself. Sorbitol 70% solution is sorbitol dissolved in water at 70%, so the CAS number, formula and molecular weight describe the dissolved substance.",
+      },
+      {
+        question: "Is sorbitol 70% solution the same as E420?",
+        answer:
+          "E420 is the food additive number for sorbitol: E420(i) covers sorbitol and E420(ii) covers sorbitol syrup. Which applies depends on the grade and on your market's labelling rules.",
+      },
+    ],
     technicalNote:
       "General information: the CAS number, formula and molecular weight shown refer to sorbitol itself; the 70% product is its aqueous solution. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
     seo: {
       title: "Sorbitol 70% Solution Supplier in Ahmedabad",
       description:
         "Sorbitol 70% solution (CAS 50-70-4) for pharmaceutical syrups, toothpaste, food and personal care. Supplier in Ahmedabad, India — request a quote.",
+    },
+  },
+  /* ------------------------------ Specialty Chemicals ------------------- */
+  {
+    slug: "denatonium-benzoate",
+    name: "Denatonium Benzoate",
+    category: "specialty-chemicals",
+    summary:
+      "Bittering agent that discourages accidental ingestion — supplied as powder, granules or solution in PEG, ethanol or methanol.",
+    overview:
+      "Denatonium benzoate is a quaternary ammonium salt and one of the most bitter substances known. Added at very low concentrations, it makes a product taste unpleasant, which discourages accidental swallowing of antifreeze, methanol-containing fluids, solvent-based paints, nail polish removers and other hazardous household liquids. It is also used in denatured alcohol, nail-biting and thumb-sucking deterrents, and bitter animal-repellent products. We supply it as powder, granules and ready-to-use solutions, in standard and custom pack sizes.",
+    casNumber: "3734-33-6",
+    molecularFormula: "C28H34N2O3",
+    molecularWeight: "446.58 g/mol",
+    physicalForm: "Powder / Granules / Solution",
+    appearance: "White crystalline powder (solid forms)",
+    synonyms: [
+      "Benzyldiethyl[(2,6-xylylcarbamoyl)methyl]ammonium benzoate",
+      "Lidocaine benzyl benzoate",
+      "Bittering agent",
+    ],
+    forms: ["Powder", "Granules", "Liquid solution"],
+    packaging: [
+      { form: "Powder", sizes: ["1 kg", "5 kg", "10 kg", "25 kg"] },
+      { form: "Liquid solution", sizes: ["25 L", "35 L", "50 L", "200 L"] },
+    ],
+    solutionBases: ["PEG (polyethylene glycol)", "Ethanol", "Methanol"],
+    applications: [
+      "Industrial Bittering Agent",
+      "Alcohol Denaturation",
+      "Nail-Biting Deterrent Formulations",
+      "Animal Repellent Formulations",
+      "Household & Consumer Products",
+    ],
+    keywords: [
+      "denatonium benzoate",
+      "denatonium benzoate supplier",
+      "3734-33-6",
+      "bittering agent",
+      "aversive agent",
+      "denatonium benzoate powder",
+      "denatonium benzoate solution",
+      "denatonium benzoate exporter india",
+    ],
+    technicalNote:
+      "General information: because it is so bitter, denatonium benzoate is used at very low levels, typically in parts per million. Its use as an alcohol denaturant and in consumer products is governed by the regulations of each market, including the approved formulas for denatured alcohol. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
+    faqs: [
+      {
+        question: "What is denatonium benzoate?",
+        answer:
+          "Denatonium benzoate is a quaternary ammonium salt and one of the most bitter substances known. Manufacturers add it in very small amounts to make a product taste unpleasant, which discourages people, children and animals from swallowing it.",
+      },
+      {
+        question: "What is the CAS number of denatonium benzoate?",
+        answer:
+          "The CAS number of denatonium benzoate is 3734-33-6. Its molecular formula is C28H34N2O3 and its molecular weight is about 446.6 g/mol.",
+      },
+      {
+        question: "What is denatonium benzoate used for?",
+        answer:
+          "It is used as a bittering agent in antifreeze, methanol-containing products, solvent-based paints, nail polish removers and other hazardous household liquids; as a denaturant in some denatured alcohol formulations; in nail-biting and thumb-sucking deterrents; and in bitter animal-repellent products, for example for protecting vehicle wiring and surfaces.",
+      },
+      {
+        question: "What forms of denatonium benzoate do you supply?",
+        answer:
+          "We supply denatonium benzoate as a powder, as granules and as a ready-to-use liquid solution. Tell us the form and, for solutions, the concentration you need, and we will confirm availability.",
+      },
+      {
+        question: "Is denatonium benzoate available as a liquid solution, for example in PEG?",
+        answer:
+          "Yes. Solutions are available in a PEG (polyethylene glycol), ethanol or methanol base. Concentration and specification are confirmed against your enquiry.",
+      },
+      {
+        question: "Which solution base should I choose?",
+        answer:
+          "The base is usually chosen to match the product it goes into: ethanol for alcohol-based products, methanol for methanol-containing fluids, and PEG where a non-volatile carrier is preferred. Share your formulation and we will confirm what is available.",
+      },
+      {
+        question: "What packaging options are available?",
+        answer:
+          "Powder is packed in 1 kg, 5 kg, 10 kg and 25 kg sizes, and solutions in 25 L, 35 L, 50 L and 200 L sizes. Custom pack sizes and private labelling under your own brand are available on request.",
+      },
+      {
+        question: "Do ethanol and methanol solutions ship as dangerous goods?",
+        answer:
+          "Yes. Solutions in ethanol or methanol are flammable liquids, so they are packed, labelled and shipped under dangerous-goods rules, which can affect freight options and cost. The transport classification for each form is confirmed on the safety data sheet for your order.",
+      },
+      {
+        question: "Where can businesses source denatonium benzoate in India?",
+        answer:
+          "Sheetal Aromatics supplies denatonium benzoate from Ahmedabad, Gujarat, to buyers across India and for export. Send the form, base, concentration, quantity and destination through the quote form or WhatsApp, and we will respond with availability and a quotation.",
+      },
+    ],
+    seo: {
+      title: "Denatonium Benzoate Supplier | CAS 3734-33-6",
+      description:
+        "Denatonium benzoate (CAS 3734-33-6) as powder, granules or solution in PEG, ethanol or methanol; 1–25 kg and 25–200 L packs. Supplier & exporter, India.",
     },
   },
 ]
@@ -1757,46 +1995,6 @@ export function visualFormFor(product: Product): VisualForm {
 
 /* ------------------------------ Search ---------------------------------- */
 
-/** Light synonym expansion so buyers find products by the term they know. */
-const searchSynonyms: Record<string, string[]> = {
-  wintergreen: ["methyl salicylate"],
-  banana: ["isoamyl acetate"],
-  jasmine: ["benzyl acetate"],
-  mint: ["menthol", "peppermint"],
-  clove: ["eugenol", "clove oil"],
-  anise: ["anethole"],
-  haldi: ["turmeric"],
-  sonth: ["sunth", "ginger"],
-  ginger: ["sunth"],
-  haritaki: ["harad"],
-  bibhitaki: ["baheda"],
-  gokshura: ["gokhru"],
-  vidanga: ["vavding"],
-  na: ["sodium"],
-  salt: ["sodium"],
-  ppi: ["benzimidazole"],
-  omeprazole: ["benzimidazole", "methoxybenzimidazole"],
-  ptc: ["phase transfer catalyst"],
-  quat: ["quaternary ammonium", "phosphonium"],
-  teba: ["benzyl triethyl ammonium chloride"],
-  tebac: ["benzyl triethyl ammonium chloride"],
-  tbab: ["tetrabutyl ammonium bromide"],
-  tbaf: ["tetrabutyl ammonium fluoride"],
-  tbahs: ["tetrabutyl ammonium hydrogen sulphate"],
-  tbai: ["tetrabutyl ammonium iodide"],
-  teab: ["tetraethyl ammonium bromide"],
-  teabf4: ["tetraethyl ammonium tetrafluoroborate"],
-  etppb: ["ethyl triphenyl phosphonium bromide"],
-  etppi: ["ethyl triphenyl phosphonium iodide"],
-  mtppb: ["methyl triphenyl phosphonium bromide"],
-  mmppc: ["methoxymethyl triphenyl phosphonium chloride"],
-  wittig: ["phosphonium"],
-  e211: ["sodium benzoate"],
-  e202: ["potassium sorbate"],
-  e282: ["calcium propionate"],
-  e420: ["sorbitol"],
-  preservative: ["sodium benzoate", "potassium sorbate", "calcium propionate"],
-}
 
 function haystack(product: Product): string {
   return [
@@ -1820,32 +2018,36 @@ function haystack(product: Product): string {
 
 export function searchProducts(query: string, category?: string): Product[] {
   const pool = category ? getProductsByCategory(category) : productsDatabase
-  const term = query.trim().toLowerCase()
-  if (!term) return pool
+  if (!query.trim()) return pool
+  const terms = searchTerms(query)
 
-  const terms = new Set<string>([term])
-  for (const word of term.split(/\s+/)) {
-    for (const expansion of searchSynonyms[word] ?? []) terms.add(expansion)
-  }
-
-  const scored = pool
-    .map((product) => {
-      const hay = haystack(product)
-      const name = product.name.toLowerCase()
-      let score = 0
-      for (const t of terms) {
-        if (!hay.includes(t)) continue
-        if (name === t) score += 100
-        else if (name.startsWith(t)) score += 50
-        else if (name.includes(t)) score += 30
-        else score += 8
-      }
-      return { product, score }
-    })
+  return pool
+    .map((product) => ({ product, score: matchScore(product.name.toLowerCase(), haystack(product), terms) }))
     .filter((r) => r.score > 0)
     .sort((a, b) => b.score - a.score || a.product.name.localeCompare(b.product.name))
+    .map((r) => r.product)
+}
 
-  return scored.map((r) => r.product)
+/**
+ * Compact search text for the in-page filters: identifiers, synonyms,
+ * applications and keywords, without the long overview prose, so it can sit in
+ * the page markup cheaply.
+ */
+export function productSearchText(product: Product): string {
+  return [
+    product.name,
+    categoryName(product.category),
+    product.group ?? "",
+    product.summary,
+    product.casNumber ?? "",
+    product.molecularFormula ?? "",
+    product.physicalForm ?? "",
+    ...(product.synonyms ?? []),
+    ...product.applications,
+    ...product.keywords,
+  ]
+    .join(" ")
+    .toLowerCase()
 }
 
 /* ------------------------------ SEO copy -------------------------------- */

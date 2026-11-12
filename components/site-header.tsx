@@ -9,10 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Logo } from "@/components/brand/logo"
 import { ProductQuickSearch } from "@/components/product-quick-search"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
 import { siteConfig, whatsappLink } from "@/lib/site-config"
-import { navLinks, navMenus, type NavItem, type NavMenu } from "@/lib/navigation"
+import type { NavItem, NavMenu } from "@/lib/navigation"
 
 /** A menu counts as active when the current page is its overview or one of its links. */
 function menuIsActive(menu: NavMenu, pathname: string) {
@@ -20,7 +19,11 @@ function menuIsActive(menu: NavMenu, pathname: string) {
   return hrefs.some((href) => pathname === href || pathname.startsWith(`${href}/`))
 }
 
-export function SiteHeader() {
+/**
+ * `menus` and `links` are built on the server (lib/navigation.ts reads the catalogue)
+ * and passed in, so the product database never ships in the header's JavaScript.
+ */
+export function SiteHeader({ menus, links }: { menus: NavMenu[]; links: NavItem[] }) {
   const pathname = usePathname()
   const [openId, setOpenId] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -85,193 +88,180 @@ export function SiteHeader() {
   const linkActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
   return (
-    <header
-      ref={headerRef}
-      className={cn(
-        "sticky top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-300",
-        scrolled
-          ? "border-border/70 bg-background/80 shadow-[0_10px_30px_-18px_rgb(10_36_26_/_0.35)] backdrop-blur-xl supports-[backdrop-filter]:bg-background/70"
-          : "border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85",
-      )}
-    >
-      {/* Utility bar — folds away once the page is scrolled */}
-      <div
-        className={cn(
-          "hidden transition-[grid-template-rows] duration-300 ease-out lg:grid",
-          scrolled ? "grid-rows-[0fr]" : "grid-rows-[1fr]",
-        )}
-      >
-        <div className="overflow-hidden">
-          <div className="border-b border-border bg-forest-900 text-forest-100">
-            <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-2 text-[13px] sm:px-6 lg:px-8">
-              <div className="flex items-center gap-6">
-                <a
-                  href={`tel:${siteConfig.contact.phonePrimary.e164}`}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
-                >
-                  <Phone aria-hidden="true" className="h-3.5 w-3.5 text-brass-400" />
-                  {siteConfig.contact.phonePrimary.display}
-                </a>
-                <a
-                  href={`mailto:${siteConfig.contact.email}`}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
-                >
-                  <Mail aria-hidden="true" className="h-3.5 w-3.5 text-brass-400" />
-                  {siteConfig.contact.email}
-                </a>
-              </div>
-              <div className="flex items-center gap-5">
-                <span className="text-forest-100/75">
-                  Established {siteConfig.establishedYear} · Ahmedabad, India · Trading, Custom Manufacturing &amp; Export
-                </span>
-                <ThemeToggle />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main bar */}
-      <div
-        className={cn(
-          "relative mx-auto flex max-w-7xl items-center gap-4 px-4 transition-[padding] duration-300 sm:px-6 lg:gap-6 lg:px-8",
-          scrolled ? "py-2.5 lg:py-3" : "py-3 lg:py-4",
-        )}
-      >
-        <Logo size="md" showTagline={false} className="shrink-0" />
-
-        <nav
-          aria-label="Primary"
-          className="ml-auto hidden items-center gap-0.5 lg:flex"
-          onMouseLeave={scheduleClose}
-          onBlur={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenId(null)
-          }}
-        >
-          {navMenus.map((menu) => {
-            const open = openId === menu.id
-            return (
-              <div key={menu.id} onMouseEnter={() => openMenu(menu.id)}>
-                <button
-                  type="button"
-                  aria-expanded={open}
-                  aria-controls={`nav-panel-${menu.id}`}
-                  onClick={() => setOpenId(open ? null : menu.id)}
-                  className={cn(
-                    "relative inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-medium transition-colors duration-200",
-                    open ? "bg-secondary text-foreground" : "text-foreground/80 hover:bg-secondary hover:text-foreground",
-                    menuIsActive(menu, pathname) && "text-primary",
-                  )}
-                >
-                  {menu.label}
-                  <ChevronDown
-                    aria-hidden="true"
-                    className={cn("h-3.5 w-3.5 transition-transform duration-300", open && "rotate-180")}
-                  />
-                  {menuIsActive(menu, pathname) && (
-                    <span aria-hidden="true" className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent" />
-                  )}
-                </button>
-                <MenuPanel menu={menu} open={open} />
-              </div>
-            )
-          })}
-
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={linkActive(link.href) ? "page" : undefined}
-              onMouseEnter={scheduleClose}
-              className={cn(
-                "relative inline-flex h-10 items-center rounded-md px-3 text-sm font-medium transition-colors duration-200",
-                linkActive(link.href) ? "text-primary" : "text-foreground/80 hover:bg-secondary hover:text-foreground",
-              )}
+    <>
+      {/* Utility bar — sits above the sticky header and simply scrolls away. Folding it
+          inside the sticky header changed the header's height mid-scroll, which shifted
+          the page under the reader and made the header flicker around the threshold. */}
+      <div className="hidden border-b border-border bg-forest-900 text-forest-100 lg:block">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-2 text-[13px] sm:px-6 lg:px-8">
+          <div className="flex items-center gap-6">
+            <a
+              href={`tel:${siteConfig.contact.phonePrimary.e164}`}
+              className="inline-flex items-center gap-2 transition-colors hover:text-white"
             >
-              {link.label}
-              {linkActive(link.href) && (
-                <span aria-hidden="true" className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent" />
-              )}
-            </Link>
-          ))}
-        </nav>
+              <Phone aria-hidden="true" className="h-3.5 w-3.5 text-brass-400" />
+              {siteConfig.contact.phonePrimary.display}
+            </a>
+            <a
+              href={`mailto:${siteConfig.contact.email}`}
+              className="inline-flex items-center gap-2 transition-colors hover:text-white"
+            >
+              <Mail aria-hidden="true" className="h-3.5 w-3.5 text-brass-400" />
+              {siteConfig.contact.email}
+            </a>
+          </div>
+          <span className="text-forest-100/75">
+            Established {siteConfig.establishedYear} · Ahmedabad, India · Trading, Custom Manufacturing &amp; Export
+          </span>
+        </div>
+      </div>
 
-        <ProductQuickSearch className="hidden w-56 xl:block" />
+      <header
+        ref={headerRef}
+        className={cn(
+          "sticky top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-300",
+          scrolled
+            ? "border-border/70 bg-background/80 shadow-[0_10px_30px_-18px_rgb(10_36_26_/_0.35)] backdrop-blur-xl supports-[backdrop-filter]:bg-background/70"
+            : "border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85",
+        )}
+      >
+        {/* Main bar — constant height, so scrolling never changes the layout; only the
+            background and shadow above respond to scroll position. */}
+        <div className="relative mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:gap-6 lg:px-8 lg:py-4">
+          <Logo size="md" showTagline={false} className="shrink-0" />
 
-        <Button asChild className="hidden shadow-sm transition-shadow hover:shadow-md lg:inline-flex">
-          <Link href="/request-a-quote">Request a Quote</Link>
-        </Button>
+          <nav
+            aria-label="Primary"
+            className="ml-auto hidden items-center gap-0.5 lg:flex"
+            onMouseLeave={scheduleClose}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenId(null)
+            }}
+          >
+            {menus.map((menu) => {
+              const open = openId === menu.id
+              return (
+                <div key={menu.id} onMouseEnter={() => openMenu(menu.id)}>
+                  <button
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={`nav-panel-${menu.id}`}
+                    onClick={() => setOpenId(open ? null : menu.id)}
+                    className={cn(
+                      "relative inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-md px-2 xl:px-3 text-sm font-medium transition-colors duration-200",
+                      open ? "bg-secondary text-foreground" : "text-foreground/80 hover:bg-secondary hover:text-foreground",
+                      menuIsActive(menu, pathname) && "text-primary",
+                    )}
+                  >
+                    {menu.label}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={cn("h-3.5 w-3.5 transition-transform duration-300", open && "rotate-180")}
+                    />
+                    {menuIsActive(menu, pathname) && (
+                      <span aria-hidden="true" className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent" />
+                    )}
+                  </button>
+                  <MenuPanel menu={menu} open={open} />
+                </div>
+              )
+            })}
 
-        {/* Mobile */}
-        <div className="ml-auto flex items-center gap-1 lg:hidden">
-          <ThemeToggle />
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open navigation menu">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" data-lenis-prevent className="flex w-full flex-col overflow-y-auto p-0 sm:max-w-sm">
-              <SheetHeader className="border-b border-border px-5 py-4 text-left">
-                <SheetTitle className="text-base">Menu</SheetTitle>
-              </SheetHeader>
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={linkActive(link.href) ? "page" : undefined}
+                onMouseEnter={scheduleClose}
+                className={cn(
+                  "relative inline-flex h-10 items-center whitespace-nowrap rounded-md px-2 xl:px-3 text-sm font-medium transition-colors duration-200",
+                  linkActive(link.href) ? "text-primary" : "text-foreground/80 hover:bg-secondary hover:text-foreground",
+                )}
+              >
+                {link.label}
+                {linkActive(link.href) && (
+                  <span aria-hidden="true" className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent" />
+                )}
+              </Link>
+            ))}
+          </nav>
 
-              <div className="px-5 pt-5">
-                <ProductQuickSearch />
-              </div>
+          <ProductQuickSearch className="hidden w-56 xl:block" />
 
-              <nav aria-label="Mobile" className="flex-1 px-3 py-4">
-                <ul className="space-y-1">
-                  <li>
-                    <MobileLink href="/" label="Home" active={pathname === "/"} />
-                  </li>
-                  {navMenus.map((menu) => (
-                    <li key={menu.id}>
-                      <MobileSection menu={menu} pathname={pathname} />
-                    </li>
-                  ))}
-                  {navLinks.map((link) => (
-                    <li key={link.href}>
-                      <MobileLink href={link.href} label={link.label} active={linkActive(link.href)} />
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+          <Button asChild className="hidden shadow-sm transition-shadow hover:shadow-md lg:inline-flex">
+            <Link href="/request-a-quote">Request a Quote</Link>
+          </Button>
 
-              <div className="space-y-3 border-t border-border px-5 py-5">
-                <Button asChild className="w-full" size="lg">
-                  <Link href="/request-a-quote">Request a Quote</Link>
+          {/* Mobile */}
+          <div className="ml-auto flex items-center gap-1 lg:hidden">
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Open navigation menu">
+                  <Menu className="h-6 w-6" />
                 </Button>
-                <a
-                  href={`tel:${siteConfig.contact.phonePrimary.e164}`}
-                  className="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                  <Phone aria-hidden="true" className="h-4 w-4 text-accent" />
-                  {siteConfig.contact.phonePrimary.display}
-                </a>
-                <a
-                  href={`mailto:${siteConfig.contact.email}`}
-                  className="flex items-center gap-2 break-all text-sm text-muted-foreground"
-                >
-                  <Mail aria-hidden="true" className="h-4 w-4 text-accent" />
-                  {siteConfig.contact.email}
-                </a>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetTrigger>
+              <SheetContent side="right" data-lenis-prevent className="flex w-full flex-col overflow-y-auto p-0 sm:max-w-sm">
+                <SheetHeader className="border-b border-border px-5 py-4 text-left">
+                  <SheetTitle className="text-base">Menu</SheetTitle>
+                </SheetHeader>
+
+                <div className="px-5 pt-5">
+                  <ProductQuickSearch />
+                </div>
+
+                <nav aria-label="Mobile" className="flex-1 px-3 py-4">
+                  <ul className="space-y-1">
+                    <li>
+                      <MobileLink href="/" label="Home" active={pathname === "/"} />
+                    </li>
+                    {menus.map((menu) => (
+                      <li key={menu.id}>
+                        <MobileSection menu={menu} pathname={pathname} />
+                      </li>
+                    ))}
+                    {links.map((link) => (
+                      <li key={link.href}>
+                        <MobileLink href={link.href} label={link.label} active={linkActive(link.href)} />
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+
+                <div className="space-y-3 border-t border-border px-5 py-5">
+                  <Button asChild className="w-full" size="lg">
+                    <Link href="/request-a-quote">Request a Quote</Link>
+                  </Button>
+                  <a
+                    href={`tel:${siteConfig.contact.phonePrimary.e164}`}
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
+                  >
+                    <Phone aria-hidden="true" className="h-4 w-4 text-accent" />
+                    {siteConfig.contact.phonePrimary.display}
+                  </a>
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="flex items-center gap-2 break-all text-sm text-muted-foreground"
+                  >
+                    <Mail aria-hidden="true" className="h-4 w-4 text-accent" />
+                    {siteConfig.contact.email}
+                  </a>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+
         </div>
 
-      </div>
-
-      {/* Reading progress, along the header's bottom edge */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-px h-0.5 overflow-hidden">
-        <div
-          ref={progressRef}
-          className="h-full origin-left bg-gradient-to-r from-forest-500 via-brass-500 to-brass-400 will-change-transform"
-          style={{ transform: "scaleX(0)" }}
-        />
-      </div>
-    </header>
+        {/* Reading progress, along the header's bottom edge */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-px h-0.5 overflow-hidden">
+          <div
+            ref={progressRef}
+            className="h-full origin-left bg-gradient-to-r from-forest-500 via-brass-500 to-brass-400 will-change-transform"
+            style={{ transform: "scaleX(0)" }}
+          />
+        </div>
+      </header>
+    </>
   )
 }
 

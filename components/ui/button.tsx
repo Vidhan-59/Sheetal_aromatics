@@ -16,7 +16,7 @@ const buttonVariants = cva(
         outline:
           "border border-border bg-transparent hover:bg-secondary hover:text-secondary-foreground hover:border-forest-300",
         accent:
-          "bg-accent text-accent-foreground shadow-xs hover:bg-brass-700",
+          "bg-accent text-accent-foreground shadow-xs hover:bg-accent/90",
         inverted:
           "bg-white text-forest-800 shadow-xs hover:bg-forest-50",
         "outline-inverted":

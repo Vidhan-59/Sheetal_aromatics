@@ -29,6 +29,8 @@ export interface EnquiryLogEntry {
   product?: string
   quantity?: string
   specification?: string
+  packaging?: string
+  branding?: string
   message: string
   ip: string
   page?: string

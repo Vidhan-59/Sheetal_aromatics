@@ -88,6 +88,10 @@ const nextConfig = {
         ],
       },
       {
+        source: "/:dir(images|media|logo)/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=604800" }],
+      },
+      {
         // The enquiry endpoint must never be cached.
         source: "/api/:path*",
         headers: [{ key: "Cache-Control", value: "no-store" }],

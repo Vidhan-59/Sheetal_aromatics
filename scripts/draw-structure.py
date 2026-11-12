@@ -34,6 +34,7 @@ INK = {
     "metals": "#26363B",
     "ayurvedic-products": "#3F4A22",
     "food-pharma-ingredients": "#4A3320",
+    "specialty-chemicals": "#352A5A",
 }
 # Muted heteroatom colours that sit well on the pale category backgrounds.
 HETERO = {8: "#B23A2A", 7: "#2D5B9A", 16: "#9A6B12", 17: "#2E7A4C", 15: "#B0591F", 35: "#8A3324"}

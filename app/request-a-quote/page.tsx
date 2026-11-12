@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Suspense } from "react"
 import { Mail, MessageCircle, Phone } from "lucide-react"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
@@ -26,27 +25,7 @@ const helps = [
   ["Destination", "Port or city, and incoterms if you have a preference."],
 ]
 
-/** Reads ?product= so links from elsewhere can pre-fill the form. */
-async function PrefilledForm({ searchParams }: { searchParams: Promise<{ product?: string }> }) {
-  const { product } = await searchParams
-  const name = typeof product === "string" ? product.slice(0, 200) : ""
-  return (
-    <QuoteForm
-      defaultProduct={name}
-      defaultMessage={
-        name
-          ? `Hello, I am interested in purchasing ${name}. Please share availability, specification, MOQ, packaging and quotation.`
-          : ""
-      }
-    />
-  )
-}
-
-export default function RequestQuotePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ product?: string }>
-}) {
+export default function RequestQuotePage() {
   return (
     <>
       <Breadcrumbs trail={[{ name: "Request a Quote", href: "/request-a-quote" }]} />
@@ -66,9 +45,8 @@ export default function RequestQuotePage({
         <Container>
           <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
             <div className="rounded-lg border border-border bg-card p-6 sm:p-9">
-              <Suspense fallback={<div className="h-96 animate-pulse rounded-md bg-muted" />}>
-                <PrefilledForm searchParams={searchParams} />
-              </Suspense>
+              {/* ?product= is read in the browser, so this page is served as static HTML. */}
+              <QuoteForm prefillFromUrl />
             </div>
 
             <aside className="space-y-8">
