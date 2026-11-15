@@ -34,7 +34,7 @@ export function ProductImage({
     return (
       <img
         src={image.srcSmall}
-        srcSet={`${image.srcSmall} 600w, ${image.src} 1200w`}
+        srcSet={`${image.srcSmall} 600w, ${image.src.replace(/\.webp$/, "-800.webp")} 800w, ${image.src} 1200w`}
         sizes={sizes}
         width={1200}
         height={900}

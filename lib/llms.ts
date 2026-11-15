@@ -9,6 +9,7 @@ import { productCategories, productsDatabase, productHref, categoryHref, type Pr
 import { industries, industryHref } from "@/lib/industries"
 import { guides } from "@/lib/guides"
 import { faqs } from "@/lib/faqs"
+import { productFaqs, productOverview } from "@/lib/product-content"
 
 const BASE = siteConfig.url
 const url = (path: string) => `${BASE}${path}`
@@ -30,6 +31,11 @@ function header(): string[] {
     `- Email: ${contact.email}`,
     `- Hours: ${siteConfig.businessHours.summary}; ${siteConfig.businessHours.closed}`,
     ...siteConfig.registrations.map((r) => `- ${r.label} ${r.value}`),
+    `- Partners: ${siteConfig.partners.map((p) => p.name).join(", ")}`,
+    `- Catalogue: ${productsDatabase.length} products listed online across ${productCategories.length} categories; ${siteConfig.productPortfolio} products sourced on request`,
+    `- Export: buyers in ${siteConfig.exportCountries} countries`,
+    ...siteConfig.social.map((p) => `- ${p.label}: ${p.href}`),
+    `- Last updated: ${siteConfig.contentUpdated}`,
     "- Prices, minimum order quantity, packing and lead time are quoted per enquiry; there is no public price list.",
     `- Quotations: ${url("/request-a-quote")}`,
   ]
@@ -43,6 +49,7 @@ function mainPages(): string[] {
     `- [All products](${url("/products")}): full catalogue, searchable by name or CAS number`,
     `- [Request a quote](${url("/request-a-quote")}): enquiry form for quotations and samples`,
     `- [Export](${url("/export")}): how export enquiries, documentation and shipments are handled`,
+    `- [Chemical supplier in Ahmedabad & Gujarat](${url("/chemical-supplier-ahmedabad-gujarat")}): local supply, GST invoicing, office address, hours and map`,
     `- [Private labelling](${url("/private-label")}): product sourcing, custom pack sizes and labels under the buyer's own brand`,
     `- [About](${url("/about")}): company background and partners`,
     `- [Contact](${url("/contact")}): address, phone, WhatsApp, email and map`,
@@ -111,24 +118,48 @@ function productDetail(p: Product): string[] {
     ["Odour", p.odor],
     ["Synonyms", p.synonyms?.join(", ")],
     ["Applications", p.applications.join(", ")],
+    ["Forms supplied", p.forms?.join(", ")],
+    ...(p.packaging ?? []).map((pack): [string, string] => [`Pack sizes (${pack.form})`, pack.sizes.join(", ")]),
+    ["Solution bases", p.solutionBases?.join(", ")],
   ]
+  const productQuestions = productFaqs(p)
   return [
-    `### ${p.name}`,
+    `#### ${p.name}`,
     "",
-    p.overview ?? p.summary,
+    productOverview(p) ?? p.summary,
     "",
     ...rows.filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`),
     "",
+    ...productQuestions.flatMap((f) => [`**${f.question}**`, "", f.answer, ""]),
   ]
+}
+
+function guideFullText(): string[] {
+  const lines = ["## Buyer guides: full text", ""]
+  for (const g of guides) {
+    lines.push(`### ${g.title}`, "", `URL: ${url(`/guides/${g.slug}`)} · Updated ${g.dateModified}`, "", g.description, "")
+    for (const section of g.sections) {
+      lines.push(`#### ${section.heading}`, "", ...section.paragraphs.flatMap((p) => [p, ""]))
+      if (section.list) lines.push(...section.list.map((item) => `- ${item}`), "")
+      if (section.table) {
+        const t = section.table
+        lines.push(`| ${t.columns.join(" | ")} |`, `| ${t.columns.map(() => "---").join(" | ")} |`)
+        lines.push(...t.rows.map((row) => `| ${row.join(" | ")} |`), "")
+      }
+    }
+    for (const f of g.faqs ?? []) lines.push(`**${f.question}**`, "", f.answer, "")
+    if (g.sources?.length) lines.push("Sources:", "", ...g.sources.map((src) => `- [${src.label}](${src.href})`), "")
+  }
+  return lines
 }
 
 export function llmsFullTxt(): string {
   const lines = [...header(), "", ...mainPages(), "", "## Products", ""]
   for (const c of productCategories) {
-    lines.push(`## ${c.name}`, "", c.intro, "", `Category page: ${url(categoryHref(c.slug))}`, "")
+    lines.push(`### ${c.name}`, "", c.intro, "", `Category page: ${url(categoryHref(c.slug))}`, "")
     for (const p of productsDatabase.filter((p) => p.category === c.slug)) lines.push(...productDetail(p))
   }
-  lines.push(...industriesAndGuides(), "", "## Buyer FAQs", "")
+  lines.push(...industriesAndGuides(), "", ...guideFullText(), "## Buyer FAQs", "")
   for (const f of faqs) lines.push(`### ${f.question}`, "", f.answer, "")
   return lines.join("\n")
 }

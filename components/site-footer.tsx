@@ -10,6 +10,7 @@ import { productCategories } from "@/lib/products-data"
 const companyLinks = [
   { href: "/about", label: "About Us" },
   { href: "/export", label: "Global Supply & Export" },
+  { href: "/chemical-supplier-ahmedabad-gujarat", label: "Supplier in Ahmedabad & Gujarat" },
   { href: "/private-label", label: "Private Labelling" },
   { href: "/industries", label: "Industries Served" },
   { href: "/guides", label: "Buyer Guides" },
@@ -54,6 +55,23 @@ export function SiteFooter() {
               </div>
             ))}
           </dl>
+
+          {siteConfig.social.length > 0 && (
+            <ul aria-label="Company profiles" className="mt-5 flex flex-wrap gap-2">
+              {siteConfig.social.map((profile) => (
+                <li key={profile.href}>
+                  <a
+                    href={profile.href}
+                    target="_blank"
+                    rel="noopener noreferrer me"
+                    className="inline-flex items-center rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-forest-100/85 transition-colors hover:border-white/50 hover:text-white"
+                  >
+                    {siteConfig.name} on {profile.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <nav aria-label="Product categories" className="lg:col-span-3">

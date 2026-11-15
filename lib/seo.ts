@@ -3,7 +3,6 @@ import {
   siteConfig,
   streetAddress,
   geo,
-  mapsLink,
   mapsShortLink,
   yearsOfExperience,
 } from "@/lib/site-config"
@@ -14,6 +13,7 @@ import {
   type Product,
 } from "@/lib/products-data"
 import { productImageAlt, productImageFor } from "@/lib/product-images"
+import { productOverview } from "@/lib/product-content"
 
 export const BASE_URL = siteConfig.url
 
@@ -31,6 +31,8 @@ interface PageMetaInput {
   ogImage?: string
   /** Marks the page as an article (guides) so shares and crawlers get its dates. */
   article?: { publishedTime: string; modifiedTime: string }
+  /** Use the title exactly as given, without the " | Sheetal Aromatics" template suffix. */
+  absoluteTitle?: boolean
 }
 
 export function pageMetadata({
@@ -41,6 +43,7 @@ export function pageMetadata({
   index = true,
   ogImage: ogImageInput,
   article,
+  absoluteTitle = false,
 }: PageMetaInput): Metadata {
   const url = `${BASE_URL}${path === "/" ? "" : path}`
   const ogImage = ogImageInput ?? `${BASE_URL}/opengraph-image`
@@ -48,7 +51,7 @@ export function pageMetadata({
   // Titles that already name the company are marked absolute, otherwise the
   // root template appends the brand a second time.
   const namesBrand = title.includes(siteConfig.name)
-  const resolvedTitle = namesBrand ? { absolute: title } : title
+  const resolvedTitle = namesBrand || absoluteTitle ? { absolute: title } : title
   // Link previews (WhatsApp, LinkedIn) show only og:title, so it carries the brand too.
   const shareTitle = namesBrand ? title : `${title} | ${siteConfig.name}`
   const ogType = article
@@ -107,7 +110,7 @@ const officePlace = {
     latitude: geo.latitude,
     longitude: geo.longitude,
   },
-  hasMap: mapsLink,
+  hasMap: mapsShortLink,
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -124,7 +127,6 @@ const contactPoints = [
     telephone: siteConfig.contact.phonePrimary.e164,
     email: siteConfig.contact.email,
     contactType: "sales",
-    areaServed: "Worldwide",
     availableLanguage: ["en", "hi", "gu"],
   },
   {
@@ -132,10 +134,22 @@ const contactPoints = [
     telephone: siteConfig.contact.phoneSecondary.e164,
     email: siteConfig.contact.email,
     contactType: "sales",
-    areaServed: "Worldwide",
     availableLanguage: ["en", "hi", "gu"],
   },
 ]
+
+/** Company map link plus every confirmed official profile (LinkedIn etc.). */
+const sameAs = [mapsShortLink, ...siteConfig.social.map((s) => s.href)]
+
+const gstin = siteConfig.registrations.find((r) => r.label.startsWith("GST"))?.value
+
+/** The partners, as published on the About page. */
+const partnerPeople = siteConfig.partners.map((p) => ({
+  "@type": "Person",
+  name: p.name,
+  jobTitle: p.role,
+  worksFor: { "@id": `${BASE_URL}/#organization` },
+}))
 
 /**
  * Organization graph for the site root. Only facts the business has published
@@ -166,9 +180,11 @@ export function organizationSchema() {
     contactPoint: contactPoints,
     email: siteConfig.contact.email,
     telephone: siteConfig.contact.phonePrimary.e164,
-    hasMap: mapsLink,
-    sameAs: [mapsShortLink],
-    areaServed: areaServed,
+    hasMap: mapsShortLink,
+    sameAs,
+    areaServed,
+    ...(gstin ? { taxID: gstin } : {}),
+    member: partnerPeople,
     knowsAbout: [
       ...productCategories.map((c) => c.name),
       "Chemical trading",
@@ -184,11 +200,14 @@ export function organizationSchema() {
   }
 }
 
+/**
+ * Home market only. The firm exports to 5+ countries (siteConfig.exportCountries),
+ * but the countries are not published, so none are listed and "Worldwide" is not claimed.
+ */
 const areaServed = [
   { "@type": "City", name: "Ahmedabad" },
   { "@type": "State", name: "Gujarat" },
   { "@type": "Country", name: "India" },
-  "Worldwide",
 ]
 
 /**
@@ -207,6 +226,7 @@ export function localBusinessSchema() {
     image: `${BASE_URL}/opengraph-image`,
     logo: `${BASE_URL}/icon-512.png`,
     telephone: siteConfig.contact.phonePrimary.e164,
+    contactPoint: contactPoints,
     email: siteConfig.contact.email,
     address: postalAddress,
     geo: officePlace.geo,
@@ -214,8 +234,9 @@ export function localBusinessSchema() {
     openingHoursSpecification: officePlace.openingHoursSpecification,
     areaServed,
     foundingDate: String(siteConfig.establishedYear),
+    ...(gstin ? { taxID: gstin } : {}),
     parentOrganization: { "@id": `${BASE_URL}/#organization` },
-    sameAs: [mapsShortLink],
+    sameAs,
   }
 }
 
@@ -227,6 +248,8 @@ export function articleSchema(article: {
   datePublished: string
   dateModified: string
   image?: string
+  /** URLs of the primary sources the article cites. */
+  citations?: string[]
 }) {
   const url = `${BASE_URL}${article.path}`
   return {
@@ -243,6 +266,7 @@ export function articleSchema(article: {
     inLanguage: "en",
     author: { "@id": `${BASE_URL}/#organization` },
     publisher: { "@id": `${BASE_URL}/#organization` },
+    ...(article.citations?.length ? { citation: article.citations } : {}),
   }
 }
 
@@ -363,7 +387,7 @@ export function productSchema(product: Product) {
     "@type": "Product",
     "@id": `${BASE_URL}/products/${product.category}/${product.slug}#product`,
     name: product.name,
-    description: product.overview ?? product.summary,
+    description: productOverview(product) ?? product.summary,
     category: categoryName(product.category),
     url: `${BASE_URL}/products/${product.category}/${product.slug}`,
     ...(image ? { image } : {}),
@@ -415,6 +439,23 @@ export function collectionSchema(name: string, description: string, path: string
           },
         }
       : {}),
+  }
+}
+
+/** AboutPage / ContactPage node, so the page type and its subject are explicit. */
+export function webPageSchema(type: "AboutPage" | "ContactPage", page: { name: string; description: string; path: string }) {
+  const url = `${BASE_URL}${page.path}`
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${url}#webpage`,
+    name: page.name,
+    description: page.description,
+    url,
+    inLanguage: "en",
+    isPartOf: { "@id": `${BASE_URL}/#website` },
+    about: { "@id": `${BASE_URL}/#organization` },
+    mainEntity: { "@id": `${BASE_URL}/#organization` },
   }
 }
 

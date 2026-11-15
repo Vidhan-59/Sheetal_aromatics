@@ -16,7 +16,7 @@ export function ProductCard({
   className?: string
 }) {
   return (
-    <article className={cn("tile group flex h-full flex-col overflow-hidden", className)}>
+    <div className={cn("tile group flex h-full flex-col overflow-hidden", className)}>
       <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-muted">
         <ProductImage
           product={product}
@@ -59,14 +59,14 @@ export function ProductCard({
           <ArrowRight aria-hidden="true" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
         </span>
       </div>
-    </article>
+    </div>
   )
 }
 
 /** Compact row used in search results and related-product lists. */
 export function ProductRow({ product }: { product: Product }) {
   return (
-    <article className="group relative flex items-center gap-4 border-b border-border py-4 last:border-0">
+    <div className="group relative flex items-center gap-4 border-b border-border py-4 last:border-0">
       <div className="hidden h-16 w-20 shrink-0 overflow-hidden rounded-md border border-border sm:block">
         <ProductImage product={product} sizes="80px" />
       </div>
@@ -82,6 +82,6 @@ export function ProductRow({ product }: { product: Product }) {
         <p>{categoryName(product.category)}</p>
         {product.casNumber && <p className="mt-1 font-mono">CAS {product.casNumber}</p>}
       </div>
-    </article>
+    </div>
   )
 }

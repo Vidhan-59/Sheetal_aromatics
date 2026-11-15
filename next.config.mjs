@@ -85,6 +85,27 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          // Report-only first: browsers log violations without blocking anything. Switch the key to
+          // Content-Security-Policy once the console stays clean. 'unsafe-inline' is needed for the
+          // inline scripts Next.js uses to stream page data.
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com",
+              "font-src 'self'",
+              "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+              "frame-src https://www.google.com https://maps.google.com",
+              "media-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'self'",
+              // (upgrade-insecure-requests is omitted: browsers ignore it in report-only mode and log an error.)
+            ].join("; "),
+          },
         ],
       },
       {

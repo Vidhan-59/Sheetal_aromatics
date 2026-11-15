@@ -6,7 +6,8 @@ import { Container, Section, SectionHeading } from "@/components/layout-primitiv
 import { SiteImage } from "@/components/site-media"
 import { Reveal } from "@/components/reveal"
 import { CtaBand } from "@/components/cta-band"
-import { pageMetadata } from "@/lib/seo"
+import { JsonLd } from "@/components/json-ld"
+import { pageMetadata, webPageSchema } from "@/lib/seo"
 import { addressLines, directionsLink, siteConfig, yearsOfExperience } from "@/lib/site-config"
 import { productCategories, productsDatabase } from "@/lib/products-data"
 
@@ -77,6 +78,13 @@ const principles = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        data={webPageSchema("AboutPage", {
+          name: "About Sheetal Aromatics",
+          description: `A partnership firm established in ${siteConfig.establishedYear} in Ahmedabad, Gujarat, trading and custom-manufacturing chemical and natural products for B2B and export customers.`,
+          path: "/about",
+        })}
+      />
       <Breadcrumbs trail={[{ name: "About Us", href: "/about" }]} />
 
       <Section tone="paper" spacing="tight">
@@ -93,7 +101,7 @@ export default function AboutPage() {
                       Sheetal Aromatics is a {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat. Since{" "}
                       {siteConfig.establishedYear} we have been trading, supplying and custom-manufacturing aromatic chemicals, essential oils, Ayurvedic
                       products, metals, pharma intermediates and phase transfer catalysts to manufacturers, formulators, distributors and
-                      importers worldwide.
+                      importers across India and in {siteConfig.exportCountries} export countries.
                     </p>
                     <p className="mt-4">
                       The firm is run directly by its partners, {siteConfig.partners.map((p) => p.name).join(" and ")}. That
@@ -105,7 +113,15 @@ export default function AboutPage() {
                       We are a trading and custom-manufacturing firm, not a marketplace. The catalogue on this site reflects the
                       materials we source and supply regularly with direct quality control, and when a buyer needs a product made to
                       their own specification we take it up as custom manufacturing. Where we cannot help, we would rather tell you
-                      than take the order.
+                      than take the order.{" "}
+                      <Link href="/products" className="link-underline">
+                        Browse the {productsDatabase.length}-product catalogue
+                      </Link>{" "}
+                      or read how we handle{" "}
+                      <Link href="/export" className="link-underline">
+                        export enquiries
+                      </Link>
+                      .
                     </p>
                   </>
                 }

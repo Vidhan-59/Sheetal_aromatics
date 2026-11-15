@@ -34,6 +34,8 @@ const archivo = Archivo({
   weight: ["900"],
   style: ["italic"],
   variable: "--font-archivo",
+  // Logo wordmark only: not worth a preload competing with the hero image and body fonts.
+  preload: false,
 })
 
 export const metadata: Metadata = {

@@ -39,6 +39,7 @@ export interface NavMenu {
 const popularProducts = [
   "benzyl-alcohol",
   "sodium-benzoate",
+  "denatonium-benzoate",
   "benzyl-triethyl-ammonium-chloride",
   "tetrabutyl-ammonium-bromide",
   "sorbitol-70-solution",

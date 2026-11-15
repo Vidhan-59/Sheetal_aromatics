@@ -27,7 +27,8 @@ import { JsonLd } from "@/components/json-ld"
 import { QuoteForm } from "@/components/quote-form"
 import { BASE_URL, faqSchema, pageMetadata } from "@/lib/seo"
 import { siteConfig, whatsappLink } from "@/lib/site-config"
-import { countByCategory, productCategories } from "@/lib/products-data"
+import { countByCategory, productCategories, productsDatabase } from "@/lib/products-data"
+import { pluralize } from "@/lib/utils"
 
 export const metadata: Metadata = pageMetadata({
   title: "Private Label Chemical Supplier in India",
@@ -205,7 +206,9 @@ export default function PrivateLabelPage() {
             </div>
             <div>
               <dt className="text-xs uppercase tracking-[0.14em] text-forest-100/60">Product portfolio</dt>
-              <dd className="mt-1.5 text-lg font-medium">{siteConfig.productPortfolio} products</dd>
+              <dd className="mt-1.5 text-lg font-medium">
+                {productsDatabase.length} listed · {siteConfig.productPortfolio} sourced on request
+              </dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-[0.14em] text-forest-100/60">Supply reach</dt>
@@ -314,7 +317,9 @@ export default function PrivateLabelPage() {
                       className="flex items-center justify-between gap-4 py-3.5 text-sm transition-colors hover:text-primary"
                     >
                       <span className="font-medium">{category.name}</span>
-                      <span className="text-xs text-muted-foreground">{countByCategory(category.slug)} products</span>
+                      <span className="text-xs text-muted-foreground">
+                        {pluralize(countByCategory(category.slug), "product")}
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -325,7 +330,11 @@ export default function PrivateLabelPage() {
               <div>
                 <h2 className="text-2xl font-semibold tracking-tight">Packaging options</h2>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  Pack sizes and materials are agreed per product. As an example, denatonium benzoate is packed as:
+                  Pack sizes and materials are agreed per product. As an example,{" "}
+                  <Link href="/products/specialty-chemicals/denatonium-benzoate" className="link-underline">
+                    denatonium benzoate
+                  </Link>{" "}
+                  is packed as:
                 </p>
                 <dl className="mt-4 rounded-lg border border-border bg-card px-5 text-sm">
                   <div className="flex justify-between gap-4 border-b border-border py-3">

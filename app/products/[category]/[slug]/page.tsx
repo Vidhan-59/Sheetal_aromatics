@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowRight, FileText, Info, MessageCircle, Package, Phone } from "lucide-react"
+import { ArrowRight, BookOpen, FileText, Info, MessageCircle, Package, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Breadcrumbs } from "@/components/breadcrumbs"
@@ -19,6 +19,8 @@ import { mailtoLink, productEnquiryMessage, siteConfig, whatsappLink } from "@/l
 import { productImageFor, productStructureFor } from "@/lib/product-images"
 import { categoryPalette } from "@/components/product-visual"
 import { industriesForProduct, industryHref } from "@/lib/industries"
+import { guidesForProduct } from "@/lib/guides"
+import { productFaqs, productOverview } from "@/lib/product-content"
 import {
   categoryName,
   getCategory,
@@ -105,6 +107,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   return pageMetadata({
     title: productSeoTitle(product),
+    absoluteTitle: true,
     description: productSeoDescription(product),
     path: `/products/${product.category}/${product.slug}`,
     ogImage: `${BASE_URL}/products/${product.category}/${product.slug}/opengraph-image`,
@@ -127,7 +130,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   const enquiry = productEnquiryMessage(product.name)
   const productIndustries = industriesForProduct(product)
   const structure = productStructureFor(product.slug)
-  const specRequest = `Hello, please share the specification sheet / COA for ${product.name}${
+  const specRequest = `Hello, please share the specification sheet, COA and SDS for ${product.name}${
     product.casNumber ? ` (CAS ${product.casNumber})` : ""
   }.`
 
@@ -141,7 +144,9 @@ export default async function ProductPage({ params }: { params: Params }) {
     ...(product.physicalForm ? [{ label: "Physical form", value: product.physicalForm }] : []),
     ...(product.appearance ? [{ label: "Appearance", value: product.appearance }] : []),
     ...(product.odor ? [{ label: "Odour", value: product.odor }] : []),
-    ...(product.typicalGrade ? [{ label: "Typical grade offered", value: product.typicalGrade }] : []),
+    ...(product.typicalGrade
+      ? [{ label: "Typical grade offered", value: `${product.typicalGrade} (indicative)` }]
+      : [{ label: "Purity / assay", value: "Confirmed against your specification on enquiry" }]),
     ...(product.meltingPoint ? [{ label: "Melting point", value: product.meltingPoint }] : []),
     ...(product.boilingPoint ? [{ label: "Boiling point", value: product.boilingPoint }] : []),
     ...(product.density ? [{ label: "Density", value: product.density }] : []),
@@ -149,7 +154,9 @@ export default async function ProductPage({ params }: { params: Params }) {
   ]
 
   const hasSupplyDetails = Boolean(product.forms?.length || product.packaging?.length || product.solutionBases?.length)
-  const faqs = product.faqs ?? []
+  const overview = productOverview(product)
+  const faqs = productFaqs(product)
+  const relatedGuides = guidesForProduct(product)
   // Sections alternate paper / muted; the optional FAQ band shifts the tones after it.
   const enquiryTone = faqs.length ? "muted" : "paper"
   const relatedTone = faqs.length ? "paper" : "muted"
@@ -166,13 +173,14 @@ export default async function ProductPage({ params }: { params: Params }) {
         ]}
       />
 
+      <article aria-labelledby="product-title">
       {/* ------------------------------ Overview --------------------------- */}
       <Section tone="paper" spacing="tight">
         <Container>
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <figure className="overflow-hidden rounded-lg border border-border bg-muted">
               <div className="relative aspect-[4/3]">
-                <ProductImage product={product} priority sizes="(min-width: 1280px) 600px, (min-width: 1024px) 48vw, 100vw" />
+                <ProductImage product={product} priority sizes="(min-width: 1280px) 600px, (min-width: 1024px) 48vw, calc(100vw - 32px)" />
                 {product.molecularFormula && (
                   <MolecularFormula
                     formula={product.molecularFormula}
@@ -199,13 +207,13 @@ export default async function ProductPage({ params }: { params: Params }) {
                 {product.group ? ` · ${product.group}` : ""}
               </Link>
 
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{product.name}</h1>
+              <h1 id="product-title" className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                {product.name}
+              </h1>
 
               <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{product.summary}</p>
 
-              {product.overview && (
-                <p className="mt-4 leading-relaxed text-muted-foreground">{product.overview}</p>
-              )}
+              {overview && <p className="mt-4 leading-relaxed text-muted-foreground">{overview}</p>}
 
               {(product.casNumber || product.molecularFormula) && (
                 <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-border py-5">
@@ -250,11 +258,13 @@ export default async function ProductPage({ params }: { params: Params }) {
                 />
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                <a href={whatsappLink(specRequest)} target="_blank" rel="noopener noreferrer" className="link-underline">
-                  <FileText aria-hidden="true" className="h-3.5 w-3.5" />
-                  Request specifications
-                </a>
+              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+                <Button asChild variant="outline" size="sm">
+                  <a href={whatsappLink(specRequest)} target="_blank" rel="noopener noreferrer">
+                    <FileText aria-hidden="true" className="h-3.5 w-3.5" />
+                    Request SDS &amp; COA
+                  </a>
+                </Button>
                 <a href={`tel:${siteConfig.contact.phonePrimary.e164}`} className="link-underline">
                   <Phone aria-hidden="true" className="h-3.5 w-3.5" />
                   Discuss bulk requirements
@@ -284,7 +294,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                 {specs.map((spec) => (
                   <DataRow key={spec.label} label={spec.label} value={spec.value} />
                 ))}
-                <DataRow label="Purity / assay" value="Confirmed against your specification on enquiry" />
+                <DataRow label="Final specification" value="Agreed against your requirement for each order" />
                 <DataRow
                   label="Packing"
                   value={product.packaging?.length ? "Standard sizes below; custom sizes on request" : "Confirmed on enquiry"}
@@ -448,6 +458,22 @@ export default async function ProductPage({ params }: { params: Params }) {
                   </ul>
                 </div>
               )}
+
+              {relatedGuides.length > 0 && (
+                <div>
+                  <h2 className="text-xl font-semibold tracking-tight">Buyer guides</h2>
+                  <ul className="mt-4 space-y-3">
+                    {relatedGuides.map((guide) => (
+                      <li key={guide.slug} className="flex items-start gap-2.5">
+                        <BookOpen aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                        <Link href={`/guides/${guide.slug}`} className="text-sm leading-snug hover:text-primary hover:underline">
+                          {guide.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </Container>
@@ -470,6 +496,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           </Container>
         </Section>
       )}
+      </article>
 
       {/* ------------------------------ Enquiry ---------------------------- */}
       <Section tone={enquiryTone} spacing="tight" id="enquiry">

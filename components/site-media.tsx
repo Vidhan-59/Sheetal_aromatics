@@ -28,8 +28,10 @@ export const siteImages = {
   "plant-exterior": {
     src: "/images/site/plant-exterior",
     alt: "Illustrative view of a chemical processing plant at dusk",
+    /** Also has a 480px rendition: on phones it sits faded under a dark wash, so it is fetched tiny. */
+    small: true,
   },
-} as const
+} as const satisfies Record<string, { src: string; alt: string; small?: boolean }>
 
 export type SiteImageName = keyof typeof siteImages
 
@@ -47,11 +49,11 @@ export function SiteImage({
   kenBurns?: boolean
   className?: string
 }) {
-  const image = siteImages[name]
+  const image: { src: string; alt: string; small?: boolean } = siteImages[name]
   const img = (
     <img
       src={`${image.src}-800.webp`}
-      srcSet={`${image.src}-800.webp 800w, ${image.src}.webp 1600w`}
+      srcSet={`${image.small ? `${image.src}-480.webp 480w, ` : ""}${image.src}-800.webp 800w, ${image.src}.webp 1600w`}
       sizes={sizes}
       width={1600}
       height={893}

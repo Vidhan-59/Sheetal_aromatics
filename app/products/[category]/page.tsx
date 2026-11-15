@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, BookOpen } from "lucide-react"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
@@ -12,6 +12,8 @@ import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
 import { getCategory, getProductsByCategory, productCategories } from "@/lib/products-data"
+import { pluralize } from "@/lib/utils"
+import { guidesForCategory } from "@/lib/guides"
 
 type Params = Promise<{ category: string }>
 
@@ -55,6 +57,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
   const products = getProductsByCategory(category.slug)
   const banner = categoryBanners[category.slug]
   const others = productCategories.filter((c) => c.slug !== category.slug)
+  const categoryGuides = guidesForCategory(category.slug)
 
   return (
     <>
@@ -73,7 +76,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
           <div className={banner ? "grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16" : undefined}>
             <SectionHeading
               as="h1"
-              eyebrow={`${products.length} products`}
+              eyebrow={pluralize(products.length, "product")}
               title={category.name}
               description={category.intro}
             />
@@ -99,9 +102,27 @@ export default async function CategoryPage({ params }: { params: Params }) {
         </Container>
       </Section>
 
-      {/* Internal linking to sibling categories */}
+      {/* Internal linking: buyer guides, then sibling categories */}
       <Section tone="paper" spacing="tight">
         <Container>
+          {categoryGuides.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-lg font-semibold">Buyer guides for {category.name.toLowerCase()}</h2>
+              <ul className="mt-5 grid gap-3 md:grid-cols-3">
+                {categoryGuides.map((guide) => (
+                  <li key={guide.slug}>
+                    <Link
+                      href={`/guides/${guide.slug}`}
+                      className="group flex h-full gap-3 rounded-md border border-border bg-card p-4 transition-colors hover:border-forest-300 hover:bg-secondary"
+                    >
+                      <BookOpen aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                      <span className="text-sm font-medium leading-snug group-hover:text-primary">{guide.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <h2 className="text-lg font-semibold">Other product categories</h2>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {others.map((other) => (
@@ -112,7 +133,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
                 >
                   <span className="text-sm font-semibold group-hover:text-primary">{other.name}</span>
                   <span className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
-                    {getProductsByCategory(other.slug).length} products
+                    {pluralize(getProductsByCategory(other.slug).length, "product")}
                     <ArrowRight aria-hidden="true" className="h-3 w-3" />
                   </span>
                 </Link>

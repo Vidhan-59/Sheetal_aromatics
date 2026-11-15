@@ -10,6 +10,7 @@ import { ProductImage } from "@/components/product-image"
 import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
+import { pluralize } from "@/lib/utils"
 import {
   categoryCover,
   countByCategory,
@@ -18,7 +19,7 @@ import {
 } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Chemical Products List | Trader & Supplier in Gujarat",
+  title: "Chemical Products Catalogue | Supplier in Gujarat",
   description: `Browse ${productsDatabase.length} products across ${productCategories.length} categories. Search by name or CAS number, filter by category and request a quotation.`,
   path: "/products",
   keywords: [
@@ -39,6 +40,7 @@ export default function ProductsPage() {
           "Products — Sheetal Aromatics",
           `Catalogue of ${productsDatabase.length} products supplied by Sheetal Aromatics.`,
           "/products",
+          productsDatabase,
         )}
       />
       <Breadcrumbs trail={[{ name: "Products", href: "/products" }]} />
@@ -48,7 +50,7 @@ export default function ProductsPage() {
           <SectionHeading
             as="h1"
             eyebrow="Catalogue"
-            title="Products"
+            title="Chemical products catalogue"
             description={`${productsDatabase.length} products across ${productCategories.length} categories. Search by product name, CAS number or application, or filter by category. Specifications, packing and documentation are confirmed against each enquiry.`}
           />
         </Container>
@@ -84,7 +86,7 @@ export default function ProductsPage() {
                       </h3>
                       <p className="mt-1.5 flex-1 text-xs leading-relaxed text-muted-foreground">{category.tagline}</p>
                       <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary">
-                        {countByCategory(category.slug)} products
+                        {pluralize(countByCategory(category.slug), "product")}
                         <ArrowRight
                           aria-hidden="true"
                           className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5"

@@ -10,7 +10,7 @@
  *   - generator: e.g. "Figma AI" or "Canva AI"
  *
  * For each entry it writes public/images/products/<slug>.webp (1200×900),
- * <slug>-600.webp (600×450) and og/<slug>.jpg (600×450), then replaces the
+ * <slug>-800.webp (800×600), <slug>-600.webp (600×450) and og/<slug>.jpg (600×450), then replaces the
  * product's entry in lib/product-images.ts with a "generated" image. The
  * chemical structure stays available through `productStructures`.
  * Finally it removes the product from scripts/product-image-queue.json.
@@ -46,6 +46,7 @@ for (const e of entries) {
   const img = sharp(e.file).rotate()
   const crop = { fit: "cover" as const, position: "centre" }
   await img.clone().resize(1200, 900, crop).webp({ quality: 80, effort: 6 }).toFile(path.join(OUT, `${e.slug}.webp`))
+  await img.clone().resize(800, 600, crop).webp({ quality: 72, effort: 6 }).toFile(path.join(OUT, `${e.slug}-800.webp`))
   await img.clone().resize(600, 450, crop).webp({ quality: 78, effort: 6 }).toFile(path.join(OUT, `${e.slug}-600.webp`))
   await img.clone().resize(600, 450, crop).jpeg({ quality: 82, mozjpeg: true }).toFile(path.join(OUT, "og", `${e.slug}.jpg`))
 

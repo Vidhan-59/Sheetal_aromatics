@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
 import { getIndustry, industries, industryHref, productsForIndustry } from "@/lib/industries"
 import { getGuide } from "@/lib/guides"
+import { pluralize } from "@/lib/utils"
 
 type Params = Promise<{ slug: string }>
 
@@ -58,7 +59,7 @@ export default async function IndustryPage({ params }: { params: Params }) {
             <div>
               <SectionHeading
                 as="h1"
-                eyebrow={`${industry.name} · ${products.length} products`}
+                eyebrow={`${industry.name} · ${pluralize(products.length, "product")}`}
                 title={industry.title}
                 description={
                   <>

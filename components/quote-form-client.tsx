@@ -130,9 +130,15 @@ export function QuoteFormClient({
   const labelClass = "block text-sm font-medium text-foreground"
 
   return (
-    <form onSubmit={onSubmit} className={cn("space-y-5", className)} noValidate={false}>
-      {/* Honeypot: hidden from users and assistive tech, attractive to bots. */}
-      <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+    <form
+      onSubmit={onSubmit}
+      aria-label={privateLabel ? "Private label enquiry" : "Request a quote"}
+      className={cn("space-y-5", className)}
+      noValidate={false}
+    >
+      {/* Honeypot: hidden from users and assistive tech, attractive to bots. `inert` also keeps
+          AI browsing agents (which read the accessibility tree) from filling it in. */}
+      <div aria-hidden="true" inert className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
         <label htmlFor={`${uid}-website`}>Leave this field empty</label>
         <input
           id={`${uid}-website`}
@@ -231,12 +237,11 @@ export function QuoteFormClient({
             value={values.product}
             onChange={(e) => update("product", e.target.value)}
           />
-          {/* datalist takes flat options — optgroup is not supported inside it */}
+          {/* datalist takes flat options — optgroup is not supported inside it. The category goes in
+              `label` rather than as text, so the page text doesn't repeat category names 87 times. */}
           <datalist id={`${uid}-products`}>
             {productOptions.map((option) => (
-              <option key={option.name} value={option.name}>
-                {option.group}
-              </option>
+              <option key={option.name} value={option.name} label={option.group} />
             ))}
           </datalist>
         </div>

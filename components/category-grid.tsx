@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Search } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn, pluralize } from "@/lib/utils"
 import { applyListFilter } from "@/lib/list-filter"
 
 /**
@@ -74,7 +74,7 @@ export function CategoryGrid({
       )}
 
       <p aria-live="polite" className="sr-only">
-        {shown} products shown
+        {pluralize(shown, "product")} shown
       </p>
 
       <div ref={listRef} className="mt-8">

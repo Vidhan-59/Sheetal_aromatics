@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Boxes, ClipboardList, FileCheck2, MessageSquare, Ship, TriangleAlert } from "lucide-react"
+import { ArrowRight, Boxes, ClipboardList, FileCheck2, MessageSquare, Ship, TriangleAlert } from "lucide-react"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Container, Section, SectionHeading } from "@/components/layout-primitives"
@@ -14,7 +14,7 @@ import { siteConfig, yearsOfExperience } from "@/lib/site-config"
 export const metadata: Metadata = pageMetadata({
   title: "Chemical Exporter from India | Export from Gujarat",
   description:
-    "How we handle export enquiries: specification, packing, documentation and shipment coordination for international B2B buyers. IEC 0805014608.",
+    "Exporting to buyers in 5+ countries from Ahmedabad: specification, packing, documentation and shipment coordination for B2B importers. IEC 0805014608.",
   path: "/export",
   keywords: [
     "chemical exporter India",
@@ -87,9 +87,22 @@ export default function ExportPage() {
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-forest-100/85">
               Export business is procurement, not retail. Buyers abroad need the specification confirmed, the packing
-              agreed, the paperwork lined up and a supplier who replies. After {yearsOfExperience}+ years, that is the
-              part of the job we have built the business around.
+              agreed, the paperwork lined up and a supplier who replies. After {yearsOfExperience}+ years, and with buyers in{" "}
+              {siteConfig.exportCountries} countries, that is the part of the job we have built the business around.
             </p>
+            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              <Link href="/products" className="inline-flex items-center gap-1.5 text-white underline-offset-4 hover:underline">
+                Browse the export catalogue
+                <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+              </Link>
+              <Link
+                href="/guides/importing-chemicals-from-india"
+                className="inline-flex items-center gap-1.5 text-white underline-offset-4 hover:underline"
+              >
+                Importer&apos;s checklist
+                <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+              </Link>
+            </div>
           </div>
 
           <dl className="mt-12 grid gap-8 border-t border-white/15 pt-8 sm:grid-cols-3">
@@ -102,8 +115,10 @@ export default function ExportPage() {
               <dd className="mt-1.5 font-mono text-lg font-medium">{siteConfig.registrations[0].value}</dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-[0.14em] text-forest-100/60">Despatch origin</dt>
-              <dd className="mt-1.5 text-lg font-medium">Ahmedabad, Gujarat, India</dd>
+              <dt className="text-xs uppercase tracking-[0.14em] text-forest-100/60">Export reach</dt>
+              <dd className="mt-1.5 text-lg font-medium">
+                {siteConfig.exportCountries} countries, from Ahmedabad
+              </dd>
             </div>
           </dl>
         </Container>

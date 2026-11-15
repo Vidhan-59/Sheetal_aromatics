@@ -8,6 +8,7 @@ import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
 import { industries, industryHref, productsForIndustry } from "@/lib/industries"
+import { pluralize } from "@/lib/utils"
 
 export const metadata: Metadata = pageMetadata({
   title: "Industries Served | Chemical & Ingredient Supply",
@@ -48,7 +49,7 @@ export default function IndustriesPage() {
                   </h2>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{industry.summary}</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                    {productsForIndustry(industry).length} products
+                    {pluralize(productsForIndustry(industry).length, "product")}
                     <ArrowRight
                       aria-hidden="true"
                       className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"

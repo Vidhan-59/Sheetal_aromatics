@@ -333,7 +333,7 @@ export const productsDatabase: Product[] = [
     slug: "benzyl-propionate",
     name: "Benzyl Propionate",
     category: "aromatic-chemicals",
-    summary: "Fruity aromatic ester with a sweet, honey-like character.",
+    summary: "Aromatic ester with a sweet, fruity-floral character close to benzyl acetate.",
     casNumber: "122-63-4",
     molecularFormula: "C10H12O2",
     typicalGrade: "98%+",
@@ -507,7 +507,7 @@ export const productsDatabase: Product[] = [
     typicalGrade: "100% pure essential oil",
     physicalForm: "Liquid",
     applications: ["Aromatherapy", "Flavours", "Perfumery", "Traditional Preparations"],
-    keywords: ["cinnamon", "spicy", "warm", "cassia", "essential oil"],
+    keywords: ["cinnamon", "spicy", "warm", "cinnamaldehyde", "essential oil"],
   },
   {
     slug: "clove-oil",
@@ -616,7 +616,7 @@ export const productsDatabase: Product[] = [
     slug: "tea-tree-oil",
     name: "Tea Tree Oil",
     category: "essential-oils",
-    summary: "Melaleuca oil with a fresh medicinal character, used widely in skin care.",
+    summary: "Melaleuca oil with a fresh, camphoraceous character, used widely in personal care formulations.",
     typicalGrade: "100% pure essential oil",
     physicalForm: "Liquid",
     synonyms: ["Melaleuca alternifolia oil"],
@@ -632,11 +632,11 @@ export const productsDatabase: Product[] = [
     group: "Herbs & Raw Materials",
     visual: "root",
     tone: "#B08A5E",
-    summary: "Withania somnifera root, one of the most widely traded adaptogenic raw materials.",
+    summary: "Withania somnifera root, one of the most widely traded Ayurvedic raw materials.",
     typicalGrade: "Natural grade",
     synonyms: ["Withania somnifera", "Indian winter cherry"],
     applications: ["Ayurvedic Formulation", "Dietary Supplements", "Extraction Feedstock"],
-    keywords: ["ashwagandha", "withania", "adaptogen", "root", "herb"],
+    keywords: ["ashwagandha", "withania", "somnifera", "root", "herb"],
   },
   {
     slug: "amla",
@@ -671,7 +671,7 @@ export const productsDatabase: Product[] = [
     group: "Herbs & Raw Materials",
     visual: "fruit",
     tone: "#7A5F3A",
-    summary: "Terminalia bellirica fruit, the second component of the Triphala blend.",
+    summary: "Terminalia bellirica fruit, one of the three components of Triphala.",
     typicalGrade: "Natural grade",
     synonyms: ["Terminalia bellirica", "Bibhitaki"],
     applications: ["Ayurvedic Formulation", "Triphala Blends", "Extraction Feedstock"],
@@ -697,7 +697,7 @@ export const productsDatabase: Product[] = [
     group: "Herbs & Raw Materials",
     visual: "root",
     tone: "#C2A882",
-    summary: "Asparagus racemosus root, widely used in women's wellness formulations.",
+    summary: "Asparagus racemosus root, a widely traded raw material for Ayurvedic formulations.",
     typicalGrade: "Natural grade",
     synonyms: ["Asparagus racemosus"],
     applications: ["Ayurvedic Formulation", "Dietary Supplements", "Extraction Feedstock"],
@@ -723,7 +723,7 @@ export const productsDatabase: Product[] = [
     group: "Herbs & Raw Materials",
     visual: "pod",
     tone: "#6E8A3A",
-    summary: "Momordica charantia (bitter gourd), used dried in traditional formulation.",
+    summary: "Momordica charantia (bitter gourd) fruit, traded dried as an Ayurvedic raw material.",
     typicalGrade: "Natural grade",
     synonyms: ["Momordica charantia", "Bitter gourd", "Bitter melon"],
     applications: ["Ayurvedic Formulation", "Dietary Supplements", "Extraction Feedstock"],
@@ -802,7 +802,7 @@ export const productsDatabase: Product[] = [
     tone: "#9A6B3A",
     summary: "Garcinia gummi-gutta rind, a widely traded botanical raw material.",
     typicalGrade: "Natural grade",
-    synonyms: ["Garcinia gummi-gutta", "Malabar tamarind", "Kokum-family rind"],
+    synonyms: ["Garcinia gummi-gutta", "Malabar tamarind"],
     applications: ["Dietary Supplements", "Extraction Feedstock", "Traditional Preparations"],
     keywords: ["garcinia", "cambogia", "malabar tamarind", "hca", "botanical"],
   },
@@ -845,7 +845,7 @@ export const productsDatabase: Product[] = [
     physicalForm: "Powder",
     synonyms: ["Withania somnifera root powder"],
     applications: ["Dietary Supplements", "Ayurvedic Formulation", "Nutraceutical Blending"],
-    keywords: ["ashwagandha", "powder", "withania", "root powder", "adaptogen"],
+    keywords: ["ashwagandha", "powder", "withania", "root powder", "somnifera"],
   },
   {
     slug: "amla-powder",
@@ -1481,7 +1481,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: TBAB is hygroscopic and deliquescent in humid atmospheres; storage in tightly closed containers in a cool, dry area is standard industry practice. This note provides general chemical context.",
     seo: {
-      title: "Tetrabutyl Ammonium Bromide (TBAB) | CAS 1643-19-2",
+      title: "TBAB (Tetrabutyl Ammonium Bromide) Supplier | CAS 1643-19-2",
       description:
         "Tetrabutyl ammonium bromide (TBAB, CAS 1643-19-2), high-purity phase transfer catalyst for synthesis and industry. Ahmedabad, India — request a quotation.",
     },
@@ -1490,9 +1490,9 @@ export const productsDatabase: Product[] = [
     slug: "tetrabutyl-ammonium-fluoride",
     name: "Tetrabutyl Ammonium Fluoride",
     category: "phase-transfer-catalysts",
-    summary: "TBAF — premier fluoride source for selective silyl ether deprotection and phase transfer reactions.",
+    summary: "TBAF — a widely used fluoride source for silyl ether deprotection and phase transfer reactions.",
     overview:
-      "Tetrabutyl ammonium fluoride (TBAF) is an indispensable reagent in organic and medicinal chemistry, celebrated as the reagent of choice for cleaving silyl protecting groups (such as TBS, TBDPS, TMS and TIPS) under mild conditions. It is also used as a nucleophilic fluoride source, a mild base in carbon-carbon bond forming reactions, and as a phase transfer catalyst. Form (hydrate/solution), assay and packaging are confirmed against each enquiry.",
+      "Tetrabutyl ammonium fluoride (TBAF) is a standard reagent in organic and medicinal chemistry, widely used for cleaving silyl protecting groups (such as TBS, TBDPS, TMS and TIPS) under mild conditions. It is also used as a nucleophilic fluoride source, a mild base in carbon-carbon bond forming reactions, and as a phase transfer catalyst. Form (hydrate/solution), assay and packaging are confirmed against each enquiry.",
     casNumber: "429-41-4",
     molecularFormula: "C16H36FN",
     molecularWeight: "261.46 g/mol",
@@ -1591,7 +1591,7 @@ export const productsDatabase: Product[] = [
     physicalForm: "Crystalline powder",
     appearance: "White to off-white crystalline powder",
     meltingPoint: "284–286 °C (dec.)",
-    synonyms: ["TEAB", "Tetraethylammonium bromide", "Tetramethylene ammonium bromide"],
+    synonyms: ["TEAB", "Tetraethylammonium bromide"],
     applications: [
       "Phase Transfer Catalysis",
       "Organic Synthesis",
@@ -1613,7 +1613,7 @@ export const productsDatabase: Product[] = [
     category: "phase-transfer-catalysts",
     summary: "TEABF4 — high-conductivity quaternary ammonium electrolyte salt for supercapacitors and electro-synthesis.",
     overview:
-      "Tetraethyl ammonium tetrafluoroborate (TEABF4) is a quaternary ammonium salt renowned for its high electrochemical stability window, high ionic conductivity and wide temperature tolerance. It is the premier electrolyte salt in double-layer electric capacitors (supercapacitors), lithium-ion battery research, and electrochemical synthesis, as well as a phase transfer reagent and ionic material. Assay, water content and packing confirmed upon enquiry.",
+      "Tetraethyl ammonium tetrafluoroborate (TEABF4) is a quaternary ammonium salt known for its wide electrochemical stability window, high ionic conductivity and wide temperature tolerance. It is a widely used electrolyte salt in double-layer electric capacitors (supercapacitors), lithium-ion battery research, and electrochemical synthesis, as well as a phase transfer reagent and ionic material. Assay, water content and packing confirmed upon enquiry.",
     casNumber: "429-06-1",
     molecularFormula: "C8H20BF4N",
     molecularWeight: "217.06 g/mol",
@@ -2057,35 +2057,63 @@ export function productSearchText(product: Product): string {
  * fits inside a search result. The CAS number is only worth the characters
  * when the product name itself is short.
  */
+/** Longest title shown in full on most search results. */
+const TITLE_LIMIT = 62
+const BRAND_SUFFIX = " | Sheetal Aromatics"
+
+/**
+ * Complete <title> for a product page (rendered as an absolute title). Adds the
+ * brand only when it fits within TITLE_LIMIT, so long chemical names are never
+ * cut off mid-word in search results.
+ */
 export function productSeoTitle(product: Product): string {
-  if (product.seo?.title) return product.seo.title
-  // First candidate that leaves room for the " | Sheetal Aromatics" suffix.
-  const candidates = [
-    product.casNumber && `${product.name} Supplier in Ahmedabad | CAS ${product.casNumber}`,
-    `${product.name} Supplier in Ahmedabad, India`,
-    `${product.name} Supplier & Exporter, India`,
-    `${product.name} Supplier`,
-  ].filter(Boolean) as string[]
-  return candidates.find((t) => t.length <= 46) ?? candidates[candidates.length - 1]
+  const candidates = (
+    product.seo?.title
+      ? [product.seo.title]
+      : [
+          product.casNumber && `${product.name} Supplier in India | CAS ${product.casNumber}`,
+          `${product.name} Supplier in Ahmedabad, India`,
+          `${product.name} Supplier & Exporter, India`,
+          `${product.name} Supplier, India`,
+          product.casNumber && `${product.name} | CAS ${product.casNumber}`,
+          `${product.name} Supplier`,
+        ]
+  ).filter(Boolean) as string[]
+
+  const branded = candidates.map((t) => `${t}${BRAND_SUFFIX}`).find((t) => t.length <= TITLE_LIMIT)
+  if (branded) return branded
+  return candidates.find((t) => t.length <= TITLE_LIMIT) ?? candidates[candidates.length - 1]
 }
 
 /** Kept at or under 158 characters so search results are not truncated. */
 export function productSeoDescription(product: Product): string {
   if (product.seo?.description) return product.seo.description
 
+  // Lead with product facts (identity, grade, form, uses); the brand line is short and varies.
   const identity = product.casNumber ? ` (CAS ${product.casNumber})` : ""
+  const grade = product.typicalGrade
+  const form = product.physicalForm?.toLowerCase()
+  const facts = !grade
+    ? ""
+    : /^\d/.test(grade) && !/oil|solution/i.test(grade)
+      ? `${grade} ${form ?? "grade"}`
+      : grade.charAt(0).toLowerCase() + grade.slice(1)
+  const lead = facts ? `${product.name}${identity}, ${facts},` : `${product.name}${identity}`
   const tails = [
-    "Supplier & exporter in Ahmedabad, India since 2005 — request a quote.",
-    "Supplier in Ahmedabad, India — request a quote.",
+    "Quotes from Sheetal Aromatics, Ahmedabad.",
+    "Bulk supply from Ahmedabad, India.",
+    "Request a quote.",
   ]
+  // Pick the tail by name so neighbouring products don't all end the same way.
+  const start = [...product.slug].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 2
+  const ordered = [tails[start], tails[1 - start], tails[2]]
 
-  for (const tail of tails) {
+  for (const tail of ordered) {
     for (const count of [3, 2, 1]) {
       const uses = product.applications.slice(0, count).join(", ").toLowerCase()
-      const candidate = `${product.name}${identity} for ${uses}. ${tail}`
+      const candidate = `${lead} for ${uses}. ${tail}`
       if (candidate.length <= 158) return candidate
     }
   }
-
-  return `${product.name}${identity} from Sheetal Aromatics. ${tails[1]}`
+  return `${product.name}${identity} for ${product.applications[0]?.toLowerCase() ?? "industrial use"}. Request a quote.`.slice(0, 158)
 }

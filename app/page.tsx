@@ -15,6 +15,7 @@ import { pageMetadata, faqSchema, localBusinessSchema } from "@/lib/seo"
 import { industries, industryHref } from "@/lib/industries"
 import { siteConfig, yearsOfExperience } from "@/lib/site-config"
 import { featuredFaqs } from "@/lib/faqs"
+import { pluralize } from "@/lib/utils"
 import {
   categoryCover,
   countByCategory,
@@ -103,9 +104,9 @@ const privateLabelPoints = [
 export default function HomePage() {
   const stats = [
     { value: `${yearsOfExperience}+`, label: "Years in the industry" },
-    { value: siteConfig.productPortfolio, label: "Products in portfolio" },
-    { value: siteConfig.exportCountries, label: "Countries supplied" },
-    { value: String(siteConfig.establishedYear), label: "Established" },
+    { value: String(productsDatabase.length), label: "Products in our online catalogue" },
+    { value: siteConfig.productPortfolio, label: siteConfig.productPortfolioLabel },
+    { value: siteConfig.exportCountries, label: "Export countries" },
   ]
 
   return (
@@ -116,12 +117,12 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-forest-900 text-white">
         {/* Background photograph, faded under a forest-green wash so the copy stays readable */}
         <div aria-hidden="true" className="absolute inset-0">
-          {/* Phones get the 800px rendition: the photo sits at half opacity under a dark wash. */}
+          {/* Phones get the 480px rendition (18 KB): the photo sits at half opacity under a dark wash. */}
           <SiteImage
             name="plant-exterior"
             priority
             kenBurns
-            sizes="(max-width: 767px) 300px, 100vw"
+            sizes="(max-width: 767px) 160px, 100vw"
             className="opacity-50"
           />
         </div>
@@ -253,7 +254,7 @@ export default function HomePage() {
                           </Link>
                         </h3>
                         <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
-                          {countByCategory(category.slug)} products
+                          {pluralize(countByCategory(category.slug), "product")}
                         </span>
                       </div>
                       <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
@@ -430,7 +431,20 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Ahmedabad, Gujarat · India · Export"
               title={`Chemical trader in Gujarat, supplying India and ${siteConfig.exportCountries} countries`}
-              description={`From our office on the Old Ahmedabad–Bhavnagar Highway we supply manufacturers across Gujarat and India's industrial centres, and export to buyers in ${siteConfig.exportCountries} countries. Choose your industry to see the materials it typically sources from us.`}
+              description={
+                <>
+                  <p>
+                    From our office on the Old Ahmedabad–Bhavnagar Highway we supply manufacturers across Gujarat and
+                    India&apos;s industrial centres, and export to buyers in {siteConfig.exportCountries} countries. Choose
+                    your industry to see the materials it typically sources from us.
+                  </p>
+                  <p className="mt-4">
+                    <Link href="/chemical-supplier-ahmedabad-gujarat" className="link-underline">
+                      Buying locally? Office address, hours and how local orders work
+                    </Link>
+                  </p>
+                </>
+              }
             />
             <ul className="grid gap-3 sm:grid-cols-2">
               {industries.map((industry) => (

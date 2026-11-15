@@ -28,3 +28,6 @@ yarn-error.log*
 next-env.d.ts
 # enquiry and visitor logs (contain buyer contact details)
 /logs/
+
+# Local SEO audit output (claude-seo)
+sheetalaromatics.com-audit/

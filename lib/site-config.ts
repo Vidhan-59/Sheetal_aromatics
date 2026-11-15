@@ -24,12 +24,18 @@ export const siteConfig = {
 
   establishedYear: 2005,
 
-  /** Scale figures supplied by the company (October 2026). */
+  /**
+   * Scale figures supplied by the company (October 2026). The portfolio figure
+   * covers products sourced on request; the online catalogue lists fewer, so it
+   * is always labelled that way next to the catalogue count.
+   */
   productPortfolio: "500+",
+  productPortfolioLabel: "Products sourced on request",
+  /** Confirmed by the company (November 2026). Use this figure, never "worldwide". */
   exportCountries: "5+",
 
   /** Last substantive content update — used as the sitemap lastmod. Update when pages change. */
-  contentUpdated: "2026-10-27",
+  contentUpdated: "2026-11-14",
 
   tagline: "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals",
   shortDescription:
@@ -82,8 +88,11 @@ export const siteConfig = {
     { name: "Vidhan Shah", role: "Partner", phone: "+91 94260 05911" },
   ],
 
-  /** No social profiles have been confirmed, so none are linked anywhere. */
-  social: [] as { label: string; href: string }[],
+  /** Official company profiles confirmed by the business. Feeds the footer, Organization sameAs and llms.txt. */
+  social: [{ label: "LinkedIn", href: "https://www.linkedin.com/company/sheetal-aromatic/" }] as {
+    label: string
+    href: string
+  }[],
 } as const
 
 export const addressLines = [
