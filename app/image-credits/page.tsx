@@ -117,6 +117,20 @@ export default function ImageCreditsPage() {
             Photographs have been cropped and resized for this site. Where a photo is licensed CC BY-SA, the adapted
             version is available under the same licence.
           </p>
+
+          <section id="our-images" className="mt-12 max-w-3xl scroll-mt-24">
+            <h2 className="text-xl font-semibold tracking-tight">Illustrations and diagrams made for this site</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Product illustrations marked &ldquo;illustrative image&rdquo; were created with AI from each product&apos;s
+              documented appearance, and chemical structure diagrams are drawn by us from public PubChem records. Both are
+              © {new Date().getFullYear()} Sheetal Aromatics. You may use them to refer to our products if you credit
+              Sheetal Aromatics and link to the product page. For any other use,{" "}
+              <Link href="/contact" className={link}>
+                contact us
+              </Link>
+              .
+            </p>
+          </section>
         </Container>
       </Section>
     </>

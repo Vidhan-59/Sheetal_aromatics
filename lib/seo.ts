@@ -7,12 +7,11 @@ import {
   yearsOfExperience,
 } from "@/lib/site-config"
 import {
-  categoryName,
   productCategories,
   productHref,
   type Product,
 } from "@/lib/products-data"
-import { productImageAlt, productImageFor } from "@/lib/product-images"
+import { productImageAlt, productImageFor, productStructureFor } from "@/lib/product-images"
 import { productOverview } from "@/lib/product-content"
 
 export const BASE_URL = siteConfig.url
@@ -312,6 +311,16 @@ export function productImageSchema(product: Product) {
   const image = productImageFor(product.slug)
   if (!image) return undefined
 
+  // Images made for the site (illustrations, structure drawings) carry the terms on /image-credits.
+  const ownImageRights = {
+    creator: { "@id": `${BASE_URL}/#organization` },
+    creditText: siteConfig.name,
+    copyrightNotice: `© ${siteConfig.name}`,
+    copyrightHolder: { "@id": `${BASE_URL}/#organization` },
+    license: `${BASE_URL}/image-credits#our-images`,
+    acquireLicensePage: `${BASE_URL}/contact`,
+  }
+
   if (image.kind === "structure") {
     return {
       "@type": "ImageObject",
@@ -322,6 +331,7 @@ export function productImageSchema(product: Product) {
       height: 600,
       caption: productImageAlt(product, image),
       isBasedOn: `https://pubchem.ncbi.nlm.nih.gov/compound/${image.pubchemCid}`,
+      ...ownImageRights,
     }
   }
 
@@ -336,8 +346,7 @@ export function productImageSchema(product: Product) {
       height: 900,
       caption: productImageAlt(product, image),
       description: `Illustrative image of ${product.name} showing its typical appearance (AI-generated, not a photograph of supplied material).`,
-      creditText: siteConfig.name,
-      copyrightHolder: { "@id": `${BASE_URL}/#organization` },
+      ...ownImageRights,
     }
   }
 
@@ -351,6 +360,7 @@ export function productImageSchema(product: Product) {
     caption: productImageAlt(product, image),
     creditText: image.credit.author,
     creator: { "@type": "Person", name: image.credit.author },
+    copyrightNotice: `© ${image.credit.author}, ${image.credit.license}`,
     license: image.credit.licenseUrl ?? image.credit.sourceUrl,
     acquireLicensePage: image.credit.sourceUrl,
   }
@@ -363,10 +373,15 @@ export function productImageUrl(product: Product): string | undefined {
 }
 
 /**
- * Product schema. Deliberately omits `offers`, `sku`, `aggregateRating` and
- * `review` — none of that information is available, and Google treats invented
- * values as spam. Verified chemical identifiers are emitted as
- * `additionalProperty` entries.
+ * Structured data for a product page.
+ *
+ * Deliberately not schema.org/Product: Google's product snippets require a
+ * price, review or rating, and this quote-only catalogue publishes none (and
+ * never invents them), so every Product node was reported as an invalid item.
+ * Chemicals, oils and metals are described as a ChemicalSubstance, with the CAS
+ * number as an identifier and the PubChem record in sameAs; botanical raw
+ * materials as a plain Thing. Search engines and AI assistants still get the
+ * identity, synonyms, uses and image, without a rich-result error on 87 pages.
  */
 export function productSchema(product: Product) {
   const properties = [
@@ -375,32 +390,42 @@ export function productSchema(product: Product) {
     product.molecularWeight && { name: "Molecular Weight", value: product.molecularWeight },
     product.physicalForm && { name: "Physical Form", value: product.physicalForm },
     product.appearance && { name: "Appearance", value: product.appearance },
+    product.typicalGrade && { name: "Typical Grade (indicative)", value: product.typicalGrade },
     product.forms?.length && { name: "Available Forms", value: product.forms.join(", ") },
     product.solutionBases?.length && { name: "Solution Bases", value: product.solutionBases.join(", ") },
     ...(product.packaging ?? []).map((pack) => ({ name: `Pack Sizes (${pack.form})`, value: pack.sizes.join(", ") })),
   ].filter(Boolean) as { name: string; value: string }[]
 
   const image = productImageSchema(product)
+  const url = `${BASE_URL}/products/${product.category}/${product.slug}`
+  const botanical = product.category === "ayurvedic-products"
+  const pubchem = productStructureFor(product.slug)?.pubchemCid
 
   return {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "@id": `${BASE_URL}/products/${product.category}/${product.slug}#product`,
+    "@type": botanical ? "Thing" : "ChemicalSubstance",
+    "@id": `${url}#substance`,
     name: product.name,
     description: productOverview(product) ?? product.summary,
-    category: categoryName(product.category),
-    url: `${BASE_URL}/products/${product.category}/${product.slug}`,
+    url,
+    mainEntityOfPage: url,
     ...(image ? { image } : {}),
-    ...(product.casNumber ? { productID: `CAS:${product.casNumber}` } : {}),
     ...(product.synonyms?.length ? { alternateName: product.synonyms } : {}),
-    // Sheetal Aromatics trades most of its range and custom-manufactures to order,
-    // so manufacture is only claimed for products explicitly marked madeInHouse.
-    ...(product.madeInHouse ? { manufacturer: { "@id": `${BASE_URL}/#organization` } } : {}),
+    ...(product.casNumber
+      ? { identifier: { "@type": "PropertyValue", propertyID: "CAS", value: product.casNumber } }
+      : {}),
+    ...(!botanical && product.molecularFormula ? { chemicalComposition: product.molecularFormula } : {}),
+    ...(!botanical && product.applications.length
+      ? { potentialUse: product.applications.map((use) => ({ "@type": "DefinedTerm", name: use })) }
+      : {}),
+    ...(pubchem ? { sameAs: [`https://pubchem.ncbi.nlm.nih.gov/compound/${pubchem}`] } : {}),
     additionalProperty: properties.map((p) => ({
       "@type": "PropertyValue",
       name: p.name,
       value: p.value,
     })),
+    // Who supplies it: links the substance to the company without claiming manufacture.
+    subjectOf: { "@type": "WebPage", "@id": `${url}#webpage`, url, publisher: { "@id": `${BASE_URL}/#organization` } },
   }
 }
 
