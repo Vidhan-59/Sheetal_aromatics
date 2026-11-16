@@ -7,8 +7,12 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   analyticsEnabled,
+  analyticsToolNames,
+  CLARITY_PROJECT_ID,
+  clarityEnabled,
   COOKIE_SETTINGS_EVENT,
   GA_MEASUREMENT_ID,
+  gaEnabled,
   readAnalyticsConsent,
   storeAnalyticsConsent,
   trackEvent,
@@ -16,8 +20,8 @@ import {
 } from "@/lib/analytics"
 
 /**
- * Loads GA4 only when it is configured AND the visitor has accepted analytics
- * cookies, and records the contact actions that matter for a B2B site:
+ * Loads GA4 and Microsoft Clarity only when configured AND the visitor has
+ * accepted analytics cookies, and records the contact actions that matter for a B2B site:
  * click-to-call, email and WhatsApp. Quote submissions are tracked by the form
  * itself as `generate_lead`. Without a measurement ID nothing renders at all.
  */
@@ -57,13 +61,20 @@ export function Analytics() {
 
   return (
     <>
-      {consent === "granted" && (
+      {consent === "granted" && gaEnabled && (
         <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
           <Script id="ga4-init" strategy="afterInteractive">
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
           </Script>
         </>
+      )}
+
+      {consent === "granted" && clarityEnabled && (
+        // Microsoft's standard Clarity loader, then the consent signal (the visitor has just accepted).
+        <Script id="clarity-init" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");window.clarity("consent");`}
+        </Script>
       )}
 
       {consent === null && (
@@ -73,8 +84,8 @@ export function Analytics() {
           className="fixed inset-x-4 bottom-[5.25rem] z-50 mx-auto max-w-xl rounded-lg border border-border bg-card p-5 shadow-lg lg:bottom-6"
         >
           <p className="text-sm leading-relaxed text-muted-foreground">
-            We would like to use Google Analytics cookies to see how buyers find and use this site. No advertising
-            cookies, and nothing is set unless you accept.{" "}
+            We would like to use {analyticsToolNames} cookies to see how buyers find and use this site. No
+            advertising cookies, and nothing is set unless you accept.{" "}
             <Link href="/cookie-policy" className="underline underline-offset-2 hover:text-foreground">
               Cookie policy
             </Link>

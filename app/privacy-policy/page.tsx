@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal-page"
 import { pageMetadata } from "@/lib/seo"
 import { addressSingleLine, siteConfig } from "@/lib/site-config"
-import { analyticsEnabled } from "@/lib/analytics"
+import { analyticsEnabled, analyticsToolNames, clarityEnabled, gaEnabled } from "@/lib/analytics"
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
@@ -49,8 +49,10 @@ export default function PrivacyPolicyPage() {
           </li>
           {analyticsEnabled && (
             <li>
-              <strong>Analytics, only with your consent.</strong> If you accept analytics cookies, Google Analytics
-              records how the site is used, such as pages viewed and which contact options are clicked.
+              <strong>Analytics, only with your consent.</strong> If you accept analytics cookies, {analyticsToolNames}{" "}
+              {gaEnabled && clarityEnabled ? "record" : "records"} how the site is used, such as pages viewed, which
+              contact options are clicked and, with Clarity, clicks and scrolling on a page. Text typed into forms is
+              not recorded by these tools.
             </li>
           )}
         </ul>
@@ -85,12 +87,19 @@ export default function PrivacyPolicyPage() {
             <strong>Website hosting</strong> (Vercel) serves the site and keeps its server logs.
           </li>
           <li>
-            <strong>Email delivery</strong> (Resend) delivers form submissions to our business mailbox (Google Gmail) and
-            may send you an acknowledgement of your enquiry.
+            <strong>Email</strong>: Zoho Mail hosts our company mailbox (info@sheetalaromatics.com), and Resend
+            delivers website form submissions to our business inbox and may send you an acknowledgement of your
+            enquiry.
           </li>
-          {analyticsEnabled && (
+          {gaEnabled && (
             <li>
               <strong>Google Analytics</strong> measures site use, only after you accept analytics cookies.
+            </li>
+          )}
+          {clarityEnabled && (
+            <li>
+              <strong>Microsoft Clarity</strong> provides heatmaps and session recordings, only after you accept
+              analytics cookies. Form input is masked.
             </li>
           )}
           <li>
@@ -121,7 +130,7 @@ export default function PrivacyPolicyPage() {
         <p>
           Enquiries and business correspondence are kept for as long as they are commercially or legally relevant.
           Server logs are kept for the hosting provider&apos;s standard period.
-          {analyticsEnabled && " Analytics data is kept for the retention period set in our Google Analytics account."}{" "}
+          {analyticsEnabled && " Analytics data is kept for the retention period set in each analytics account."}{" "}
           If you would like your enquiry deleted, ask us at {email} and we will remove it, except where we must keep a
           record by law.
         </p>
