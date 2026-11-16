@@ -48,7 +48,7 @@
 | **GST No.** | 24ABEFS0254K1Z9 |
 | **IEC No.** | 0805014608 (Importer Exporter Code — authorises exports) |
 | **Website** | https://www.sheetalaromatics.com (domain registered 20 Sep 2026) |
-| **Enquiry email** | sheetalaromatics@gmail.com |
+| **Company email** | info@sheetalaromatics.com (Zoho Mail; web enquiries still go to sheetalaromatics@gmail.com until Resend is verified) |
 | **Phone / WhatsApp** | +91 98241 69906 (Shailesh Shah) · +91 94260 05911 (Vidhan Shah) |
 | **Hours** | Monday – Saturday, 9:00 AM – 6:00 PM IST · Sunday closed |
 | **Tagline on site** | "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals" |
@@ -90,7 +90,7 @@ Sheetal Aromatics was founded in **2005 in Ahmedabad, Gujarat** as a partnership
 | **Map pin** | 22.9097292, 72.528589 — https://maps.app.goo.gl/TjPKrPcCSKfzE6bz6 (company's own Google Maps / Business Profile link) |
 | **Primary phone & WhatsApp** | +91 98241 69906 — Shailesh Shah · https://wa.me/919824169906 |
 | **Secondary phone** | +91 94260 05911 — Vidhan Shah |
-| **Email** | sheetalaromatics@gmail.com (no domain mailbox yet — see §15) |
+| **Email** | info@sheetalaromatics.com (Zoho Mail, set up Nov 2026; MX, SPF and DKIM live) |
 | **Hours** | Mon–Sat 9:00–18:00 IST; Sunday closed |
 | **Web enquiry** | https://www.sheetalaromatics.com/request-a-quote (every product page also has a pre-filled quote form, WhatsApp and email buttons) |
 
@@ -445,7 +445,7 @@ Header: **Products** (mega menu: 7 categories with counts + popular products) ·
 ### Email (quote delivery)
 - Provider order: **Resend** (API key) → SMTP → Gmail App Password.
 - Currently sending from Resend's test sender `onboarding@resend.dev` to sheetalaromatics@gmail.com; buyer confirmations skipped until `sheetalaromatics.com` is verified in Resend and `RESEND_FROM` is changed (e.g. `quotes@sheetalaromatics.com`).
-- No domain mailbox exists yet (no MX records). DNS has DMARC `p=quarantine` with **no SPF/DKIM**, so any mail sent from @sheetalaromatics.com would be junked until SPF/DKIM are added.
+- Domain mailbox: Zoho Mail (info@sheetalaromatics.com). DNS has Zoho MX (zoho.in), SPF `v=spf1 include:zoho.in ~all`, DKIM selector `zmail`, and DMARC `p=quarantine`. When Resend is verified, its records go on the `send.` subdomain plus `resend._domainkey`, so they don't clash with Zoho's root SPF.
 
 ### Analytics & tracking
 - GA4 code is built in and switches on when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set in Vercel. Events: `generate_lead` (quote submitted, with product), `click_to_call`, `email_click`, `whatsapp_click`. The cookie policy updates automatically when GA is on.

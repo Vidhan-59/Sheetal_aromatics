@@ -122,6 +122,9 @@ interface Mailer {
   send(mail: OutgoingMail): Promise<void>
 }
 
+/** The Resend account's own address (server-only; never shown on the site). */
+const RESEND_ACCOUNT_INBOX = "sheetalaromatics@gmail.com"
+
 /**
  * Picks the first configured provider: Resend (API key), then any SMTP server,
  * then Gmail with an App Password.
@@ -411,7 +414,10 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const inbox = process.env.CONTACT_TO ?? siteConfig.contact.email
+  // Resend's test sender (onboarding@resend.dev) only delivers to the Resend
+  // account owner, so until the domain is verified in Resend, enquiries go to
+  // that inbox rather than the public info@ address. CONTACT_TO always wins.
+  const inbox = process.env.CONTACT_TO ?? (mail.testSender ? RESEND_ACCOUNT_INBOX : siteConfig.contact.email)
 
   try {
     await mail.send({

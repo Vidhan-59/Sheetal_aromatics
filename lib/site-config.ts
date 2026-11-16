@@ -54,7 +54,8 @@ export const siteConfig = {
   },
 
   contact: {
-    email: "sheetalaromatics@gmail.com",
+    /** Public company mailbox (Zoho Mail on the company domain, set up November 2026). */
+    email: "info@sheetalaromatics.com",
     /** Primary number, also used for WhatsApp deep links. */
     phonePrimary: {
       display: "+91 98241 69906",

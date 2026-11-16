@@ -32,7 +32,7 @@ Requires Node 18.18+ (Node 20 LTS recommended).
 The quotation and contact forms POST to `/api/enquiry`. Each enquiry gets a
 reference number (e.g. `SA-260930-K7QX`) and sends two emails:
 
-1. **To the company inbox** (`CONTACT_TO`, default `sheetalaromatics@gmail.com`):
+1. **To the company inbox** (`CONTACT_TO`; default `info@sheetalaromatics.com`, or the Resend account's Gmail while Resend uses its test sender):
    every field, the page the form was sent from, and *Reply to buyer* /
    *WhatsApp buyer* buttons. Pressing Reply goes straight to the buyer.
 2. **To the buyer**: a branded confirmation quoting the reference, product,
