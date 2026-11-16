@@ -41,6 +41,7 @@ export function Analytics() {
       const href = link.getAttribute("href") ?? ""
       if (href.startsWith("tel:")) trackEvent("click_to_call", { link_url: href })
       else if (href.startsWith("mailto:")) trackEvent("email_click", { link_url: href.split("?")[0] })
+      else if (href.includes("mail.google.com/mail")) trackEvent("email_click", { link_url: "gmail_compose" })
       else if (href.includes("wa.me/")) trackEvent("whatsapp_click", { link_url: href.split("?")[0] })
     }
     document.addEventListener("click", onClick, { capture: true })

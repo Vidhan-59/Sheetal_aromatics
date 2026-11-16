@@ -1,11 +1,16 @@
 /**
- * Conversion tracking. Google Analytics 4 is loaded only when
- * NEXT_PUBLIC_GA_MEASUREMENT_ID is set in the environment AND the visitor has
- * accepted analytics cookies; otherwise every call here is a no-op, so tracking
- * can be switched on from Vercel without a code change.
+ * Conversion tracking. Google Analytics 4 is loaded only after the visitor has
+ * accepted analytics cookies; until then every call here is a no-op.
+ *
+ * The measurement ID is the company's GA4 web stream ("Sheetal Aromatics
+ * website"). It is public by design (it appears in every page that loads GA),
+ * so it is the default here; NEXT_PUBLIC_GA_MEASUREMENT_ID (or NEXT_PUBLIC_GA_ID)
+ * in Vercel overrides it, and setting either to "off" disables analytics.
  */
 
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ""
+const DEFAULT_GA_MEASUREMENT_ID = "G-Y9H1FPN5JL"
+const configuredId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? process.env.NEXT_PUBLIC_GA_ID
+export const GA_MEASUREMENT_ID = configuredId === "off" ? "" : configuredId || DEFAULT_GA_MEASUREMENT_ID
 export const analyticsEnabled = GA_MEASUREMENT_ID.length > 0
 
 export type AnalyticsConsent = "granted" | "denied"
