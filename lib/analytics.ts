@@ -54,12 +54,23 @@ export function storeAnalyticsConsent(value: AnalyticsConsent): void {
   } catch {
     // Storage blocked (private mode): the choice simply lasts for this page view.
   }
+  // Only signals tools that are already on the page; this never loads anything (the
+  // <Analytics> component renders the scripts only once consent is "granted").
+  const clarity = (window as unknown as { clarity?: (...args: unknown[]) => void }).clarity
+  if (value === "granted") {
+    // Re-accepting in the same page view after a decline: lift the GA kill switch and re-signal Clarity.
+    if (GA_MEASUREMENT_ID) {
+      ;(window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = false
+    }
+    clarity?.("consentv2", { ad_Storage: "denied", analytics_Storage: "granted" })
+    clarity?.("consent")
+  }
   if (value === "denied") {
     // Withdrawing consent after the tools have loaded: stop further collection and clear their cookies.
     if (GA_MEASUREMENT_ID) {
       ;(window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = true
     }
-    const clarity = (window as unknown as { clarity?: (...args: unknown[]) => void }).clarity
+    clarity?.("consentv2", { ad_Storage: "denied", analytics_Storage: "denied" })
     clarity?.("consent", false)
     const domain = window.location.hostname.replace(/^www\./, "")
     for (const name of document.cookie.split(";").map((c) => c.split("=")[0].trim())) {

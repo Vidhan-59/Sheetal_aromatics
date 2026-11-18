@@ -3,6 +3,13 @@ import path from "path"
 
 const LOGS_DIR = path.join(process.cwd(), "logs")
 
+/**
+ * Vercel's serverless filesystem is read-only, so file logging is skipped there
+ * (it would only throw). On Vercel the enquiry route writes undelivered leads to
+ * the function logs instead; these files are for local / self-hosted runs.
+ */
+const fileLoggingDisabled = Boolean(process.env.VERCEL)
+
 function ensureLogsDir() {
   if (!fs.existsSync(LOGS_DIR)) {
     fs.mkdirSync(LOGS_DIR, { recursive: true })
@@ -28,6 +35,9 @@ export interface EnquiryLogEntry {
   country?: string
   product?: string
   quantity?: string
+  quantityUnit?: string
+  incoterm?: string
+  destination?: string
   specification?: string
   packaging?: string
   branding?: string
@@ -39,6 +49,7 @@ export interface EnquiryLogEntry {
 }
 
 export async function logVisit(entry: VisitLogEntry): Promise<void> {
+  if (fileLoggingDisabled) return
   try {
     ensureLogsDir()
     const now = new Date()
@@ -62,6 +73,7 @@ export async function logVisit(entry: VisitLogEntry): Promise<void> {
 }
 
 export async function logEnquiry(entry: EnquiryLogEntry): Promise<void> {
+  if (fileLoggingDisabled) return
   try {
     ensureLogsDir()
     const now = new Date()
@@ -78,7 +90,9 @@ export async function logEnquiry(entry: EnquiryLogEntry): Promise<void> {
       `Phone: ${entry.phone || "N/A"}`,
       `Country: ${entry.country || "N/A"}`,
       `Product: ${entry.product || "N/A"}`,
-      `Quantity: ${entry.quantity || "N/A"}`,
+      `Quantity: ${entry.quantity ? `${entry.quantity} ${entry.quantityUnit ?? ""}`.trim() : "N/A"}`,
+      `Incoterm: ${entry.incoterm || "N/A"}`,
+      `Destination: ${entry.destination || "N/A"}`,
       `Specification: ${entry.specification || "N/A"}`,
       `Page: ${entry.page || "N/A"}`,
       `IP: ${entry.ip}`,

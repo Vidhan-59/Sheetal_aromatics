@@ -48,9 +48,12 @@ export function ProductExplorer({
   useEffect(() => {
     if (!ready || !listRef.current) return
     setShown(applyListFilter(listRef.current, { query, attr: "category", value: category }))
-    const params = new URLSearchParams()
+    // Start from the current query string so campaign parameters (utm_*, gclid) survive for GA's page_location.
+    const params = new URLSearchParams(window.location.search)
     if (query.trim()) params.set("q", query.trim())
+    else params.delete("q")
     if (category) params.set("category", category)
+    else params.delete("category")
     const qs = params.toString()
     window.history.replaceState(window.history.state, "", qs ? `/products?${qs}` : "/products")
   }, [query, category, ready])
@@ -78,7 +81,7 @@ export function ProductExplorer({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by name, CAS number, application…"
-            className="h-12 w-full rounded-md border border-border bg-card pl-10 pr-4 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-forest-400 focus:ring-2 focus:ring-ring/25"
+            className="h-12 w-full rounded-md border border-input bg-card pl-10 pr-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-forest-400 focus-visible:ring-2 focus-visible:ring-ring"
           />
         </div>
 

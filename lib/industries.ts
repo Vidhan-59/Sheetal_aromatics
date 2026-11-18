@@ -49,7 +49,7 @@ export const industries: Industry[] = [
     slugs: ["sorbitol-70-solution", "sodium-benzoate", "benzyl-alcohol", "menthol", "iodine", "sodium-metal", "methyl-salicylate"],
     guides: ["phase-transfer-catalysts-selection-guide", "chemical-quotation-checklist"],
     seo: {
-      title: "Pharmaceutical Raw Material Supplier, Ahmedabad",
+      title: "Raw Materials for Pharmaceutical Manufacturing",
       description:
         "Pharma intermediates, phase transfer catalysts, excipients and reagents for API and formulation manufacturers. Supplier in Ahmedabad, India — request a quote.",
     },
@@ -74,7 +74,7 @@ export const industries: Industry[] = [
     applicationMatch: /food|beverage|confection|flavour/i,
     guides: ["food-preservatives-guide", "chemical-quotation-checklist"],
     seo: {
-      title: "Food Ingredient & Preservative Supplier, Gujarat",
+      title: "Food Preservatives & Ingredients for Food Makers",
       description:
         "Sodium benzoate, potassium sorbate, calcium propionate, sorbitol 70%, flavour esters and essential oils for food & beverage. Ahmedabad, India.",
     },
@@ -157,7 +157,7 @@ export const industries: Industry[] = [
     categories: ["ayurvedic-products"],
     guides: ["chemical-quotation-checklist", "importing-chemicals-from-india"],
     seo: {
-      title: "Ayurvedic & Nutraceutical Raw Material Supplier",
+      title: "Botanical Raw Materials for Nutraceutical Makers",
       description:
         "Ashwagandha, Amla, Triphala, Moringa, Shilajit and other Ayurvedic herbs and powders for nutraceutical and Ayurvedic manufacturers. Ahmedabad, India.",
     },
@@ -181,7 +181,7 @@ export const industries: Industry[] = [
     slugs: ["sodium-metal", "iodine"],
     guides: ["phase-transfer-catalysts-selection-guide", "importing-chemicals-from-india"],
     seo: {
-      title: "Phase Transfer Catalyst & Intermediate Supplier",
+      title: "Raw Materials for Agrochemical & API Synthesis",
       description:
         "TEBAC, TBAB, phosphonium salts, intermediates and reagents for fine chemical and agrochemical synthesis. Supplier in Ahmedabad, India.",
     },
@@ -206,7 +206,7 @@ export const industries: Industry[] = [
     applicationMatch: /glass|electronic|polymer|coating|resin|curing|electrolyte|corrosion|metallurg|ink/i,
     guides: ["chemical-quotation-checklist", "importing-chemicals-from-india"],
     seo: {
-      title: "Industrial Chemical Supplier in Ahmedabad",
+      title: "Industrial & Specialty Chemicals for Manufacturers",
       description:
         "Selenium, solvents, electrolytes, curing accelerators and corrosion inhibitors for glass, electronics, coatings and polymers. Ahmedabad, India.",
     },

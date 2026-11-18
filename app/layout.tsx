@@ -50,7 +50,8 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "Chemicals",
-  formatDetection: { telephone: true, address: false, email: true },
+  // Next writes "=no" for every key present, so list only what to disable.
+  formatDetection: { address: false },
   robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   // Search-console ownership tokens, set in the hosting environment (never hard-coded).
   verification: {

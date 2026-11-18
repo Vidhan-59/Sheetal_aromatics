@@ -163,7 +163,7 @@ export default function PrivateLabelPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-forest-900 text-white">
         <Parallax speed={0.14}>
-          <SiteImage name="plant" priority />
+          <SiteImage name="plant" priority sizes="(max-width: 767px) 480px, 100vw" />
         </Parallax>
         <div
           aria-hidden="true"

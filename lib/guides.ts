@@ -46,6 +46,11 @@ export interface Guide {
   sources?: { label: string; href: string }[]
   /** Short questions and answers at the end of the guide (also FAQPage schema). */
   faqs?: { question: string; answer: string }[]
+  /**
+   * The guide's headline question, answered in 40–60 words at the top of the page
+   * so readers and answer engines get the answer before the detail.
+   */
+  quickAnswer?: { question: string; answer: string }
 }
 
 export const guides: Guide[] = [
@@ -254,6 +259,11 @@ export const guides: Guide[] = [
     slug: "phase-transfer-catalysts-selection-guide",
     title: "Phase transfer catalysts: choosing between TEBAC, TBAB and phosphonium salts",
     seoTitle: "Choosing a Phase Transfer Catalyst: TEBAC vs TBAB",
+    quickAnswer: {
+      question: "TEBAC or TBAB: which phase transfer catalyst should you use?",
+      answer:
+        "TEBAC (benzyl triethyl ammonium chloride, 13 carbons) is relatively hydrophilic and suits reactions with concentrated aqueous sodium hydroxide, such as dichlorocarbene chemistry. TBAB (tetrabutyl ammonium bromide, 16 carbons) is more lipophilic and is the general-purpose choice for alkylation and nucleophilic substitution. For a new reaction, trial both.",
+    },
     description:
       "How quaternary ammonium and phosphonium phase transfer catalysts work, and how lipophilicity, counter-ion and stability guide the choice for a reaction.",
     datePublished: "2026-10-21",

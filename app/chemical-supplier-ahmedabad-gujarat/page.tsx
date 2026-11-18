@@ -112,7 +112,8 @@ export default function LocalSupplierPage() {
                   <p>
                     {siteConfig.name} is a {siteConfig.legalForm.toLowerCase()} on the Old Ahmedabad–Bhavnagar Highway at
                     Paldi Kankaj, Tal. Daskroi. For {yearsOfExperience}+ years we have supplied aromatic chemicals,
-                    essential oils, Ayurvedic raw materials, metals, pharma intermediates and phase transfer catalysts to
+                    essential oils, Ayurvedic raw materials, metals, pharma intermediates, phase transfer catalysts, food &amp;
+                    pharma ingredients and specialty chemicals to
                     manufacturers, formulators and distributors in Ahmedabad, across Gujarat and throughout India.
                   </p>
                   <p className="mt-4">

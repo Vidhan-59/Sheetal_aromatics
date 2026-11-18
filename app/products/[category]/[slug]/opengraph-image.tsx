@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 import { ImageResponse } from "next/og"
+import sharp from "sharp"
 import { categoryName, getProduct, productsDatabase } from "@/lib/products-data"
 import { productImageFor } from "@/lib/product-images"
 import { categoryPalette } from "@/components/product-visual"
@@ -8,7 +9,9 @@ import { siteConfig } from "@/lib/site-config"
 
 export const runtime = "nodejs"
 export const size = { width: 1200, height: 630 }
-export const contentType = "image/png"
+// JPEG, not PNG: the photo-heavy PNG cards were 280–500 KB, and WhatsApp (the main
+// sales channel) tends to drop link-preview images above ~300 KB.
+export const contentType = "image/jpeg"
 export const alt = "Product details — Sheetal Aromatics"
 
 export function generateStaticParams() {
@@ -51,7 +54,7 @@ export default async function ProductOgImage({
     !picture && product?.physicalForm,
   ].filter(Boolean) as string[]
 
-  return new ImageResponse(
+  const card = new ImageResponse(
     (
       <div
         style={{
@@ -171,4 +174,7 @@ export default async function ProductOgImage({
     ),
     size,
   )
+  const png = Buffer.from(await card.arrayBuffer())
+  const jpeg = await sharp(png).flatten({ background: "#ffffff" }).jpeg({ quality: 80, mozjpeg: true }).toBuffer()
+  return new Response(new Uint8Array(jpeg), { headers: { "Content-Type": "image/jpeg" } })
 }

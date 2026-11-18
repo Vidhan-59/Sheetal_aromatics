@@ -284,6 +284,11 @@ export const industrialContent: ProductContentMap = {
   "benzyl-triethyl-ammonium-chloride": {
     faqs: [
       {
+        question: "TEBAC or TBAB: which phase transfer catalyst should I choose?",
+        answer:
+          "TEBAC (benzyl triethyl ammonium chloride, 13 carbons) is relatively hydrophilic and suits reactions with concentrated aqueous sodium hydroxide, such as dichlorocarbene chemistry. TBAB (tetrabutyl ammonium bromide, 16 carbons) is more lipophilic and is the general-purpose choice for alkylation and substitution. For a new reaction, trial both; the PTC selection guide compares them in detail.",
+      },
+      {
         question: "What is TEBAC, and what is its CAS number?",
         answer:
           "TEBAC is benzyl triethyl ammonium chloride, CAS 56-37-1, formula C13H22ClN, molecular weight 227.77 g/mol. It is also sold as TEBA, BTEAC and triethylbenzylammonium chloride, all names for the same quaternary ammonium salt with one benzyl and three ethyl groups on nitrogen. It is supplied as a crystalline powder, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
@@ -494,6 +499,11 @@ export const industrialContent: ProductContentMap = {
   },
   "tetrabutyl-ammonium-bromide": {
     faqs: [
+      {
+        question: "TEBAC or TBAB: which phase transfer catalyst should I choose?",
+        answer:
+          "TEBAC (benzyl triethyl ammonium chloride, 13 carbons) is relatively hydrophilic and suits reactions with concentrated aqueous sodium hydroxide, such as dichlorocarbene chemistry. TBAB (tetrabutyl ammonium bromide, 16 carbons) is more lipophilic and is the general-purpose choice for alkylation and substitution. For a new reaction, trial both; the PTC selection guide compares them in detail.",
+      },
       {
         question: "Is TBAB tetrabutylammonium bromide or tetrabutylammonium tribromide?",
         answer:

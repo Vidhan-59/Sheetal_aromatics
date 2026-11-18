@@ -75,6 +75,15 @@ const nextConfig = {
     ]
   },
 
+  async rewrites() {
+    // iOS and some crawlers request these fixed paths regardless of the <link rel="apple-touch-icon">
+    // tag. Served in place (not redirected) because not every client follows a redirect for icons.
+    return [
+      { source: "/apple-touch-icon.png", destination: "/apple-icon.png" },
+      { source: "/apple-touch-icon-precomposed.png", destination: "/apple-icon.png" },
+    ]
+  },
+
   async headers() {
     return [
       {

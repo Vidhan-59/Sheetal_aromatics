@@ -11,7 +11,7 @@ import { QualityLabVideo, SiteImage } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { FaqList } from "@/components/faq-list"
 import { JsonLd } from "@/components/json-ld"
-import { pageMetadata, faqSchema, localBusinessSchema } from "@/lib/seo"
+import { pageMetadata, localBusinessSchema } from "@/lib/seo"
 import { industries, industryHref } from "@/lib/industries"
 import { siteConfig, yearsOfExperience } from "@/lib/site-config"
 import { featuredFaqs } from "@/lib/faqs"
@@ -25,9 +25,9 @@ import {
 } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Chemical Trader & Supplier in Ahmedabad, Gujarat | Sheetal Aromatics",
+  title: "Chemical Supplier & Exporter, India | Sheetal Aromatics",
   description:
-    "Chemical trader, supplier & exporter in Ahmedabad, Gujarat since 2005 — aromatic chemicals, PTCs, pharma intermediates, food ingredients, essential oils.",
+    "Chemical supplier & exporter from Ahmedabad, India since 2005: aromatic chemicals, PTCs, pharma intermediates, essential oils. EXW, FOB or CIF terms.",
   path: "/",
   keywords: [
     "chemical supplier India",
@@ -111,13 +111,16 @@ export default function HomePage() {
 
   return (
     <>
-      <JsonLd data={[faqSchema(featuredFaqs), localBusinessSchema()]} />
+      {/* The featured FAQs stay visible; their FAQPage markup lives on /faq only
+          (Google: mark up one instance of each question). */}
+      <JsonLd data={[localBusinessSchema()]} />
 
       {/* ------------------------------- Hero ------------------------------ */}
       <section className="relative overflow-hidden bg-forest-900 text-white">
         {/* Background photograph, faded under a forest-green wash so the copy stays readable */}
-        <div aria-hidden="true" className="absolute inset-0">
-          {/* Phones get the 480px rendition (18 KB): the photo sits at half opacity under a dark wash. */}
+        {/* Hidden on phones: under the dark wash it adds little, and as a decorative LCP
+            element it held mobile LCP at ~3 s. The heading becomes the LCP there instead. */}
+        <div aria-hidden="true" className="absolute inset-0 hidden md:block">
           <SiteImage
             name="plant-exterior"
             priority
@@ -140,13 +143,14 @@ export default function HomePage() {
             </Eyebrow>
 
             <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">
-              Chemical trading, custom manufacturing &amp; export from Ahmedabad, Gujarat
+              Chemical supplier &amp; exporter from Ahmedabad, India
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/85">
-              {yearsOfExperience}+ years trading, supplying and custom-manufacturing aromatic chemicals, essential oils, Ayurvedic products, metals,
-              pharma intermediates and phase transfer catalysts to manufacturers, distributors, importers and
-              procurement teams.
+              {yearsOfExperience}+ years supplying aromatic chemicals, phase transfer catalysts, pharma intermediates, essential
+              oils, Ayurvedic raw materials, metals, food &amp; pharma ingredients and specialty chemicals to manufacturers,
+              distributors, importers and procurement teams in India and abroad, with custom manufacturing to your own
+              specification.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -348,7 +352,7 @@ export default function HomePage() {
               <SectionHeading
                 eyebrow="Global supply & export"
                 title="Built around how international buyers actually procure"
-                description="Overseas enquiries need more than a price. They need the specification confirmed, the packing agreed, the paperwork lined up and someone who replies. That is the part we have spent two decades getting right."
+                description="Overseas enquiries need more than a price. They need the specification confirmed, the packing agreed, the paperwork lined up and someone who replies. That is the part we work hardest to get right."
               />
               <Button asChild variant="outline" className="mt-8">
                 <Link href="/export">
@@ -357,8 +361,8 @@ export default function HomePage() {
                 </Link>
               </Button>
               <Reveal className="reveal-image mt-10">
-                <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-md">
-                  <SiteImage name="warehouse" kenBurns sizes="(min-width: 1024px) 560px, 100vw" />
+                <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-md">
+                  <SiteImage name="warehouse" kenBurns representative sizes="(min-width: 1024px) 560px, 100vw" />
                 </div>
               </Reveal>
             </div>

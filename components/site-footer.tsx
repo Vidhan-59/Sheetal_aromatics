@@ -34,9 +34,10 @@ export function SiteFooter() {
         <div className="lg:col-span-4">
           <Logo size="md" inverted showTagline={false} />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-forest-100/75">
-            A {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat, trading, custom-manufacturing and supplying aromatic chemicals, essential
-            oils, Ayurvedic products, metals, pharma intermediates and phase transfer catalysts to B2B and export customers since{" "}
-            {siteConfig.establishedYear}.
+            A {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat, supplying and exporting aromatic chemicals, essential
+            oils, Ayurvedic products, metals, pharma intermediates, phase transfer catalysts, food &amp; pharma ingredients and
+            specialty chemicals to B2B buyers in India and abroad since {siteConfig.establishedYear}, with custom
+            manufacturing to a buyer&apos;s own specification.
           </p>
 
           <dl className="mt-6 space-y-1.5 text-xs text-forest-100/60">

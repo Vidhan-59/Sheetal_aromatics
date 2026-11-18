@@ -3,7 +3,7 @@ import { z } from "zod"
 import nodemailer from "nodemailer"
 import { Resend } from "resend"
 
-import { addressLines, siteConfig, whatsappLink } from "@/lib/site-config"
+import { addressLines, productEnquiryMessage, siteConfig, whatsappLink } from "@/lib/site-config"
 import { logEnquiry } from "@/lib/logger"
 
 export const runtime = "nodejs"
@@ -21,6 +21,10 @@ const enquirySchema = z
   country: z.string().trim().max(80).optional().or(z.literal("")),
   product: z.string().trim().max(200).optional().or(z.literal("")),
   quantity: z.string().trim().max(120).optional().or(z.literal("")),
+  quantityUnit: z.enum(["kg", "MT", "L", "drums"]).optional().or(z.literal("")),
+  /** Quote enquiries: preferred trade term and where the goods are going. */
+  incoterm: z.enum(["EXW Ahmedabad", "FOB Indian port", "CFR", "CIF", "Not sure"]).optional().or(z.literal("")),
+  destination: z.string().trim().max(160).optional().or(z.literal("")),
   specification: z.string().trim().max(2000).optional().or(z.literal("")),
   /** Private-label enquiries: pack sizes / materials wanted, and label or brand requirements. */
   packaging: z.string().trim().max(500).optional().or(z.literal("")),
@@ -38,43 +42,115 @@ const enquirySchema = z
   /** Milliseconds the form was on screen before submission. */
   elapsed: z.number().int().nonnegative().optional(),
   })
-  // Quote and general enquiries need a message; private-label ones carry their detail in the branding field.
-  .refine((d) => (d.kind === "private-label" ? (d.branding ?? "").length >= 10 : (d.message ?? "").length >= 10), {
-    message: "Please add a few details about your requirement",
+  // Issues carry a field path so the form can show each one next to its field.
+  .superRefine((d, ctx) => {
+    // Quote and general enquiries need a message; private-label ones carry their detail in the branding field.
+    if (d.kind === "private-label" ? (d.branding ?? "").length < 10 : (d.message ?? "").length < 10) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [d.kind === "private-label" ? "branding" : "message"],
+        message: "Please add a few details about your requirement",
+      })
+    }
+    if (d.kind === "quote") {
+      // Export pricing depends on the destination, so a quote needs the buyer's country.
+      if (!d.country) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["country"], message: "Please select your country" })
+      }
+      // Product pages pre-fill a generic message; sent untouched with no quantity it gives the team nothing to quote on.
+      if (!d.quantity && d.product && d.message === productEnquiryMessage(d.product)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["quantity"],
+          message: "Please add the quantity you need, or describe your requirement in the message",
+        })
+      }
+    }
   })
 
 type Enquiry = z.infer<typeof enquirySchema>
 
 /* ------------------------------ Rate limiting ---------------------------- */
 
-const WINDOW_MS = 10 * 60 * 1000
-const MAX_PER_WINDOW = 5
-const hits = new Map<string, number[]>()
-
 /**
- * Per-process, in-memory throttle. Enough to stop casual form abuse on a
- * single-instance deployment; swap for a shared store if the site is ever run
- * across multiple instances.
+ * Per-process, in-memory throttle. Enough to stop casual form abuse, but on
+ * Vercel each serverless instance has its own memory (and instances are
+ * recycled), so these limits are best-effort only. Real limits need a durable
+ * shared store such as Upstash Redis (@upstash/ratelimit).
  */
-function rateLimited(key: string): boolean {
-  const now = Date.now()
-  const recent = (hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS)
-  if (recent.length >= MAX_PER_WINDOW) {
+function createLimiter(maxPerWindow: number, windowMs: number) {
+  const hits = new Map<string, number[]>()
+  return function limited(key: string): boolean {
+    const now = Date.now()
+    const recent = (hits.get(key) ?? []).filter((t) => now - t < windowMs)
+    if (recent.length >= maxPerWindow) {
+      hits.set(key, recent)
+      return true
+    }
+    recent.push(now)
     hits.set(key, recent)
-    return true
-  }
-  recent.push(now)
-  hits.set(key, recent)
 
-  if (hits.size > 5000) {
-    for (const [k, v] of hits) if (v.every((t) => now - t >= WINDOW_MS)) hits.delete(k)
+    if (hits.size > 5000) {
+      for (const [k, v] of hits) if (v.every((t) => now - t >= windowMs)) hits.delete(k)
+    }
+    return false
   }
-  return false
 }
+
+/** Submissions per client IP. */
+const rateLimited = createLimiter(5, 10 * 60 * 1000)
+/**
+ * Acknowledgement emails per recipient address, so the form cannot be used to
+ * flood a third party's inbox with confirmations by typing their address. Over
+ * the limit the enquiry still reaches the team; only the auto-reply is skipped.
+ */
+const recipientLimited = createLimiter(3, 60 * 60 * 1000)
 
 function clientKey(request: NextRequest): string {
   const forwarded = request.headers.get("x-forwarded-for")
   return (forwarded?.split(",")[0] ?? request.headers.get("x-real-ip") ?? "unknown").trim()
+}
+
+/* ------------------------------ Origin check ----------------------------- */
+
+function hostOf(url: string | null | undefined): string | null {
+  if (!url) return null
+  try {
+    return new URL(url).host.toLowerCase()
+  } catch {
+    return null
+  }
+}
+
+const LOCAL_HOST = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/
+
+/**
+ * Rejects cross-site POSTs (another website scripting a visitor's browser into
+ * submitting the form). Accepts the site's own host (with and without www) and
+ * the host the request was served on, which covers Vercel preview URLs, plus
+ * localhost outside production. A request without an Origin header must carry
+ * a same-site Referer instead. Non-browser clients can send any header, so this
+ * does not stop scripts; the rate limits and honeypot cover those.
+ */
+function sameSiteRequest(request: NextRequest): boolean {
+  const allowed = new Set<string>()
+  const siteHost = hostOf(siteConfig.url)
+  if (siteHost) {
+    allowed.add(siteHost)
+    allowed.add(siteHost.startsWith("www.") ? siteHost.slice(4) : `www.${siteHost}`)
+  }
+  const servedHost = (request.headers.get("x-forwarded-host") ?? request.headers.get("host"))
+    ?.split(",")[0]
+    .trim()
+    .toLowerCase()
+  if (servedHost) allowed.add(servedHost)
+
+  const isAllowed = (host: string | null): boolean =>
+    host !== null && (allowed.has(host) || (process.env.NODE_ENV !== "production" && LOCAL_HOST.test(host)))
+
+  const origin = request.headers.get("origin")
+  if (origin) return isAllowed(hostOf(origin))
+  return isAllowed(hostOf(request.headers.get("referer")))
 }
 
 /* --------------------------------- Mail ---------------------------------- */
@@ -90,10 +166,6 @@ function escapeHtml(value: string): string {
 /** Stops header injection via values that end up in Subject / Reply-To. */
 function sanitizeHeader(value: string): string {
   return value.replace(/[\r\n]+/g, " ").slice(0, 200)
-}
-
-function truncate(value: string, max: number): string {
-  return value.length > max ? `${value.slice(0, max - 1)}…` : value
 }
 
 /** Short, human-quotable reference shown to the buyer and in both emails, e.g. SA-260930-K7QX. */
@@ -223,6 +295,13 @@ function button(href: string, label: string, primary = true): string {
   return `<a href="${escapeHtml(href)}" style="display:inline-block;${style};padding:10px 18px;border-radius:6px;font:600 14px ${FONT};text-decoration:none;margin:0 8px 8px 0">${escapeHtml(label)}</a>`
 }
 
+/** "500 kg" from the quantity and unit fields; a quantity that already names its unit is left as typed. */
+function formatQuantity(data: Enquiry): string {
+  const quantity = data.quantity ?? ""
+  if (!quantity) return ""
+  return data.quantityUnit && !/[a-z]/i.test(quantity) ? `${quantity} ${data.quantityUnit}` : quantity
+}
+
 /** Notification delivered to the company inbox. */
 const kindLabel = { quote: "quote request", general: "enquiry", "private-label": "private-label enquiry" } as const
 
@@ -239,7 +318,13 @@ function teamEmail(data: Enquiry, reference: string, receivedAt: Date) {
     ["Phone / WhatsApp", data.phone || "—"],
     ["Country", data.country || "—"],
     ["Product", data.product || "—"],
-    ["Quantity required", data.quantity || "—"],
+    ["Quantity required", formatQuantity(data) || "—"],
+    ...(data.kind === "quote"
+      ? ([
+          ["Incoterm", data.incoterm || "—"],
+          ["Destination port / city", data.destination || "—"],
+        ] as [string, string][])
+      : []),
     ...(data.kind === "private-label"
       ? ([
           ["Packaging preference", data.packaging || "—"],
@@ -293,21 +378,16 @@ ${detailsTable(rows)}
 /** Acknowledgement sent to the buyer. */
 function customerEmail(data: Enquiry, reference: string) {
   const label = kindLabel[data.kind]
-  // Short fields only, and trimmed: the free-text message is not echoed back so
-  // the form cannot be used to relay arbitrary text to a third-party inbox.
-  const rows: [string, string][] = [
-    ["Reference", reference],
-    ...(data.product ? ([["Product", truncate(data.product, 120)]] as [string, string][]) : []),
-    ...(data.quantity ? ([["Quantity", truncate(data.quantity, 120)]] as [string, string][]) : []),
-    ...(data.specification ? ([["Specification", truncate(data.specification, 300)]] as [string, string][]) : []),
-    ...(data.packaging ? ([["Packaging", truncate(data.packaging, 200)]] as [string, string][]) : []),
-  ]
+  // Nothing the visitor typed is echoed back (not the name, product or any other
+  // free text): the address is unverified, so anything echoed could be used to
+  // relay arbitrary text to a third-party inbox. The reference is server-generated.
+  const rows: [string, string][] = [["Reference", reference]]
 
   const subject = `We have received your ${label} — ${siteConfig.name} (Ref ${reference})`
   const whatsapp = whatsappLink(`Hello, my enquiry reference is ${reference}.`)
 
   const text = [
-    `Dear ${data.name},`,
+    "Hello,",
     "",
     `Thank you for contacting ${siteConfig.name}. We have received your ${label} and our team will review it and respond by email.`,
     "",
@@ -326,9 +406,7 @@ function customerEmail(data: Enquiry, reference: string) {
 
   const html = emailShell(
     `Thank you — we have your ${label} (Ref ${reference}).`,
-    `<h1 style="margin:0 0 14px;font:600 22px/1.3 ${FONT};color:${BRAND.ink}">Thank you, ${escapeHtml(
-      truncate(data.name, 60),
-    )}</h1>
+    `<h1 style="margin:0 0 14px;font:600 22px/1.3 ${FONT};color:${BRAND.ink}">Thank you for contacting us</h1>
 <p style="margin:0 0 14px">We have received your ${escapeHtml(label)} and our team will review it and respond by email.</p>
 ${detailsTable(rows)}
 <p style="margin:20px 0 14px">If you have a specification sheet, drawing or any further detail, simply reply to this email and it will reach our team.</p>
@@ -345,6 +423,10 @@ Hours: ${escapeHtml(siteConfig.businessHours.summary)}</p>
 /* --------------------------------- Handler ------------------------------- */
 
 export async function POST(request: NextRequest) {
+  if (!sameSiteRequest(request)) {
+    return NextResponse.json({ ok: false, error: "Invalid request origin." }, { status: 403 })
+  }
+
   if (rateLimited(clientKey(request))) {
     return NextResponse.json(
       { ok: false, error: "Too many enquiries from this connection. Please try again shortly, or email us directly." },
@@ -361,15 +443,26 @@ export async function POST(request: NextRequest) {
 
   const parsed = enquirySchema.safeParse(payload)
   if (!parsed.success) {
+    // `error` (the first problem) is kept for older clients; `fieldErrors` maps each field to its message.
+    const fieldErrors: Record<string, string> = {}
+    for (const issue of parsed.error.issues) {
+      const key = String(issue.path[0] ?? "form")
+      fieldErrors[key] ??= issue.message
+    }
     return NextResponse.json(
-      { ok: false, error: parsed.error.issues[0]?.message ?? "Please check the form and try again." },
+      { ok: false, error: parsed.error.issues[0]?.message ?? "Please check the form and try again.", fieldErrors },
       { status: 400 },
     )
   }
 
   const data = parsed.data
 
-  // Silently accept obvious bot submissions so scripts get no useful signal.
+  // Silently accept obvious bot submissions so scripts get no useful signal:
+  // - `website` is the honeypot field, invisible to people;
+  // - `elapsed` under 2 s means the form was completed faster than a person can type.
+  // Both are DROPPED on purpose (no email, no log) while the normal success
+  // message is returned. A browser that autofills and submits within 2 s would
+  // be dropped too; that trade-off is accepted.
   if (data.website || (typeof data.elapsed === "number" && data.elapsed < 2000)) {
     return NextResponse.json({ ok: true, message: "Thank you — your enquiry has been received." })
   }
@@ -379,39 +472,52 @@ export async function POST(request: NextRequest) {
   const team = teamEmail(data, reference, receivedAt)
   const clientIp = clientKey(request)
 
+  // Everything the visitor submitted (minus the bot-trap fields), for the log entries below.
+  const record = {
+    reference,
+    kind: data.kind,
+    name: data.name,
+    company: data.company,
+    email: data.email,
+    phone: data.phone,
+    country: data.country,
+    product: data.product,
+    quantity: data.quantity,
+    quantityUnit: data.quantityUnit,
+    incoterm: data.incoterm,
+    destination: data.destination,
+    specification: data.specification,
+    packaging: data.packaging,
+    branding: data.branding,
+    message: data.message ?? "",
+    page: data.page,
+    ip: clientIp,
+  }
+
+  /**
+   * logEnquiry() writes to the local filesystem, which is read-only on Vercel,
+   * so when the email does not go out this one JSON line in the function logs
+   * is the surviving copy of the lead. Search the logs for "enquiry_undelivered".
+   */
+  function reportUndelivered(reason: string) {
+    console.error(
+      JSON.stringify({ event: "enquiry_undelivered", ...record, receivedAt: receivedAt.toISOString(), reason }),
+    )
+  }
+
+  // Shown to the buyer whenever the enquiry could not be emailed to the team.
+  const fallbackMessage = `Sorry, our enquiry form could not reach our team just now. Please send your requirement on WhatsApp (${siteConfig.contact.phonePrimary.display}) or email ${siteConfig.contact.email}, quoting Ref ${reference}, and our team will follow up.`
+
   const mail = buildTransport()
 
   if (!mail) {
-    // No credentials configured — log immediately so the quote is NEVER lost, and tell
-    // the visitor honestly instead of showing a false success message.
-    console.error("[enquiry] No mail transport configured. Enquiry recorded in logs/enquiries.log:\n" + team.text)
-    await logEnquiry({
-      reference,
-      kind: data.kind,
-      name: data.name,
-      company: data.company,
-      email: data.email,
-      phone: data.phone,
-      country: data.country,
-      product: data.product,
-      quantity: data.quantity,
-      specification: data.specification,
-      packaging: data.packaging,
-      branding: data.branding,
-      message: data.message ?? "",
-      page: data.page,
-      ip: clientIp,
-      emailDelivered: false,
-      error: "No mail transport configured (set RESEND_API_KEY, SMTP_* or GMAIL_* in the environment)",
-    })
+    // No credentials configured: keep the lead in the function logs and tell the
+    // visitor honestly how to reach the team, instead of a false success message.
+    const reason = "No mail transport configured (set RESEND_API_KEY, SMTP_* or GMAIL_* in the environment)"
+    reportUndelivered(reason)
+    await logEnquiry({ ...record, emailDelivered: false, error: reason })
 
-    return NextResponse.json(
-      {
-        ok: false,
-        error: `The enquiry form is not connected to email yet. Please write to ${siteConfig.contact.email} and we will respond. (Your quote Ref ${reference} has been logged)`,
-      },
-      { status: 503 },
-    )
+    return NextResponse.json({ ok: false, reference, error: fallbackMessage }, { status: 503 })
   }
 
   // Resend's test sender (onboarding@resend.dev) only delivers to the Resend
@@ -429,58 +535,22 @@ export async function POST(request: NextRequest) {
       html: team.html,
     })
 
-    await logEnquiry({
-      reference,
-      kind: data.kind,
-      name: data.name,
-      company: data.company,
-      email: data.email,
-      phone: data.phone,
-      country: data.country,
-      product: data.product,
-      quantity: data.quantity,
-      specification: data.specification,
-      packaging: data.packaging,
-      branding: data.branding,
-      message: data.message ?? "",
-      page: data.page,
-      ip: clientIp,
-      emailDelivered: true,
-    })
+    await logEnquiry({ ...record, emailDelivered: true })
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error)
     console.error(`[enquiry] ${reference} failed to send:`, error)
-    await logEnquiry({
-      reference,
-      kind: data.kind,
-      name: data.name,
-      company: data.company,
-      email: data.email,
-      phone: data.phone,
-      country: data.country,
-      product: data.product,
-      quantity: data.quantity,
-      specification: data.specification,
-      packaging: data.packaging,
-      branding: data.branding,
-      message: data.message ?? "",
-      page: data.page,
-      ip: clientIp,
-      emailDelivered: false,
-      error: errMsg,
-    })
+    reportUndelivered(errMsg)
+    await logEnquiry({ ...record, emailDelivered: false, error: errMsg })
 
-    return NextResponse.json(
-      { ok: false, error: `We could not send your enquiry. Please email ${siteConfig.contact.email} directly.` },
-      { status: 502 },
-    )
+    return NextResponse.json({ ok: false, reference, error: fallbackMessage }, { status: 502 })
   }
 
   // The buyer's acknowledgement is best-effort: the enquiry has already reached
   // the team, so a failure here is logged but never reported as a failed send.
   let acknowledged = false
   // Skipped while on Resend's test sender, which cannot deliver to buyers' addresses.
-  if (process.env.CONTACT_AUTOREPLY !== "false" && !mail.testSender) {
+  // Also skipped once this address has had several confirmations recently (see recipientLimited).
+  if (process.env.CONTACT_AUTOREPLY !== "false" && !mail.testSender && !recipientLimited(data.email.toLowerCase())) {
     const ack = customerEmail(data, reference)
     try {
       await mail.send({

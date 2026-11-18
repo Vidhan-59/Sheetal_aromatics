@@ -215,6 +215,14 @@ export default async function ProductPage({ params }: { params: Params }) {
 
               {overview && <p className="mt-4 leading-relaxed text-muted-foreground">{overview}</p>}
 
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                Supplied by {siteConfig.name} from Ahmedabad, India, for domestic delivery and{" "}
+                <Link href="/export" className="link-underline">
+                  export
+                </Link>{" "}
+                on EXW, FOB or CIF terms, with COA and SDS on request.
+              </p>
+
               {(product.casNumber || product.molecularFormula) && (
                 <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-border py-5">
                   {product.casNumber && (
@@ -300,7 +308,9 @@ export default async function ProductPage({ params }: { params: Params }) {
                   value={product.packaging?.length ? "Standard sizes below; custom sizes on request" : "Confirmed on enquiry"}
                 />
                 <DataRow label="Origin" value="Confirmed on enquiry" />
-                <DataRow label="Documentation" value="Available on request for a specific enquiry" />
+                {product.hsCode && <DataRow label="HS code" value={product.hsCode} />}
+                {product.unNumber && <DataRow label="UN number (transport)" value={product.unNumber} />}
+                <DataRow label="Documentation" value="COA and SDS on request; export documents prepared per shipment" />
               </dl>
 
               {hasSupplyDetails && (

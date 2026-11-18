@@ -12,7 +12,7 @@ import { productCategories } from "@/lib/products-data"
 export const metadata: Metadata = pageMetadata({
   title: "Request a Quote | Product Enquiry",
   description:
-    "Request a quotation for aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates or phase transfer catalysts from Ahmedabad, India.",
+    "Request a quotation for aromatic chemicals, PTCs, pharma intermediates, essential oils, Ayurvedic and food ingredients. EXW, FOB or CIF from India.",
   path: "/request-a-quote",
   keywords: ["request chemical quote India", "chemical RFQ supplier", "aromatic chemicals quotation"],
 })

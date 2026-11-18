@@ -181,12 +181,16 @@ export function organizationSchema() {
     telephone: siteConfig.contact.phonePrimary.e164,
     hasMap: mapsShortLink,
     sameAs,
-    areaServed,
+    // No areaServed here: the company exports to 5+ countries, so an India-only
+    // list would describe it as a domestic supplier. The home-market list stays
+    // on the LocalBusiness node (the Ahmedabad office) only.
     ...(gstin ? { taxID: gstin } : {}),
     member: partnerPeople,
     knowsAbout: [
       ...productCategories.map((c) => c.name),
       "Chemical trading",
+      "Chemical export from India",
+      "Export documentation and dangerous-goods packing",
       "Custom chemical manufacturing",
       "Private label chemical supply",
       "Custom chemical packaging",
@@ -200,8 +204,9 @@ export function organizationSchema() {
 }
 
 /**
- * Home market only. The firm exports to 5+ countries (siteConfig.exportCountries),
- * but the countries are not published, so none are listed and "Worldwide" is not claimed.
+ * Home market of the Ahmedabad office (LocalBusiness only). The firm exports to
+ * 5+ countries (siteConfig.exportCountries); add Country nodes for them here and
+ * on the export Service once the owner names them. "Worldwide" is never claimed.
  */
 const areaServed = [
   { "@type": "City", name: "Ahmedabad" },
@@ -279,14 +284,8 @@ export function websiteSchema() {
     description: siteConfig.shortDescription,
     publisher: { "@id": `${BASE_URL}/#organization` },
     inLanguage: "en",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/products?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
+    // No SearchAction: Google retired the sitelinks search box (Nov 2024) and
+    // /products?q= is disallowed in robots.txt.
   }
 }
 
@@ -384,48 +383,93 @@ export function productImageUrl(product: Product): string | undefined {
  * identity, synonyms, uses and image, without a rich-result error on 87 pages.
  */
 export function productSchema(product: Product) {
-  const properties = [
-    product.casNumber && { name: "CAS Number", value: product.casNumber },
-    product.molecularFormula && { name: "Molecular Formula", value: product.molecularFormula },
-    product.molecularWeight && { name: "Molecular Weight", value: product.molecularWeight },
-    product.physicalForm && { name: "Physical Form", value: product.physicalForm },
-    product.appearance && { name: "Appearance", value: product.appearance },
-    product.typicalGrade && { name: "Typical Grade (indicative)", value: product.typicalGrade },
-    product.forms?.length && { name: "Available Forms", value: product.forms.join(", ") },
-    product.solutionBases?.length && { name: "Solution Bases", value: product.solutionBases.join(", ") },
-    ...(product.packaging ?? []).map((pack) => ({ name: `Pack Sizes (${pack.form})`, value: pack.sizes.join(", ") })),
-  ].filter(Boolean) as { name: string; value: string }[]
-
   const image = productImageSchema(product)
   const url = `${BASE_URL}/products/${product.category}/${product.slug}`
   const botanical = product.category === "ayurvedic-products"
-  const pubchem = productStructureFor(product.slug)?.pubchemCid
+  const pubchem = product.pubchemCid ?? productStructureFor(product.slug)?.pubchemCid
+  const pubchemUrl = pubchem ? `https://pubchem.ncbi.nlm.nih.gov/compound/${pubchem}` : undefined
 
-  return {
-    "@context": "https://schema.org",
+  const identifiers = [
+    product.casNumber && { "@type": "PropertyValue", propertyID: "CAS", value: product.casNumber },
+    product.hsCode && { "@type": "PropertyValue", propertyID: "HS code", value: product.hsCode },
+    product.unNumber && { "@type": "PropertyValue", propertyID: "UN number", value: product.unNumber },
+  ].filter(Boolean)
+
+  const substance = {
     "@type": botanical ? "Thing" : "ChemicalSubstance",
     "@id": `${url}#substance`,
     name: product.name,
     description: productOverview(product) ?? product.summary,
     url,
-    mainEntityOfPage: url,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
     ...(image ? { image } : {}),
     ...(product.synonyms?.length ? { alternateName: product.synonyms } : {}),
-    ...(product.casNumber
-      ? { identifier: { "@type": "PropertyValue", propertyID: "CAS", value: product.casNumber } }
-      : {}),
+    ...(identifiers.length ? { identifier: identifiers.length === 1 ? identifiers[0] : identifiers } : {}),
     ...(!botanical && product.molecularFormula ? { chemicalComposition: product.molecularFormula } : {}),
+    // Formula and weight belong on a MolecularEntity; additionalProperty is not
+    // defined for ChemicalSubstance or Thing.
+    ...(!botanical && product.molecularFormula
+      ? {
+          hasBioChemEntityPart: {
+            "@type": "MolecularEntity",
+            name: product.name,
+            molecularFormula: product.molecularFormula,
+            ...(product.molecularWeight ? { molecularWeight: product.molecularWeight } : {}),
+            ...(pubchemUrl ? { sameAs: pubchemUrl } : {}),
+          },
+        }
+      : {}),
     ...(!botanical && product.applications.length
       ? { potentialUse: product.applications.map((use) => ({ "@type": "DefinedTerm", name: use })) }
       : {}),
-    ...(pubchem ? { sameAs: [`https://pubchem.ncbi.nlm.nih.gov/compound/${pubchem}`] } : {}),
-    additionalProperty: properties.map((p) => ({
-      "@type": "PropertyValue",
-      name: p.name,
-      value: p.value,
-    })),
-    // Who supplies it: links the substance to the company without claiming manufacture.
-    subjectOf: { "@type": "WebPage", "@id": `${url}#webpage`, url, publisher: { "@id": `${BASE_URL}/#organization` } },
+    ...(pubchemUrl ? { sameAs: [pubchemUrl] } : {}),
+    subjectOf: { "@id": `${url}#webpage` },
+  }
+
+  const page = {
+    "@type": "ItemPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: product.seo?.title ?? product.name,
+    inLanguage: "en",
+    isPartOf: { "@id": `${BASE_URL}/#website` },
+    mainEntity: { "@id": `${url}#substance` },
+    publisher: { "@id": `${BASE_URL}/#organization` },
+    dateModified: siteConfig.contentUpdated,
+  }
+
+  // States who sells it to whom — true for every listed product — without a
+  // price or availability (quote-only catalogue; never invented). Not attached to
+  // a schema.org/Product, so Google's merchant-listing checks do not apply.
+  const offer = {
+    "@type": "Offer",
+    "@id": `${url}#offer`,
+    url,
+    itemOffered: { "@id": `${url}#substance` },
+    offeredBy: { "@id": `${BASE_URL}/#organization` },
+    businessFunction: "http://purl.org/goodrelations/v1#Sell",
+    eligibleCustomerType: "http://purl.org/goodrelations/v1#Business",
+  }
+
+  return { "@context": "https://schema.org", "@graph": [page, substance, offer] }
+}
+
+/**
+ * Export service node for /export: what the company does for overseas buyers,
+ * in the words used on the page. Countries are added once the owner names them.
+ */
+export function exportServiceSchema(description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${BASE_URL}/export#service`,
+    name: "Chemical export from India",
+    serviceType: "Chemical export from India",
+    description,
+    url: `${BASE_URL}/export`,
+    provider: { "@id": `${BASE_URL}/#organization` },
+    audience: { "@type": "BusinessAudience", audienceType: "Importers, distributors and manufacturers outside India" },
+    category: productCategories.map((c) => c.name),
   }
 }
 
@@ -441,25 +485,40 @@ export function faqSchema(items: { question: string; answer: string }[]) {
   }
 }
 
-export function collectionSchema(name: string, description: string, path: string, products?: Product[]) {
+export function collectionSchema(
+  name: string,
+  description: string,
+  path: string,
+  /** Products, or any other listed pages (guides, industries) as { name, href }. */
+  items?: (Product | { name: string; href: string })[],
+) {
+  const url = `${BASE_URL}${path}`
+  const entries = (items ?? []).map((item) => ({
+    name: item.name,
+    href: "href" in item ? item.href : productHref(item),
+  }))
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
+    "@id": `${url}#webpage`,
     name,
     description,
-    url: `${BASE_URL}${path}`,
+    url,
+    inLanguage: "en",
     isPartOf: { "@id": `${BASE_URL}/#website` },
-    about: { "@id": `${BASE_URL}/#organization` },
-    ...(products?.length
+    // The page is about its topic; the company is its publisher.
+    about: { "@type": "Thing", name },
+    publisher: { "@id": `${BASE_URL}/#organization` },
+    ...(entries.length
       ? {
           mainEntity: {
             "@type": "ItemList",
-            numberOfItems: products.length,
-            itemListElement: products.map((product, i) => ({
+            numberOfItems: entries.length,
+            itemListElement: entries.map((entry, i) => ({
               "@type": "ListItem",
               position: i + 1,
-              url: `${BASE_URL}${productHref(product)}`,
-              name: product.name,
+              url: `${BASE_URL}${entry.href}`,
+              name: entry.name,
             })),
           },
         }

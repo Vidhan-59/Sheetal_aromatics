@@ -89,12 +89,11 @@ export function Logo({
   if (!asLink) return content
 
   return (
-    <Link
-      href="/"
-      aria-label={`${siteConfig.name} — home`}
-      className="inline-flex rounded-sm transition-opacity hover:opacity-90"
-    >
+    // No aria-label: the accessible name comes from the visible wordmark (WCAG 2.5.3 label in name),
+    // with a visually hidden suffix saying where the link goes.
+    <Link href="/" className="inline-flex rounded-sm transition-opacity hover:opacity-90">
       {content}
+      <span className="sr-only"> — home</span>
     </Link>
   )
 }

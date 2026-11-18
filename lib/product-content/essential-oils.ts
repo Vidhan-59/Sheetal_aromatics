@@ -23,14 +23,14 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What should I specify when enquiring for cinnamon oil?",
         answer:
-          "Give the plant part (bark or leaf) or say whether cassia oil is acceptable, the constituent you test against (usually cinnamaldehyde content for bark and cassia oils, or eugenol content for leaf oil), the end use, quantity, packing and destination. The oil is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry.",
+          "Give the plant part (bark or leaf) or say whether cassia oil is acceptable, the constituent you test against (usually cinnamaldehyde content for bark and cassia oils, or eugenol content for leaf oil), the end use, quantity, packing and destination. The oil is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry.",
       },
     ],
   },
 
   "eucalyptus-oil": {
     overview:
-      "Eucalyptus globulus, the Tasmanian blue gum, is the source of this eucalyptus oil, which is typically obtained by steam distillation of the leaves. Its fresh, camphoraceous odour comes mainly from 1,8-cineole, also called eucalyptol, the constituent most buyers test against. The oil is used in pharmaceutical formulations, respiratory preparations, personal-care products and aromatherapy blends. When enquiring, specify the species, the 1,8-cineole content you work to, whether crude or rectified oil is required, and the quantity, packing and destination. It is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
+      "Eucalyptus globulus, the Tasmanian blue gum, is the source of this eucalyptus oil, which is typically obtained by steam distillation of the leaves. Its fresh, camphoraceous odour comes mainly from 1,8-cineole, also called eucalyptol, the constituent most buyers test against. The oil is used in pharmaceutical formulations, respiratory preparations, personal-care products and aromatherapy blends. When enquiring, specify the species, the 1,8-cineole content you work to, whether crude or rectified oil is required, and the quantity, packing and destination. It is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
     faqs: [
       {
         question: "Which eucalyptus species is this oil from?",
@@ -57,7 +57,7 @@ export const essentialOilsContent: ProductContentMap = {
 
   "peppermint-oil": {
     overview:
-      "Peppermint oil is the essential oil of Mentha × piperita (often written Mentha piperita), typically obtained by steam distillation of the aerial parts of the flowering plant. Menthol is its principal constituent, supported by menthone, and together they give the fresh, cooling mint character the oil is bought for. It is used in the food industry, especially confectionery and chewing gum, in oral-care products such as toothpaste and mouthwash, in pharmaceutical formulations and in cosmetics. Buyers usually specify menthol and menthone content, the end use, packing and destination. The oil is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
+      "Peppermint oil is the essential oil of Mentha × piperita (often written Mentha piperita), typically obtained by steam distillation of the aerial parts of the flowering plant. Menthol is its principal constituent, supported by menthone, and together they give the fresh, cooling mint character the oil is bought for. It is used in the food industry, especially confectionery and chewing gum, in oral-care products such as toothpaste and mouthwash, in pharmaceutical formulations and in cosmetics. Buyers usually specify menthol and menthone content, the end use, packing and destination. The oil is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
     faqs: [
       {
         question: "Is peppermint oil the same as mint oil from Mentha arvensis?",
@@ -72,7 +72,7 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What specification parameters do buyers set for peppermint oil?",
         answer:
-          "Menthol and menthone content are the parameters most often specified. Flavour and pharmaceutical buyers may also set limits for minor constituents such as menthofuran and pulegone, or name the pharmacopoeia or food standard they work to. Share your specification sheet; the oil is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry.",
+          "Menthol and menthone content are the parameters most often specified. Flavour and pharmaceutical buyers may also set limits for minor constituents such as menthofuran and pulegone, or name the pharmacopoeia or food standard they work to. Share your specification sheet; the oil is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry.",
       },
       {
         question: "What is peppermint oil used for?",
@@ -104,7 +104,7 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What is patchouli oil used for?",
         answer:
-          "Patchouli oil is used mainly in perfumery, where its tenacity makes it a base note and fixative in chypre, oriental and woody accords. It is also used in cosmetics and toiletries such as soaps and lotions, in aromatherapy blends and in traditional preparations. It is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry.",
+          "Patchouli oil is used mainly in perfumery, where its tenacity makes it a base note and fixative in chypre, oriental and woody accords. It is also used in cosmetics and toiletries such as soaps and lotions, in aromatherapy blends and in traditional preparations. It is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry.",
       },
     ],
   },
@@ -187,7 +187,7 @@ export const essentialOilsContent: ProductContentMap = {
 
   "sandalwood-oil": {
     overview:
-      "Valued as a soft, woody, creamy base note in perfumery, sandalwood oil is typically obtained by steam distillation of the heartwood of Santalum trees. Its character comes mainly from the santalols, alpha-santalol and beta-santalol. Commercial oils differ by species: East Indian sandalwood (Santalum album) and Australian sandalwood (Santalum spicatum) are the best known, and their santalol profiles are not the same. The oil is used in perfumery, cosmetics, aromatherapy blends and traditional preparations, including attars. Buyers should specify the species, the santalol content they work to, packing and destination. It is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
+      "Valued as a soft, woody, creamy base note in perfumery, sandalwood oil is typically obtained by steam distillation of the heartwood of Santalum trees. Its character comes mainly from the santalols, alpha-santalol and beta-santalol. Commercial oils differ by species: East Indian sandalwood (Santalum album) and Australian sandalwood (Santalum spicatum) are the best known, and their santalol profiles are not the same. The oil is used in perfumery, cosmetics, aromatherapy blends and traditional preparations, including attars. Buyers should specify the species, the santalol content they work to, packing and destination. It is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
     faqs: [
       {
         question: "Which sandalwood species should I specify?",
@@ -214,7 +214,7 @@ export const essentialOilsContent: ProductContentMap = {
 
   "rosemary-oil": {
     overview:
-      "Rosemary oil is the essential oil of Rosmarinus officinalis, now also classified as Salvia rosmarinus, typically obtained by steam distillation of the leaves and flowering tops. It has a fresh, herbaceous, woody-camphoraceous odour. Its main constituents are 1,8-cineole, camphor and alpha-pinene, and their balance varies with chemotype and growing region, so oils are often described as cineole-type or camphor-type. It is used in aromatherapy blends, hair-care and personal-care products, and flavours. Buyers should specify the chemotype or the constituent levels they work to, along with packing and destination. It is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
+      "Rosemary oil is the essential oil of Rosmarinus officinalis, now also classified as Salvia rosmarinus, typically obtained by steam distillation of the leaves and flowering tops. It has a fresh, herbaceous, woody-camphoraceous odour. Its main constituents are 1,8-cineole, camphor and alpha-pinene, and their balance varies with chemotype and growing region, so oils are often described as cineole-type or camphor-type. It is used in aromatherapy blends, hair-care and personal-care products, and flavours. Buyers should specify the chemotype or the constituent levels they work to, along with packing and destination. It is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
     faqs: [
       {
         question: "What are the chemotypes of rosemary oil?",
@@ -234,14 +234,14 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What specification is rosemary oil offered to?",
         answer:
-          "Rosemary oil is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. Send the parameters you work to, typically the chemotype and the 1,8-cineole, camphor and alpha-pinene content, together with quantity, packing and destination. COA and SDS are available on request for a specific enquiry.",
+          "Rosemary oil is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. Send the parameters you work to, typically the chemotype and the 1,8-cineole, camphor and alpha-pinene content, together with quantity, packing and destination. COA and SDS are available on request for a specific enquiry.",
       },
     ],
   },
 
   "tea-tree-oil": {
     overview:
-      "From the leaves and terminal branches of Melaleuca alternifolia, a member of the myrtle family, tea tree oil is typically obtained by steam distillation. It has a fresh, camphoraceous, slightly spicy odour. Terpinen-4-ol is the main constituent, with gamma-terpinene, alpha-terpinene and smaller amounts of 1,8-cineole also characteristic. The oil is used in skin-care and personal-care products, aromatherapy blends and household products. Buyers typically specify terpinen-4-ol and 1,8-cineole content, or name the published standard they work to, together with packing and destination. It is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
+      "From the leaves and terminal branches of Melaleuca alternifolia, a member of the myrtle family, tea tree oil is typically obtained by steam distillation. It has a fresh, camphoraceous, slightly spicy odour. Terpinen-4-ol is the main constituent, with gamma-terpinene, alpha-terpinene and smaller amounts of 1,8-cineole also characteristic. The oil is used in skin-care and personal-care products, aromatherapy blends and household products. Buyers typically specify terpinen-4-ol and 1,8-cineole content, or name the published standard they work to, together with packing and destination. It is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
     faqs: [
       {
         question: "Which plant does tea tree oil come from?",
@@ -251,7 +251,7 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What do buyers specify for tea tree oil?",
         answer:
-          "Terpinen-4-ol content, usually as a minimum, and 1,8-cineole content, usually as a maximum, are the key parameters. Many buyers also work to ISO 4730, the international standard for terpinen-4-ol type tea tree oil; if you do, name it in your enquiry. The oil is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry.",
+          "Terpinen-4-ol content, usually as a minimum, and 1,8-cineole content, usually as a maximum, are the key parameters. Many buyers also work to ISO 4730, the international standard for terpinen-4-ol type tea tree oil; if you do, name it in your enquiry. The oil is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry.",
       },
       {
         question: "What is tea tree oil used for?",
@@ -281,7 +281,7 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What is lemongrass oil used for?",
         answer:
-          "Lemongrass oil is used in perfumery and in soaps and toiletries for its fresh lemon note, in flavours, in household and insect-repellent formulations, and in aromatherapy blends. Its citral content also makes it a feedstock for citral isolation and downstream aroma chemistry. It is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry.",
+          "Lemongrass oil is used in perfumery and in soaps and toiletries for its fresh lemon note, in flavours, in household and insect-repellent formulations, and in aromatherapy blends. Its citral content also makes it a feedstock for citral isolation and downstream aroma chemistry. It is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry.",
       },
       {
         question: "How should lemongrass oil be stored?",
@@ -301,7 +301,7 @@ export const essentialOilsContent: ProductContentMap = {
       {
         question: "What are the main constituents of clove oil?",
         answer:
-          "Eugenol is the dominant constituent of clove oil, accompanied by eugenyl acetate and beta-caryophyllene in proportions that vary with the plant part distilled. Buyers usually specify eugenol content, and for bud oil may also look at eugenyl acetate. The oil is offered as 100% pure essential oil, with the specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
+          "Eugenol is the dominant constituent of clove oil, accompanied by eugenyl acetate and beta-caryophyllene in proportions that vary with the plant part distilled. Buyers usually specify eugenol content, and for bud oil may also look at eugenyl acetate. The oil is supplied as a natural essential oil, with its constituent profile and specification confirmed against your requirement on enquiry. COA and SDS are available on request for a specific enquiry.",
       },
       {
         question: "Should I buy clove oil or eugenol?",

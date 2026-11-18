@@ -42,6 +42,8 @@ export function ProductQuickSearch({ className }: { className?: string }) {
     return () => document.removeEventListener("mousedown", onPointerDown)
   }, [])
 
+  const expanded = open && Boolean(catalogue) && results.length > 0
+
   function goToResults() {
     if (!query.trim()) return
     setOpen(false)
@@ -96,9 +98,10 @@ export function ProductQuickSearch({ className }: { className?: string }) {
           placeholder="Search products or CAS number"
           autoComplete="off"
           role="combobox"
-          aria-expanded={open && results.length > 0}
+          aria-expanded={expanded}
           aria-controls={listId}
           aria-autocomplete="list"
+          aria-activedescendant={expanded && active >= 0 ? `${listId}-opt-${active}` : undefined}
           onChange={(e) => {
             setQuery(e.target.value)
             setOpen(true)
@@ -109,44 +112,42 @@ export function ProductQuickSearch({ className }: { className?: string }) {
             setOpen(true)
           }}
           onKeyDown={onKeyDown}
-          className="h-10 w-full rounded-md border border-border bg-card pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-forest-400 focus:ring-2 focus:ring-ring/25"
+          className="h-10 w-full rounded-md border border-input bg-card pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-forest-400 focus-visible:ring-2 focus-visible:ring-ring"
         />
       </form>
 
-      {open && catalogue && results.length > 0 && (
-        <ul
-          id={listId}
-          role="listbox"
-          aria-label="Product suggestions"
-          className="absolute left-0 right-0 top-[calc(100%+0.4rem)] z-50 overflow-hidden rounded-md border border-border bg-popover shadow-lg"
-        >
-          {results.map((product, i) => (
-            <li key={product.slug} role="option" aria-selected={i === active}>
-              <a
-                href={catalogue.productHref(product)}
-                onMouseEnter={() => setActive(i)}
-                className={cn(
-                  "flex items-baseline justify-between gap-3 px-3 py-2.5 text-sm transition-colors",
-                  i === active ? "bg-secondary" : "hover:bg-secondary",
-                )}
-              >
-                <span className="font-medium text-foreground">{product.name}</span>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  {product.casNumber ?? catalogue.categoryName(product.category)}
-                </span>
-              </a>
-            </li>
-          ))}
-          <li>
-            <button
-              type="button"
-              onClick={goToResults}
-              className="w-full border-t border-border px-3 py-2.5 text-left text-xs font-medium text-primary hover:bg-secondary"
-            >
-              See all results for “{query.trim()}”
-            </button>
-          </li>
-        </ul>
+      {expanded && catalogue && (
+        <div className="absolute left-0 right-0 top-[calc(100%+0.4rem)] z-50 overflow-hidden rounded-md border border-border bg-popover shadow-lg">
+          {/* Only the product options live in the listbox; the "see all" button sits outside it. Focus stays
+              on the input (aria-activedescendant), so the links are kept out of the tab order. */}
+          <ul id={listId} role="listbox" aria-label="Product suggestions">
+            {results.map((product, i) => (
+              <li key={product.slug} id={`${listId}-opt-${i}`} role="option" aria-selected={i === active}>
+                <a
+                  href={catalogue.productHref(product)}
+                  tabIndex={-1}
+                  onMouseEnter={() => setActive(i)}
+                  className={cn(
+                    "flex items-baseline justify-between gap-3 px-3 py-2.5 text-sm transition-colors",
+                    i === active ? "bg-secondary" : "hover:bg-secondary",
+                  )}
+                >
+                  <span className="font-medium text-foreground">{product.name}</span>
+                  <span className="shrink-0 text-xs text-muted-foreground">
+                    {product.casNumber ?? catalogue.categoryName(product.category)}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            onClick={goToResults}
+            className="w-full border-t border-border px-3 py-2.5 text-left text-xs font-medium text-primary hover:bg-secondary"
+          >
+            See all results for “{query.trim()}”
+          </button>
+        </div>
       )}
     </div>
   )

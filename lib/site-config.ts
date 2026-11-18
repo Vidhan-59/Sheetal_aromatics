@@ -35,9 +35,9 @@ export const siteConfig = {
   exportCountries: "5+",
 
   /** Last substantive content update — used as the sitemap lastmod. Update when pages change. */
-  contentUpdated: "2026-11-14",
+  contentUpdated: "2026-11-18",
 
-  tagline: "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals",
+  tagline: "Supplier & Exporter of Aromatic & Specialty Chemicals",
   shortDescription:
     "Trader, supplier and exporter of aromatic chemicals, essential oils, Ayurvedic products, metals, pharma intermediates, phase transfer catalysts and specialty chemicals, with custom manufacturing, custom packaging and private labelling to buyer specification. Ahmedabad, India.",
 
@@ -72,7 +72,7 @@ export const siteConfig = {
   },
 
   businessHours: {
-    summary: "Monday – Saturday, 9:00 AM – 6:00 PM IST",
+    summary: "Monday – Saturday, 9:00 AM – 6:00 PM IST (UTC+5:30)",
     closed: "Sunday: Closed",
     /** schema.org openingHours format */
     schema: ["Mo-Sa 09:00-18:00"],

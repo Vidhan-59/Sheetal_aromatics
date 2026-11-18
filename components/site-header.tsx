@@ -111,7 +111,7 @@ export function SiteHeader({ menus, links }: { menus: NavMenu[]; links: NavItem[
             </a>
           </div>
           <span className="text-forest-100/75">
-            Established {siteConfig.establishedYear} · Ahmedabad, India · Trading, Custom Manufacturing &amp; Export
+            Established {siteConfig.establishedYear} · Ahmedabad, India · Supply &amp; Export · Custom Manufacturing to Spec
           </span>
         </div>
       </div>
@@ -415,7 +415,8 @@ function MobileSection({ menu, pathname }: { menu: NavMenu; pathname: string }) 
           expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
         )}
       >
-        <div className="overflow-hidden">
+        {/* inert while collapsed: the 0fr row only hides the links visually, so without it they stay tabbable. */}
+        <div className="overflow-hidden" inert={!expanded}>
           <ul className="mb-2 ml-3 space-y-0.5 border-l border-border pl-3 pt-1">
             <li>
               <Link href={menu.href} className="flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold text-primary hover:bg-secondary">

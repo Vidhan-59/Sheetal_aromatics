@@ -39,7 +39,7 @@ export const faqs: Faq[] = [
   {
     question: "Does Sheetal Aromatics supply international buyers?",
     answer:
-      "Yes. We handle enquiries from importers, distributors, manufacturers and procurement teams outside India, and hold an Importer Exporter Code (IEC 0805014608). Shipment terms, packing and documentation are agreed for each order.",
+      "Yes. Export is a core part of the business: we supply importers, distributors and manufacturers in 5+ countries and hold Importer Exporter Code 0805014608. Shipments leave from Mundra, Kandla, Hazira or Nhava Sheva on EXW, FOB, CFR or CIF terms, with COA, SDS, certificate of origin and shipping documents. See the Export page for details.",
     featured: true,
   },
   {
@@ -98,17 +98,17 @@ export const faqs: Faq[] = [
   {
     question: "Do you supply samples?",
     answer:
-      "Sample requests are considered against a specific enquiry. Please include the product, the specification you are evaluating against and your shipping address, and we will confirm what is possible.",
+      "Yes. New buyers usually move from a sample to a trial lot and then to regular orders. Sample terms are confirmed against a specific enquiry, so include the product, the specification you are evaluating against and your delivery address.",
   },
   {
     question: "What packing is available?",
     answer:
-      "Packing depends on the product and the quantity ordered, and is confirmed with the quotation. Custom pack sizes and private labelling are available on request, so if you have a required pack size, packaging standard or label, state it with your enquiry.",
+      "Packing is confirmed with the quotation. Typical export packs are HDPE or MS drums or IBCs for liquids and lined bags or fibre drums for powders, palletised and stretch-wrapped; dangerous goods go in UN-certified packaging. Custom pack sizes and private labelling are available, so state any required pack size, standard or label with your enquiry.",
   },
   {
     question: "Do you provide documentation with shipments?",
     answer:
-      "Documentation is prepared according to the product, the destination and the terms agreed for the order. Tell us what your side needs at enquiry stage and we will confirm what can be provided.",
+      "Yes. A certificate of analysis and safety data sheet are available for each product, and export shipments also carry the commercial invoice, packing list, certificate of origin and bill of lading or air waybill, plus a dangerous-goods declaration for hazardous items. A method of analysis is available on request. Tell us any extra document your importer or bank needs.",
   },
 ]
 

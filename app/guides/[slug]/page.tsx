@@ -92,6 +92,14 @@ export default async function GuidePage({ params }: { params: Params }) {
                   {guide.audience}
                 </p>
               )}
+              {guide.quickAnswer && (
+                <section aria-labelledby="quick-answer" className="mt-6 rounded-lg border border-border bg-card p-5">
+                  <h2 id="quick-answer" className="text-base font-semibold">
+                    {guide.quickAnswer.question}
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{guide.quickAnswer.answer}</p>
+                </section>
+              )}
               <p className="mt-4 text-xs text-muted-foreground">
                 By Sheetal Aromatics · Updated{" "}
                 <time dateTime={guide.dateModified}>{dateFormat.format(new Date(guide.dateModified))}</time> ·{" "}

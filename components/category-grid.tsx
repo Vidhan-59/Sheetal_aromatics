@@ -67,7 +67,7 @@ export function CategoryGrid({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Filter this category"
-              className="h-10 w-full rounded-md border border-border bg-card pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-forest-400 focus:ring-2 focus:ring-ring/25"
+              className="h-10 w-full rounded-md border border-input bg-card pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-forest-400 focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
         </div>

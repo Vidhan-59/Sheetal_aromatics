@@ -10,7 +10,7 @@ import { collectionSchema, pageMetadata } from "@/lib/seo"
 import { guides } from "@/lib/guides"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Buyer Guides | Chemical Sourcing & Specifications",
+  title: "Buyer Guides for Chemical Sourcing",
   description:
     "Practical guides for chemical and ingredient buyers: quotation checklists, phase transfer catalyst selection, food preservatives and importing from India.",
   path: "/guides",
@@ -24,6 +24,7 @@ export default function GuidesPage() {
           "Buyer guides",
           "Practical guides for chemical and ingredient buyers from Sheetal Aromatics.",
           "/guides",
+          guides.map((g) => ({ name: g.title, href: `/guides/${g.slug}` })),
         )}
       />
       <Breadcrumbs trail={[{ name: "Buyer Guides", href: "/guides" }]} />

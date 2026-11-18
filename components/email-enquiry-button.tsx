@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useId } from "react"
 import { Check, Copy, ExternalLink, Mail, ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -29,6 +29,8 @@ export function EmailEnquiryButton({
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const panelId = useId()
 
   const mailto = mailtoLink(subject, body)
   const gmail = gmailLink(subject, body)
@@ -39,11 +41,20 @@ export function EmailEnquiryButton({
         setOpen(false)
       }
     }
+    // Escape closes the panel and hands focus back to the button that opened it.
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
     if (open) {
       document.addEventListener("mousedown", handleClickOutside)
+      document.addEventListener("keydown", handleKeyDown)
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
     }
   }, [open])
 
@@ -59,14 +70,16 @@ export function EmailEnquiryButton({
 
   return (
     <div className="relative inline-block text-left" ref={ref}>
+      {/* A plain disclosure (button + panel of links), not an ARIA menu: the panel holds ordinary links and a button. */}
       <Button
+        ref={triggerRef}
         type="button"
         variant={variant}
         size={size}
         onClick={() => setOpen((prev) => !prev)}
         className={cn("inline-flex items-center gap-2", className)}
         aria-expanded={open}
-        aria-haspopup="true"
+        aria-controls={open ? panelId : undefined}
       >
         <Mail aria-hidden="true" className="h-4 w-4" />
         <span>{label}</span>
@@ -75,8 +88,7 @@ export function EmailEnquiryButton({
 
       {open && (
         <div
-          role="menu"
-          aria-orientation="vertical"
+          id={panelId}
           className="absolute left-0 z-50 mt-2 w-72 origin-top-left rounded-lg border border-border bg-card p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in-50 zoom-in-95 sm:w-80"
         >
           <div className="px-3 py-2 border-b border-border/60">
@@ -134,11 +146,15 @@ export function EmailEnquiryButton({
                   <span className="text-xs text-muted-foreground block">{siteConfig.contact.email}</span>
                 </div>
               </div>
-              {copied && <span className="text-xs font-medium text-emerald-600">Copied</span>}
+              {copied && <span aria-hidden="true" className="text-xs font-medium text-emerald-600">Copied</span>}
             </button>
           </div>
         </div>
       )}
+      {/* Announces the copy result; kept outside the panel so it is mounted before the text changes. */}
+      <span aria-live="polite" className="sr-only">
+        {copied ? "Email address copied" : ""}
+      </span>
     </div>
   )
 }

@@ -73,7 +73,7 @@ export function Analytics() {
       {consent === "granted" && clarityEnabled && (
         // Microsoft's standard Clarity loader, then the consent signal (the visitor has just accepted).
         <Script id="clarity-init" strategy="afterInteractive">
-          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");window.clarity("consent");`}
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_PROJECT_ID}");window.clarity("consentv2",{ad_Storage:"denied",analytics_Storage:"granted"});window.clarity("consent");`}
         </Script>
       )}
 

@@ -11,7 +11,7 @@ import { industries, industryHref, productsForIndustry } from "@/lib/industries"
 import { pluralize } from "@/lib/utils"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Industries Served | Chemical & Ingredient Supply",
+  title: "Industries Served | Chemical Supply",
   description:
     "Raw materials for pharmaceutical, food & beverage, fragrance, cosmetics, Ayurvedic, chemical synthesis and industrial manufacturers. Ahmedabad, India.",
   path: "/industries",
@@ -25,6 +25,7 @@ export default function IndustriesPage() {
           "Industries served",
           "Raw materials supplied by Sheetal Aromatics, grouped by the industries that use them.",
           "/industries",
+          industries.map((i) => ({ name: i.name, href: industryHref(i) })),
         )}
       />
       <Breadcrumbs trail={[{ name: "Industries", href: "/industries" }]} />

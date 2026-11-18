@@ -19,7 +19,7 @@ import {
 } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Chemical Products Catalogue | Supplier in Gujarat",
+  title: "Chemical Products Catalogue, India",
   description: `Browse ${productsDatabase.length} products across ${productCategories.length} categories. Search by name or CAS number, filter by category and request a quotation.`,
   path: "/products",
   keywords: [

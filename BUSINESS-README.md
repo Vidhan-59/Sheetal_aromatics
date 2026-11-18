@@ -2,7 +2,7 @@
 
 > **One file, full context.** This document explains Sheetal Aromatics end to end: who we are, what we supply, how we sell, our website, SEO and marketing. Share it with a person, agency or AI assistant and they should need nothing else to understand the business.
 >
-> **Last updated:** 25 October 2026 · **Website:** https://www.sheetalaromatics.com
+> **Last updated:** 18 November 2026 · **Website:** https://www.sheetalaromatics.com
 >
 > **Accuracy key:** facts marked **Verified** come from statutory records or the company directly. Items marked **Open** are unresolved decisions — do not repeat them as facts until resolved (see §15).
 
@@ -40,18 +40,19 @@
 | **Established** | 2005 (21+ years in the trade) |
 | **Partners** | Shailesh Shah · Vidhan Shah |
 | **Based in** | Ahmedabad, Gujarat, India |
-| **Business model** | **Trading** (sourcing and supplying the catalogue) **+ custom manufacturing** (products made to a buyer's own specification) — confirmed by the owner, 25 Oct 2026 |
+| **Business model** | **Mainly a supplier (trading)** — sourcing and supplying the catalogue — with **custom manufacturing** only as a to-specification service (owner, 25 Oct and 18 Nov 2026). Never describe the firm as manufacturing its range |
+| **Market priority** | **Export first** (international B2B buyers), domestic India second — owner, 18 Nov 2026 |
 | **What we do** | B2B supply and export of aromatic chemicals, essential oils, Ayurvedic herbs & powders, metals, pharma intermediates, phase transfer catalysts and food & pharma ingredients |
 | **Customers** | Manufacturers, formulators, distributors, importers and procurement teams — domestic (India) and export. B2B only |
-| **Catalogue online** | 88 products in 7 categories (47 with CAS numbers) |
-| **Portfolio & reach** | "500+ products" in the trading portfolio (owner figure; 88 have pages) · **5+ export countries** (owner-confirmed — list them when publishing) |
+| **Catalogue online** | 87 products in 8 categories (48 with CAS numbers) — counts on the site are computed from `lib/products-data.ts` |
+| **Portfolio & reach** | "500+ products" in the trading portfolio (owner figure; 87 have pages) · **5+ export countries** (owner-confirmed — list them when publishing) |
 | **GST No.** | 24ABEFS0254K1Z9 |
 | **IEC No.** | 0805014608 (Importer Exporter Code — authorises exports) |
 | **Website** | https://www.sheetalaromatics.com (domain registered 20 Sep 2026) |
 | **Company email** | info@sheetalaromatics.com (Zoho Mail; web enquiries still go to sheetalaromatics@gmail.com until Resend is verified) |
 | **Phone / WhatsApp** | +91 98241 69906 (Shailesh Shah) · +91 94260 05911 (Vidhan Shah) |
 | **Hours** | Monday – Saturday, 9:00 AM – 6:00 PM IST · Sunday closed |
-| **Tagline on site** | "Trading & Custom Manufacturing of Aromatic & Specialty Chemicals" |
+| **Tagline on site** | "Supplier & Exporter of Aromatic & Specialty Chemicals" (changed 18 Nov 2026 to supplier/export-first) |
 
 ---
 
@@ -67,7 +68,7 @@ Sheetal Aromatics was founded in **2005 in Ahmedabad, Gujarat** as a partnership
 | Industry experience | Steady work with fragrance compounders, flavour houses and formulators built product knowledge and supplier relationships |
 | Product expansion | Range widened into essential oils, Ayurvedic herbs and powders, high-purity metals and pharma intermediates |
 | Export focus | Importer Exporter Code (IEC 0805014608) supports buyers outside India alongside domestic supply |
-| Today | 88 catalogued products across 7 categories, plus phase transfer catalysts and food & pharma ingredients |
+| Today | 87 catalogued products across 8 categories |
 
 **Our operating principles** (published on the site):
 
@@ -119,11 +120,12 @@ Competitors commonly display ISO 9001, FSSAI, Halal, Kosher and RCMC. Obtaining 
 |---|---|---|---|---|
 | 1 | **Aromatic Chemicals** | `/products/aromatic-chemicals` | 15 | Esters, alcohols and specialty aroma ingredients |
 | 2 | **Essential Oils** | `/products/essential-oils` | 12 | Steam-distilled oils and isolated aroma compounds |
-| 3 | **Ayurvedic Products** | `/products/ayurvedic-products` | 31 | Herbs, raw materials and milled powders |
+| 3 | **Ayurvedic Products** | `/products/ayurvedic-products` | 29 | Herbs, raw materials and milled powders |
 | 4 | **Metals** | `/products/metals` | 3 | High-purity elements for industry and synthesis |
 | 5 | **Pharma Intermediates** | `/products/pharma-intermediates` | 8 | Building blocks for pharmaceutical synthesis |
 | 6 | **Phase Transfer Catalysts** | `/products/phase-transfer-catalysts` | 15 | Quaternary ammonium and phosphonium salts |
 | 7 | **Food & Pharma Ingredients** | `/products/food-pharma-ingredients` | 4 | Preservatives, humectants and excipients |
+| 8 | **Specialty Chemicals** | `/products/specialty-chemicals` | 1 | Bittering agents and performance additives (denatonium benzoate) |
 
 ### Commercial character of each line
 
@@ -190,7 +192,7 @@ We supply steam-distilled essential oils alongside the isolated aroma compounds 
 | [Rosemary Oil](https://www.sheetalaromatics.com/products/essential-oils/rosemary-oil) | — | — | Liquid · 100% pure essential oil | Aromatherapy, Hair Care, Flavours, Personal Care | — | Photo |
 | [Tea Tree Oil](https://www.sheetalaromatics.com/products/essential-oils/tea-tree-oil) | — | — | Liquid · 100% pure essential oil | Skin Care, Personal Care, Aromatherapy, Household | Melaleuca alternifolia oil | Photo |
 
-### Ayurvedic Products (31)
+### Ayurvedic Products (29)
 
 **URL:** `/products/ayurvedic-products` · **SEO title:** Ayurvedic Raw Material Supplier, Ahmedabad
 
@@ -337,7 +339,10 @@ Each industry has a page with a hand-written brief, a "what to include in your e
 - **Distributors & importers** — chemical wholesalers, food-ingredient distributors (especially Africa & Middle East), botanical importers.
 - **Labs & R&D** — HPLC ion-pair reagents (TBAHS), synthesis reagents.
 
-### Domestic focus
+### Priority order
+**Export first, domestic second** (owner, 18 Nov 2026). The international plan below leads; the domestic plan follows.
+
+### Domestic focus (second priority)
 Ahmedabad and Gujarat first (strong local SEO and Google Business Profile), then India's industrial clusters: Vadodara, Ankleshwar/Bharuch, Surat, Vapi, Mumbai/Thane, Hyderabad.
 
 ### International focus (growth plan — "three hero lines, three or four beachhead markets")
@@ -413,7 +418,7 @@ These rules apply to the website, ads, emails, listings and anything written abo
 | **Domain** | Registered 20 Sep 2026 at GoDaddy (nameservers domaincontrol.com); renewal due 20 Sep 2027 — turn on auto-renew |
 | **Hosting** | Vercel (Mumbai region), deploys automatically from GitHub `main` (repo `Vidhan-59/Sheetal_aromatics`) |
 | **Stack** | Next.js 15 (App Router, static prerendering), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, Lenis (smooth scroll), Resend + Nodemailer (email) |
-| **Pages** | 118 indexable URLs: home, about, export, contact, request-a-quote, FAQ, products hub, 7 categories, 88 products, industries hub + 7 industries, guides hub + 4 guides, legal pages |
+| **Pages** | 121 indexable URLs: home, about, export, contact, request-a-quote, FAQ, private-label, local Ahmedabad page, products hub, 8 categories, 87 products, industries hub + 7 industries, guides hub + 4 guides, legal pages |
 
 ### Site structure
 ```
@@ -575,11 +580,11 @@ Qualified enquiries by source (primary) · indexed pages · organic impressions/
 |---|---|
 | Years in business | 21+ (since 2005) |
 | Product categories | 7 |
-| Products with pages | 86 (Shilajit 3/5/7% merged into one page, 25 Oct 2026) |
+| Products with pages | 87 in 8 categories (Shilajit 3/5/7% merged into one page; Denatonium Benzoate added under Specialty Chemicals) |
 | Product images | All 86 products: 43 photos · 43 AI-generated illustrative — optional photo upgrades listed in `scripts/product-image-queue.json` |
 | Industry pages | 7 |
 | Buyer guides | 4 |
-| Indexable URLs | 118 |
+| Indexable URLs | 121 |
 | Partners | 2 |
 | Search volumes / backlinks / rankings | Not yet measured (needs Search Console, Keyword Planner) |
 

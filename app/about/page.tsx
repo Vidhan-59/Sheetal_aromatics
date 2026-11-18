@@ -12,7 +12,7 @@ import { addressLines, directionsLink, siteConfig, yearsOfExperience } from "@/l
 import { productCategories, productsDatabase } from "@/lib/products-data"
 
 export const metadata: Metadata = pageMetadata({
-  title: "About Us | Chemical Trader in Ahmedabad Since 2005",
+  title: "About Us | Chemical Supplier Since 2005",
   description: `A partnership firm established in ${siteConfig.establishedYear} in Ahmedabad, Gujarat, supplying chemical and natural products to B2B and export customers.`,
   path: "/about",
   keywords: [
@@ -81,7 +81,7 @@ export default function AboutPage() {
       <JsonLd
         data={webPageSchema("AboutPage", {
           name: "About Sheetal Aromatics",
-          description: `A partnership firm established in ${siteConfig.establishedYear} in Ahmedabad, Gujarat, trading and custom-manufacturing chemical and natural products for B2B and export customers.`,
+          description: `A partnership firm established in ${siteConfig.establishedYear} in Ahmedabad, Gujarat, supplying and exporting chemical and natural products to B2B buyers, with custom manufacturing to buyer specification.`,
           path: "/about",
         })}
       />
@@ -94,24 +94,24 @@ export default function AboutPage() {
               <SectionHeading
                 as="h1"
                 eyebrow={`Established ${siteConfig.establishedYear}`}
-                title="Over two decades in chemical trading, custom manufacturing and export"
+                title="Over two decades in chemical trading, supply and export"
                 description={
                   <>
                     <p>
                       Sheetal Aromatics is a {siteConfig.legalForm.toLowerCase()} based in Ahmedabad, Gujarat. Since{" "}
-                      {siteConfig.establishedYear} we have been trading, supplying and custom-manufacturing aromatic chemicals, essential oils, Ayurvedic
-                      products, metals, pharma intermediates and phase transfer catalysts to manufacturers, formulators, distributors and
-                      importers across India and in {siteConfig.exportCountries} export countries.
+                      {siteConfig.establishedYear} we have been sourcing, supplying and exporting aromatic chemicals, essential oils, Ayurvedic
+                      products, metals, pharma intermediates, phase transfer catalysts, food &amp; pharma ingredients and specialty
+                      chemicals to manufacturers, formulators, distributors and importers across India and in{" "}
+                      {siteConfig.exportCountries} export countries.
                     </p>
                     <p className="mt-4">
                       The firm is run directly by its partners, {siteConfig.partners.map((p) => p.name).join(" and ")}. That
                       matters more than it sounds: the people who manage sourcing and custom manufacturing are the people who answer your
-                      enquiry, which is why specifications get confirmed properly, quality parameters are strictly met, and technical questions get straight
-                      answers.
+                      enquiry, which is why specifications get confirmed before quoting and technical questions get straight answers.
                     </p>
                     <p className="mt-4">
-                      We are a trading and custom-manufacturing firm, not a marketplace. The catalogue on this site reflects the
-                      materials we source and supply regularly with direct quality control, and when a buyer needs a product made to
+                      We are a trading firm, not a marketplace. The catalogue on this site reflects the materials we source and
+                      supply regularly, with the COA and SDS confirmed before an order, and when a buyer needs a product made to
                       their own specification we take it up as custom manufacturing. Where we cannot help, we would rather tell you
                       than take the order.{" "}
                       <Link href="/products" className="link-underline">
@@ -184,8 +184,8 @@ export default function AboutPage() {
           </div>
 
           <Reveal className="reveal-image mt-14">
-            <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
-              <SiteImage name="plant" kenBurns sizes="(min-width: 1280px) 1200px, 100vw" />
+            <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-lg lg:aspect-[21/9]">
+              <SiteImage name="plant" kenBurns representative sizes="(min-width: 1280px) 1200px, 100vw" />
             </div>
           </Reveal>
         </Container>
@@ -223,8 +223,8 @@ export default function AboutPage() {
                 description="None of this is unusual. It is simply what a buyer is entitled to expect from a supplier that has been trading for two decades."
               />
               <Reveal className="reveal-image mt-10">
-                <div className="aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
-                  <SiteImage name="qc-lab" kenBurns sizes="(min-width: 1024px) 480px, 100vw" />
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
+                  <SiteImage name="qc-lab" kenBurns representative sizes="(min-width: 1024px) 480px, 100vw" />
                 </div>
               </Reveal>
             </div>

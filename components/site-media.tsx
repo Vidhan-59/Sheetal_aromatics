@@ -4,12 +4,16 @@ import { cn } from "@/lib/utils"
 import { InViewMotion, LazyVideo } from "@/components/motion"
 
 /**
- * Company photography and video used outside the product catalogue.
- * Each image has a 1600px and an 800px WebP rendition in public/images/site/.
+ * Representative photography and video used outside the product catalogue.
+ * These are stock or illustrative images, not photographs of the company's own
+ * premises, so they are labelled "Representative image" wherever they illustrate
+ * content (pass `representative`). Replace with the company's own photos when
+ * available. Each image has a 1600px and an 800px WebP rendition in public/images/site/.
  */
 export const siteImages = {
   warehouse: {
     src: "/images/site/warehouse",
+    small: true,
     alt: "Chemical drums and IBC containers palletised and wrapped for export, with shipping containers at the dock",
   },
   botanicals: {
@@ -22,6 +26,7 @@ export const siteImages = {
   },
   plant: {
     src: "/images/site/plant",
+    small: true,
     alt: "Stainless-steel process vessels and control panel in a chemical production facility",
   },
   /** AI-generated ambient background for the home hero; not a photograph of the company's site. */
@@ -40,6 +45,7 @@ export function SiteImage({
   sizes = "100vw",
   priority = false,
   kenBurns = false,
+  representative = false,
   className,
 }: {
   name: SiteImageName
@@ -47,6 +53,8 @@ export function SiteImage({
   priority?: boolean
   /** Slow ambient zoom/pan while on screen (disabled for reduced motion). */
   kenBurns?: boolean
+  /** Shows a "Representative image" label; the parent must be `relative`. */
+  representative?: boolean
   className?: string
 }) {
   const image: { src: string; alt: string; small?: boolean } = siteImages[name]
@@ -59,12 +67,21 @@ export function SiteImage({
       height={893}
       alt={image.alt}
       loading={priority ? "eager" : "lazy"}
-      decoding="async"
+      decoding={priority ? undefined : "async"}
       fetchPriority={priority ? "high" : undefined}
       className={cn("h-full w-full object-cover", kenBurns && "ken-burns", className)}
     />
   )
-  return kenBurns ? <InViewMotion className="h-full w-full overflow-hidden">{img}</InViewMotion> : img
+  const media = kenBurns ? <InViewMotion className="h-full w-full overflow-hidden">{img}</InViewMotion> : img
+  if (!representative) return media
+  return (
+    <>
+      {media}
+      <span className="pointer-events-none absolute bottom-2 left-2 rounded-sm bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white">
+        Representative image
+      </span>
+    </>
+  )
 }
 
 /** Muted, looping background clip of the quality-control lab; loads only when scrolled near. */
@@ -73,7 +90,7 @@ export function QualityLabVideo({ className }: { className?: string }) {
     <LazyVideo
       src="/media/quality-lab.mp4"
       poster="/media/quality-lab-poster.webp"
-      label="Laboratory analysts weighing and testing samples"
+      label="Representative video: laboratory analysts weighing and testing samples"
       className={className}
     />
   )

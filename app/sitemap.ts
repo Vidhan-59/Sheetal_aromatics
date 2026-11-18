@@ -12,7 +12,7 @@ import { siteConfig } from "@/lib/site-config"
 export default function sitemap(): MetadataRoute.Sitemap {
   // A real content date rather than the build time: Google ignores lastmod values that change on every deploy.
   const updated = new Date(siteConfig.contentUpdated)
-  const legalUpdated = new Date("2026-11-12")
+  const legalUpdated = new Date("2026-11-16")
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL },

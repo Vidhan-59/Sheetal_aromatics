@@ -115,6 +115,15 @@ export interface Product {
    * Traded products leave this unset, so structured data never claims manufacture.
    */
   madeInHouse?: boolean
+  /** PubChem compound ID, for products without a structure drawing (e.g. elements). */
+  pubchemCid?: number
+  /**
+   * Harmonised System code used on the company's own shipping bills. Owner-supplied
+   * only — never guessed. Shown on the page, in llms-full.txt and in structured data.
+   */
+  hsCode?: string
+  /** UN dangerous-goods number, where the product is classed as dangerous for transport. */
+  unNumber?: string
 }
 
 /* ------------------------------------------------------------------------ */
@@ -132,7 +141,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "Our aromatic chemicals range covers the benzyl and isoamyl ester family, aromatic alcohols, salicylates and specialty crystals used across fragrance houses, flavour compounders, cosmetic manufacturers and industrial formulators. Each enquiry is handled against your own specification sheet — share the grade, purity and packaging you work to and we will respond with availability and a quotation.",
     seo: {
-      title: "Aromatic Chemicals Supplier in Ahmedabad, India",
+      title: "Aromatic Chemicals Supplier & Exporter, India",
       description:
         "Benzyl acetate, benzyl alcohol, benzyl benzoate, isoamyl acetate, methyl salicylate, menthol and more, from Ahmedabad, India. Request a quotation.",
     },
@@ -147,7 +156,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "We supply steam-distilled essential oils alongside the isolated aroma compounds derived from them, such as eugenol, methyl eugenol and anethole. Oils are sourced against the constituent profile our customers work to; specification sheets and sampling arrangements are discussed at enquiry stage.",
     seo: {
-      title: "Essential Oils Supplier & Exporter, Ahmedabad",
+      title: "Essential Oils Supplier & Exporter, India",
       description:
         "Lemongrass, eucalyptus, clove, peppermint, patchouli, sandalwood oils plus eugenol and anethole, from Ahmedabad, India. Request a quotation.",
     },
@@ -163,7 +172,7 @@ export const productCategories: ProductCategory[] = [
       "Our Ayurvedic range covers both whole herbs and raw materials and the milled powders produced from them. Buyers working to a mesh size, assay marker or moisture limit should share those requirements with the enquiry so the material can be sourced and quoted against the correct specification.",
     groups: ["Herbs & Raw Materials", "Powders"],
     seo: {
-      title: "Ayurvedic Raw Material Supplier, Ahmedabad",
+      title: "Ayurvedic Raw Material Exporter, India",
       description:
         "Ashwagandha, Amla, Harad, Baheda, Shatavari, Triphala, Neem, Tulsi, Moringa and more, as herbs or milled powders. Ahmedabad, India.",
     },
@@ -193,7 +202,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "Our pharma intermediates range supports customers manufacturing active ingredients and fine chemicals. Enquiries are handled against your specification — share the assay, impurity limits and documentation you require and we will confirm what can be supplied and quote accordingly.",
     seo: {
-      title: "Pharma Intermediates Supplier, Ahmedabad",
+      title: "Pharma Intermediates Supplier & Exporter",
       description:
         "2-Mercapto-5-methoxybenzimidazole, diphenyl acetonitrile, diphenyl acetic acid and related building blocks. Ahmedabad, India — request a quotation.",
     },
@@ -223,7 +232,7 @@ export const productCategories: ProductCategory[] = [
     intro:
       "Our food and pharma ingredients range covers the preservatives, humectants and excipients used by food and beverage manufacturers, bakeries, pharmaceutical formulators and personal-care brands — sodium benzoate, potassium sorbate, calcium propionate and sorbitol 70% solution. Food- and pharma-grade use is governed by the regulations of the destination market, so please state the grade, pharmacopoeia or food-standard reference and documentation you require with the enquiry.",
     seo: {
-      title: "Food & Pharma Ingredients Supplier, Gujarat",
+      title: "Food & Pharma Ingredients Exporter, India",
       description:
         "Sodium benzoate, potassium sorbate, calcium propionate and sorbitol 70% solution for food, pharma and personal care. Supplier in Ahmedabad, India.",
     },
@@ -479,7 +488,6 @@ export const productsDatabase: Product[] = [
     casNumber: "93-04-9",
     molecularFormula: "C11H10O",
     molecularWeight: "158.20 g/mol",
-    typicalGrade: "High grade",
     physicalForm: "Crystals",
     synonyms: ["2-Methoxynaphthalene (Yara Yara)", "Methyl 2-naphthyl ether", "Nerolin Yara Yara"],
     applications: ["Perfumery", "Fine Fragrance", "Specialty Compounding"],
@@ -494,7 +502,7 @@ export const productsDatabase: Product[] = [
     summary: "Steam-distilled lemongrass oil with a fresh, citral-led citrus character.",
     overview:
       "Lemongrass oil is valued for its bright citrus top note and its citral content, which also makes it a feedstock for downstream aroma chemistry. Buyers working to a citral percentage should state the required range with the enquiry.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     applications: ["Aromatherapy", "Perfumery", "Flavours", "Household & Insect Repellent"],
     keywords: ["lemongrass", "citrus", "citral", "steam distilled", "natural", "essential oil"],
@@ -504,7 +512,7 @@ export const productsDatabase: Product[] = [
     name: "Cinnamon Oil",
     category: "essential-oils",
     summary: "Warm, spicy essential oil with the characteristic cinnamon profile.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     applications: ["Aromatherapy", "Flavours", "Perfumery", "Traditional Preparations"],
     keywords: ["cinnamon", "spicy", "warm", "cinnamaldehyde", "essential oil"],
@@ -516,7 +524,7 @@ export const productsDatabase: Product[] = [
     summary: "Strongly spicy essential oil, rich in eugenol.",
     overview:
       "Clove oil is one of the highest-eugenol natural oils and is used both directly and as the starting material for eugenol isolation. Bud, leaf and stem oils differ in profile — please specify which is required.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     applications: ["Dental & Oral Care", "Aromatherapy", "Flavours", "Eugenol Feedstock"],
     keywords: ["clove", "spicy", "eugenol", "dental", "essential oil"],
@@ -526,7 +534,7 @@ export const productsDatabase: Product[] = [
     name: "Eucalyptus Oil",
     category: "essential-oils",
     summary: "Refreshing camphoraceous oil, rich in eucalyptol (1,8-cineole).",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     synonyms: ["Eucalyptus globulus oil"],
     applications: ["Pharmaceutical", "Aromatherapy", "Personal Care", "Respiratory Preparations"],
@@ -537,7 +545,7 @@ export const productsDatabase: Product[] = [
     name: "Peppermint Oil",
     category: "essential-oils",
     summary: "Cooling essential oil with a fresh, menthol-led mint character.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     synonyms: ["Mentha piperita oil"],
     applications: ["Food Industry", "Oral Care", "Pharmaceutical", "Cosmetics"],
@@ -548,7 +556,7 @@ export const productsDatabase: Product[] = [
     name: "Patchouli Oil",
     category: "essential-oils",
     summary: "Earthy, musky essential oil with excellent tenacity as a base note.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     applications: ["Perfumery", "Aromatherapy", "Cosmetics", "Traditional Preparations"],
     keywords: ["patchouli", "earthy", "musky", "base note", "essential oil"],
@@ -597,7 +605,7 @@ export const productsDatabase: Product[] = [
     name: "Sandalwood Oil",
     category: "essential-oils",
     summary: "Woody, creamy essential oil used as a premium perfumery base note.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     applications: ["Perfumery", "Aromatherapy", "Cosmetics", "Traditional Preparations"],
     keywords: ["sandalwood", "woody", "creamy", "santalol", "essential oil"],
@@ -607,7 +615,7 @@ export const productsDatabase: Product[] = [
     name: "Rosemary Oil",
     category: "essential-oils",
     summary: "Herbaceous essential oil with a fresh, woody-camphoraceous character.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     applications: ["Aromatherapy", "Hair Care", "Flavours", "Personal Care"],
     keywords: ["rosemary", "herbaceous", "woody", "hair care", "essential oil"],
@@ -617,7 +625,7 @@ export const productsDatabase: Product[] = [
     name: "Tea Tree Oil",
     category: "essential-oils",
     summary: "Melaleuca oil with a fresh, camphoraceous character, used widely in personal care formulations.",
-    typicalGrade: "100% pure essential oil",
+    typicalGrade: "Natural essential oil; constituent profile confirmed per lot",
     physicalForm: "Liquid",
     synonyms: ["Melaleuca alternifolia oil"],
     applications: ["Skin Care", "Personal Care", "Aromatherapy", "Household"],
@@ -1025,6 +1033,7 @@ export const productsDatabase: Product[] = [
     overview:
       "Selenium is used in glass decolourising and colouring, electronics, metallurgy and as a trace element source. It is supplied here in powder form.",
     casNumber: "7782-49-2",
+    pubchemCid: 6326970,
     molecularFormula: "Se",
     molecularWeight: "78.97 g/mol",
     typicalGrade: "99.9%",
@@ -1039,6 +1048,7 @@ export const productsDatabase: Product[] = [
     category: "metals",
     summary: "High-purity iodine for pharmaceutical, antiseptic and industrial use.",
     casNumber: "7553-56-2",
+    pubchemCid: 807,
     molecularFormula: "I2",
     molecularWeight: "253.81 g/mol",
     typicalGrade: "99.5%",
@@ -1055,6 +1065,8 @@ export const productsDatabase: Product[] = [
     overview:
       "Sodium metal is supplied against the grade, form and packing agreed at enquiry stage. Because it is water-reactive, handling, packing and transport arrangements are confirmed for every order before despatch — please state your intended grade, quantity, destination and end use with your enquiry.",
     casNumber: "7440-23-5",
+    pubchemCid: 5360545,
+    unNumber: "UN 1428",
     molecularFormula: "Na",
     molecularWeight: "22.99 g/mol",
     physicalForm: "Solid",
@@ -1076,7 +1088,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: sodium is an alkali metal that reacts vigorously with water and moist air, releasing hydrogen. It is classified as a dangerous good for transport and is handled under inert conditions. Grade, form, purity and packing are confirmed per order.",
     seo: {
-      title: "Sodium Metal Supplier | CAS 7440-23-5",
+      title: "Sodium Metal CAS 7440-23-5 Supplier, India (UN 1428)",
       description:
         "Sodium metal (CAS 7440-23-5) for chemical synthesis and reduction. Grade, packing and handling confirmed per order. Ahmedabad, India.",
     },
@@ -1236,7 +1248,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: TEBAC is a quaternary ammonium salt and is known to be hygroscopic, so it is normally kept in tightly closed containers away from moisture. This is general chemistry context about the substance and is not a statement about a specific grade or assay of material supplied by Sheetal Aromatics.",
     seo: {
-      title: "Benzyl Triethyl Ammonium Chloride (TEBAC)",
+      title: "TEBAC (Benzyl Triethyl Ammonium Chloride) CAS 56-37-1 Supplier",
       description:
         "Benzyl triethyl ammonium chloride (TEBAC, CAS 56-37-1), a quaternary ammonium phase transfer catalyst, supplied from Ahmedabad, India. Request a quotation.",
     },
@@ -1309,7 +1321,7 @@ export const productsDatabase: Product[] = [
     ],
     keywords: ["btppc", "benzyltriphenylphosphonium", "phosphonium salt", "wittig", "fluoroelastomer", "phase transfer catalyst", "ptc"],
     seo: {
-      title: "Benzyl Triphenyl Phosphonium Chloride (BTPPC)",
+      title: "BTPPC (Benzyl Triphenyl Phosphonium Chloride) CAS 1100-88-5",
       description:
         "Benzyl triphenyl phosphonium chloride (BTPPC, CAS 1100-88-5) for Wittig reactions, phase transfer catalysis and FKM curing. Ahmedabad, India.",
     },
@@ -1329,7 +1341,7 @@ export const productsDatabase: Product[] = [
     applications: ["Wittig Reaction Reagent", "Phase Transfer Catalysis", "Polymer & Resin Chemistry", "Fine Chemical Manufacturing"],
     keywords: ["butyltriphenylphosphonium", "phosphonium salt", "wittig", "phase transfer catalyst", "ptc"],
     seo: {
-      title: "Butyl Triphenyl Phosphonium Chloride Supplier",
+      title: "Butyl Triphenyl Phosphonium Chloride CAS 13371-17-0 Supplier",
       description:
         "Butyl triphenyl phosphonium chloride (CAS 13371-17-0) for Wittig reactions, phase transfer catalysis and polymer work. Ahmedabad, India — request a quotation.",
     },
@@ -1420,7 +1432,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: methyl triphenyl phosphonium bromide is moderately hygroscopic and sensitive to humidity. Material is kept in tightly closed containers in a dry, ventilated area. This note provides general chemical context.",
     seo: {
-      title: "Methyl Triphenyl Phosphonium Bromide (MTPPB)",
+      title: "MTPPB (Methyl Triphenyl Phosphonium Bromide) CAS 1779-49-3",
       description:
         "Methyl triphenyl phosphonium bromide (MTPPB, CAS 1779-49-3) for Wittig methylenation and phase transfer catalysis. Ahmedabad, India — request a quotation.",
     },
@@ -1450,7 +1462,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: methoxymethyl triphenyl phosphonium chloride is hygroscopic and may decompose if exposed to excessive moisture or heat. Stored under dry conditions. This represents general scientific information.",
     seo: {
-      title: "Methoxymethyl Triphenyl Phosphonium Chloride",
+      title: "Methoxymethyl Triphenyl Phosphonium Chloride CAS 4009-98-7",
       description:
         "Methoxymethyl triphenyl phosphonium chloride (CAS 4009-98-7) for Wittig homologation and fine chemical synthesis. Ahmedabad, India.",
     },
@@ -1481,7 +1493,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: TBAB is hygroscopic and deliquescent in humid atmospheres; storage in tightly closed containers in a cool, dry area is standard industry practice. This note provides general chemical context.",
     seo: {
-      title: "TBAB (Tetrabutyl Ammonium Bromide) Supplier | CAS 1643-19-2",
+      title: "TBAB (Tetrabutyl Ammonium Bromide) CAS 1643-19-2 Exporter",
       description:
         "Tetrabutyl ammonium bromide (TBAB, CAS 1643-19-2), high-purity phase transfer catalyst for synthesis and industry. Ahmedabad, India — request a quotation.",
     },
@@ -1512,7 +1524,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: TBAF is extremely hygroscopic and typically supplied as a trihydrate or solution in THF to prevent decomposition. Avoid skin and eye contact. This is general chemical context.",
     seo: {
-      title: "Tetrabutyl Ammonium Fluoride (TBAF) Supplier",
+      title: "TBAF (Tetrabutyl Ammonium Fluoride) CAS 429-41-4 Supplier",
       description:
         "Tetrabutyl ammonium fluoride (TBAF, CAS 429-41-4) for silyl deprotection and organic synthesis. Ahmedabad, India — request a quotation.",
     },
@@ -1542,7 +1554,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: TBAHS is hygroscopic and forms acidic aqueous solutions (pH ~1-2). Stored in tightly sealed containers protected from atmospheric moisture. This provides general chemistry context.",
     seo: {
-      title: "Tetrabutyl Ammonium Hydrogen Sulphate (TBAHS)",
+      title: "TBAHS (Tetrabutyl Ammonium Hydrogen Sulphate) CAS 32503-27-8",
       description:
         "Tetrabutyl ammonium hydrogen sulphate (TBAHS, CAS 32503-27-8) for phase transfer catalysis and HPLC ion-pairing. Ahmedabad, India — request a quote.",
     },
@@ -1633,7 +1645,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: TEABF4 for electrochemical applications is typically controlled for ultra-low moisture and trace halide content. Stored in tightly sealed containers under dry conditions. This provides general chemical context.",
     seo: {
-      title: "Tetraethyl Ammonium Tetrafluoroborate (TEABF4)",
+      title: "TEABF4 (Tetraethyl Ammonium Tetrafluoroborate) CAS 429-06-1",
       description:
         "Tetraethyl ammonium tetrafluoroborate (TEABF4, CAS 429-06-1) for supercapacitors and electrochemical applications. Ahmedabad, India.",
     },
@@ -1684,7 +1696,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: sodium benzoate acts through undissociated benzoic acid, so it is most effective in acidic products (roughly pH 4.5 and below). Permitted uses and limits in food are set by the regulations of each market, such as FSSAI in India. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
     seo: {
-      title: "Sodium Benzoate Supplier in Gujarat | CAS 532-32-1",
+      title: "Sodium Benzoate (E211) CAS 532-32-1 Supplier & Exporter",
       description:
         "Sodium benzoate (E211, CAS 532-32-1) for food, beverage, pharma and personal-care preservation. Supplier in Ahmedabad, Gujarat — request a quote.",
     },
@@ -1729,7 +1741,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: sorbates remain effective up to a higher pH than benzoates (roughly pH 6.5), which is why they are common in bakery and dairy. Permitted uses and limits are set by each market's food regulations. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
     seo: {
-      title: "Potassium Sorbate Supplier in India | CAS 24634-61-5",
+      title: "Potassium Sorbate (E202) CAS 24634-61-5 Exporter, India",
       description:
         "Potassium sorbate (E202, CAS 24634-61-5), a mould and yeast inhibitor for bakery, dairy, beverages and cosmetics. Ahmedabad, India — request a quote.",
     },
@@ -1772,7 +1784,7 @@ export const productsDatabase: Product[] = [
       },
     ],
     seo: {
-      title: "Calcium Propionate Supplier in Gujarat",
+      title: "Calcium Propionate (E282) CAS 4075-81-4 Supplier & Exporter",
       description:
         "Calcium propionate (E282, CAS 4075-81-4), the bakery mould inhibitor for bread, processed foods and feed. Supplier in Ahmedabad, Gujarat — request a quote.",
     },
@@ -1818,7 +1830,7 @@ export const productsDatabase: Product[] = [
     technicalNote:
       "General information: the CAS number, formula and molecular weight shown refer to sorbitol itself; the 70% product is its aqueous solution. This is general context about the substance, not a statement about a specific grade supplied by Sheetal Aromatics.",
     seo: {
-      title: "Sorbitol 70% Solution Supplier in Ahmedabad",
+      title: "Sorbitol 70% Solution CAS 50-70-4 Supplier & Exporter",
       description:
         "Sorbitol 70% solution (CAS 50-70-4) for pharmaceutical syrups, toothpaste, food and personal care. Supplier in Ahmedabad, India — request a quote.",
     },
@@ -1840,7 +1852,6 @@ export const productsDatabase: Product[] = [
     synonyms: [
       "Benzyldiethyl[(2,6-xylylcarbamoyl)methyl]ammonium benzoate",
       "Lidocaine benzyl benzoate",
-      "Bittering agent",
     ],
     forms: ["Powder", "Granules", "Liquid solution"],
     packaging: [
@@ -1915,7 +1926,7 @@ export const productsDatabase: Product[] = [
       },
     ],
     seo: {
-      title: "Denatonium Benzoate Supplier | CAS 3734-33-6",
+      title: "Denatonium Benzoate CAS 3734-33-6 Supplier & Exporter",
       description:
         "Denatonium benzoate (CAS 3734-33-6) as powder, granules or solution in PEG, ethanol or methanol; 1–25 kg and 25–200 L packs. Supplier & exporter, India.",
     },
@@ -2067,21 +2078,34 @@ const BRAND_SUFFIX = " | Sheetal Aromatics"
  * cut off mid-word in search results.
  */
 export function productSeoTitle(product: Product): string {
-  const candidates = (
-    product.seo?.title
-      ? [product.seo.title]
-      : [
-          product.casNumber && `${product.name} Supplier in India | CAS ${product.casNumber}`,
-          `${product.name} Supplier in Ahmedabad, India`,
-          `${product.name} Supplier & Exporter, India`,
-          `${product.name} Supplier, India`,
-          product.casNumber && `${product.name} | CAS ${product.casNumber}`,
-          `${product.name} Supplier`,
-        ]
-  ).filter(Boolean) as string[]
+  if (product.seo?.title) {
+    const branded = `${product.seo.title}${BRAND_SUFFIX}`
+    return branded.length <= TITLE_LIMIT ? branded : product.seo.title
+  }
 
-  const branded = candidates.map((t) => `${t}${BRAND_SUFFIX}`).find((t) => t.length <= TITLE_LIMIT)
-  if (branded) return branded
+  // Buyers search by CAS number and abbreviation (README §12), and export is the
+  // first market, so those win the characters before the brand suffix does.
+  const { name, casNumber: cas } = product
+  const abbr = product.synonyms?.find((s) => /^[A-Z][A-Z0-9-]{1,7}$/.test(s) && !name.includes(s))
+  const names = abbr ? [`${name} (${abbr})`, name] : [name]
+
+  const candidates = [
+    ...(cas
+      ? names.flatMap((n) => [
+          `${n} CAS ${cas} Supplier & Exporter${BRAND_SUFFIX}`,
+          `${n} CAS ${cas} Supplier & Exporter, India`,
+          `${n} CAS ${cas} Supplier, India`,
+          `${n} CAS ${cas} Supplier`,
+        ])
+      : []),
+    ...names.flatMap((n) => [
+      `${n} Supplier & Exporter, India${BRAND_SUFFIX}`,
+      `${n} Supplier & Exporter, India`,
+      `${n} Exporter from India`,
+      `${n} Supplier, India`,
+    ]),
+    cas ? `${name} | CAS ${cas}` : `${name} Supplier`,
+  ]
   return candidates.find((t) => t.length <= TITLE_LIMIT) ?? candidates[candidates.length - 1]
 }
 

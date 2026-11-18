@@ -11,7 +11,7 @@ import { SiteImage, type SiteImageName } from "@/components/site-media"
 import { CtaBand } from "@/components/cta-band"
 import { JsonLd } from "@/components/json-ld"
 import { collectionSchema, pageMetadata } from "@/lib/seo"
-import { getCategory, getProductsByCategory, productCategories } from "@/lib/products-data"
+import { getCategory, getProductsByCategory, productCategories, productHref } from "@/lib/products-data"
 import { pluralize } from "@/lib/utils"
 import { guidesForCategory } from "@/lib/guides"
 
@@ -81,8 +81,8 @@ export default async function CategoryPage({ params }: { params: Params }) {
               description={category.intro}
             />
             {banner && (
-              <div className="aspect-[16/10] overflow-hidden rounded-xl border border-border shadow-md">
-                <SiteImage name={banner} priority kenBurns sizes="(min-width: 1024px) 520px, 100vw" />
+              <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border shadow-md">
+                <SiteImage name={banner} priority kenBurns representative sizes="(min-width: 1024px) 520px, 100vw" />
               </div>
             )}
           </div>
@@ -101,6 +101,47 @@ export default async function CategoryPage({ params }: { params: Params }) {
           </CategoryGrid>
         </Container>
       </Section>
+
+      {/* Quick-reference table: identifiers for every product in the category, server-rendered
+          so search and answer engines can read the list (e.g. "phase transfer catalysts CAS list"). */}
+      {products.some((p) => p.casNumber) && (
+        <Section tone="paper" spacing="tight">
+          <Container>
+            <h2 className="text-lg font-semibold">{category.name}: CAS numbers at a glance</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Supplied from Ahmedabad, India for domestic delivery and export. Grade and packing are confirmed against
+              your specification.
+            </p>
+            <div className="mt-5 overflow-x-auto rounded-lg border border-border bg-card">
+              <table className="w-full min-w-[36rem] text-left text-sm">
+                <caption className="sr-only">{category.name} with CAS numbers, formulas and forms</caption>
+                <thead>
+                  <tr className="border-b border-border text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                    <th scope="col" className="px-4 py-2.5 font-medium">Product</th>
+                    <th scope="col" className="px-4 py-2.5 font-medium">CAS number</th>
+                    <th scope="col" className="px-4 py-2.5 font-medium">Formula</th>
+                    <th scope="col" className="px-4 py-2.5 font-medium">Form</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {products.map((product) => (
+                    <tr key={product.slug}>
+                      <th scope="row" className="px-4 py-2.5 font-medium">
+                        <Link href={productHref(product)} className="hover:text-primary hover:underline">
+                          {product.name}
+                        </Link>
+                      </th>
+                      <td className="px-4 py-2.5 font-mono text-xs tabular-nums">{product.casNumber ?? "—"}</td>
+                      <td className="px-4 py-2.5">{product.molecularFormula ?? "—"}</td>
+                      <td className="px-4 py-2.5 text-muted-foreground">{product.physicalForm ?? "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Container>
+        </Section>
+      )}
 
       {/* Internal linking: buyer guides, then sibling categories */}
       <Section tone="paper" spacing="tight">
